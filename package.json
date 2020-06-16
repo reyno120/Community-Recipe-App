@@ -1,0 +1,19 @@
+{
+  "name": "community-recipe-app",
+  "version": "1.0.0",
+  "description": "A Community based collaborative recipe web application for health plant-based recipes",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reyno120/Community-Recipe-App.git"
+  },
+  "author": "Jacob Reynolds",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reyno120/Community-Recipe-App/issues"
+  },
+  "homepage": "https://github.com/reyno120/Community-Recipe-App#readme"
+}
