@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 import SingleCard from './SingleCard';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
 
 
 class Cards extends Component {
-    state = {  }
+    state = {  
+        recipes: []
+    };
 
+    componentDidMount() {
+        axios.get('/home', {
+            params: {
+                filter: this.props.filter
+            }
+        })
+        .then(res => {
+            this.setState({recipes: res.data.recipes});
+        });
+    }
+    
     render() { 
         return (
             <div style={{marginBottom: '6em'}}>
@@ -26,18 +40,29 @@ class Cards extends Component {
                 }}>
                 </div>
                 <Grid container spacing={2} style={{marginLeft: '.5em'}}>
-                    <Grid item xs={3}>
-                        <SingleCard></SingleCard>
+                    {this.state.recipes.map((details, index) => (
+                        <Grid item xs={3}>
+                            <SingleCard 
+                                key={index} 
+                                name={details.name}
+                                description={details.description}
+                                author={details.author}
+                                source={details.source}
+                                directions={details.directions}
+                                ingredients={details.ingredients}
+                                date={details.date}
+                            ></SingleCard>
+                        </Grid>
+                    ))}
+                    {/* <Grid item xs={3}>
+                        <SingleCard recipe={this.state.recipes[1]}></SingleCard>
                     </Grid>
                     <Grid item xs={3}>
-                        <SingleCard></SingleCard>
+                        <SingleCard recipe={this.state.recipes[2]}></SingleCard>
                     </Grid>
                     <Grid item xs={3}>
-                        <SingleCard></SingleCard>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <SingleCard></SingleCard>
-                    </Grid>
+                        <SingleCard recipe={this.state.recipes[3]}></SingleCard>
+                    </Grid> */}
                 </Grid>
             </div>  
         );

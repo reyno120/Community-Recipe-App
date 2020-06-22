@@ -31,8 +31,8 @@ export default function SimplePaper() {
   return (
     <div className={classes.root}>
       <Paper elevation={3}>
-        <Cards header={header[0]}></Cards>
-        <Cards header={header[1]}></Cards>
+        <Cards header={header[0]} filter={header[0]}></Cards>
+        <Cards header={header[1]} filter={header[1]}></Cards>
       </Paper>
     </div>
   );

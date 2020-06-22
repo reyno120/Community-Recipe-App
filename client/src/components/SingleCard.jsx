@@ -14,6 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const [expanded] = React.useState(false);
 
@@ -54,7 +55,7 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        title={props.name}
         subheader="September 14, 2016"
       />
       <CardMedia

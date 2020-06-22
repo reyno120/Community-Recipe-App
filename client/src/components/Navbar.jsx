@@ -36,7 +36,7 @@ export default function ButtonAppBar() {
         <Broccoli className={classes.image}></Broccoli>
         <Button style={{textTransform: 'none'}} className={classes.title}>
             <Typography variant="h6">
-              <Link to="/">
+              <Link to="/home">
                 Home
               </Link>
             </Typography>
