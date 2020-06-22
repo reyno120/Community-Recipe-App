@@ -17,6 +17,9 @@ class Cards extends Component {
         })
         .then(res => {
             this.setState({recipes: res.data.recipes});
+        })
+        .catch(error => {
+            console.log(error);
         });
     }
     
@@ -51,6 +54,7 @@ class Cards extends Component {
                                 directions={details.directions}
                                 ingredients={details.ingredients}
                                 date={details.date}
+                                recipeID={details.recipeID}
                             ></SingleCard>
                         </Grid>
                     ))}

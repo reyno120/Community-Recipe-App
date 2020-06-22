@@ -13,6 +13,8 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,8 +57,8 @@ export default function RecipeReviewCard(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={props.name}
-        subheader="September 14, 2016"
+        title={<Link to={`/recipes/${props.recipeID}`}>{props.name}</Link>}
+        subheader={props.author}
       />
       <CardMedia
         className={classes.media}
@@ -65,8 +67,7 @@ export default function RecipeReviewCard(props) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          {props.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -76,8 +77,11 @@ export default function RecipeReviewCard(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
+        <IconButton style={{marginLeft: 'auto'}}>
+            <BookmarkIcon></BookmarkIcon>
+        </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
@@ -103,7 +107,7 @@ export default function RecipeReviewCard(props) {
             Set aside off of the heat to let rest for 10 minutes, and then serve.
           </Typography>
         </CardContent>
-      </Collapse>
+      </Collapse> */}
     </Card>
   );
 }

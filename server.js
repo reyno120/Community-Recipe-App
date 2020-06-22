@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 
 // Controllers
 const homeController = require('./controllers/homeController');
+const recipeController = require('./controllers/recipeController');
 
 
 
@@ -27,6 +28,7 @@ mongoose.set('useCreateIndex', true);
 
 // HTTP Request
 app.get('/home', homeController);
+app.get('/recipes', recipeController);
 
 
 
