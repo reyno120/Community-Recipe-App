@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
-import tempImage from '../images/anna-pelzer-unsplash.jpg';
 import Grid from '@material-ui/core/Grid';
 
 class Recipe extends Component {
@@ -45,7 +44,7 @@ class Recipe extends Component {
                                 <p style={{display: 'inline-block', fontSize: '24px'}}>Difficulty: {details.difficulty}</p>
                                 <p style={{display: 'inline-block', fontSize: '24px', marginLeft: '3em' , marginBottom: '1em'}}>Time: {details.time}</p>
                             </div>
-                            <img src={tempImage} alt="temporary" style={{width: '40%', marginLeft: '25em', display: 'block'}} />
+                            <img src={details.image} alt="temporary" style={{width: '40%', marginLeft: '25em', display: 'block'}} />
                             <p style={{
                                 fontSize: '18px',
                                 margin: '3em 10em 3em 10em',  

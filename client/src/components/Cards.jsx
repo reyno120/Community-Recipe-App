@@ -54,19 +54,11 @@ class Cards extends Component {
                                 directions={details.directions}
                                 ingredients={details.ingredients}
                                 date={details.date}
+                                image={details.image}
                                 recipeID={details.recipeID}
                             ></SingleCard>
                         </Grid>
                     ))}
-                    {/* <Grid item xs={3}>
-                        <SingleCard recipe={this.state.recipes[1]}></SingleCard>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <SingleCard recipe={this.state.recipes[2]}></SingleCard>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <SingleCard recipe={this.state.recipes[3]}></SingleCard>
-                    </Grid> */}
                 </Grid>
             </div>  
         );
