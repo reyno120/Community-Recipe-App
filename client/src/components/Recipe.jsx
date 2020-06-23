@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Paper from '@material-ui/core/Paper';
 
 class Recipe extends Component {
     state = {  
@@ -20,10 +21,21 @@ class Recipe extends Component {
         });
     }
 
-    render() { 
-        console.log(this.state.recipe);
+    render() {
         return (  
-            <h2>Test recipe</h2>
+            <Paper 
+                elevation={3} 
+                style={{
+                    backgroundColor: 'rgb(228, 221, 211)',
+                    width: '1366px',
+                    margin: 'auto'
+                }}>
+                {this.state.recipe.map((details, index) => (
+                    <h1 style={{
+                        color: 'rgb(25, 26, 23)'
+                    }}>{details.name}</h1>
+                ))}
+            </Paper>
         );
     }
 }
