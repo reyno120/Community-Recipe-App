@@ -5,9 +5,18 @@ const recipeSchema = new mongoose.Schema({
     description: { type: String },
     author: { type: String },
     source: { type: String },
-    directions: { type: String },
-    ingredients: { type: String },
+    directions: [{ type: String }],
+    ingredients: [{ type: String }],
     date: { type: String },
+    tips: [{ type: String }],
+    nutrition: {
+        calories: { type: String},
+        carbs: { type: String },
+        fat: { type: String },
+        protein: { type: String }
+    },
+    time: { type: String },
+    difficulty: { type: String },
     recipeID: { type: String }
     // userid: {
     //     type: mongoose.Schema.Types.ObjectId,

@@ -1,61 +1,30 @@
 const Recipes = require('../models/Recipe');
-// const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
-// Recipes.create({
-//     name: "test recipe 1",
-//     description: "test desc 1",
-//     author: "test author 1",
-//     source: "test source 1",
-//     directions: "test directions 1",
-//     ingredients: "test ingredients 1",
-//     date: "test date 1",
-//     recipeID: uuidv4()
-// },
-// (error, event) => {
-//     if(error) throw error;
-// });
-
-// Recipes.create({
-//     name: "test recipe 2",
-//     description: "test desc 2",
-//     author: "test author 2",
-//     source: "test source 2",
-//     directions: "test directions 2",
-//     ingredients: "test ingredients 2",
-//     date: "test date 2",
-//     recipeID: uuidv4()
-// },
-// (error, event) => {
-//     if(error) throw error;
-// });
-
-// Recipes.create({
-//     name: "test recipe 3",
-//     description: "test desc 3",
-//     author: "test author 3",
-//     source: "test source 3",
-//     directions: "test directions 3",
-//     ingredients: "test ingredients 3",
-//     date: "test date 3",
-//     recipeID: uuidv4()
-// },
-// (error, event) => {
-//     if(error) throw error;
-// });
-
-// Recipes.create({
-//     name: "test recipe 4",
-//     description: "test desc 4",
-//     author: "test author 4",
-//     source: "test source 4",
-//     directions: "test directions 4",
-//     ingredients: "test ingredients 4",
-//     date: "test date 4",
-//     recipeID: uuidv4()
-// },
-// (error, event) => {
-//     if(error) throw error;
-// });
+// for(var i = 1; i < 5; i++) {
+//     Recipes.create({
+//         name: "test recipe " + i,
+//         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+//         author: "test author " + i,
+//         source: "test source " + i,
+//         directions: ["direction 1", "direction 2", "direction 3", "direction 4"],
+//         ingredients: ["ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4"],
+//         date: "test date " + i,
+//         tips: ["useful tip 1", "useful tip 2", "useful tip 3"],
+//         nutrition: {
+//             calories: '500',
+//             carbs: '100g',
+//             fat: '5g',
+//             protein: '12g'
+//         },
+//         time: '30 minutes',
+//         difficulty: 'easy',
+//         recipeID: uuidv4()
+//     },
+//     (error, event) => {
+//         if(error) throw error;
+//     });
+// }
 
 module.exports = (req, res) => {
     Recipes.find({}, (error, recipes) => {
