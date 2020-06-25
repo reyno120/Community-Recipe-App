@@ -6,13 +6,16 @@ module.exports = (req, res) => {
     }
 
     const file = req.files.file;
+    const directory = path.join(__dirname, '../client/public/images/', file.name);
 
-    file.mv(`${__dirname}./client/public/images/${file.name}`, error => {
+    file.mv(directory, error => {
         if(error) {
             console.error(error);
             return res.status(500).send(error);
         }
 
-        res.json({fileName: file.name, filePath: '/images/${file.name}'});
+        const filePath = path.join('../../public/images', file.name);
+        console.log(filePath);
+        res.json({fileName: file.name, filePath: filePath});
     });
 }
