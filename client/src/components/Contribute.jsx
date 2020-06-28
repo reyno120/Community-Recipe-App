@@ -2,27 +2,36 @@ import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import IngredientList from '../data/ingredients';
+import Select from 'react-select';
+import Radio from '@material-ui/core/Radio';
 
 class Contribute extends Component {
     state = {
         file: null,
         filename: '',
         image: '',
-        ingredients: []
+        ingredients: [],
+        selectedIngredient: '',
+        nutritionDisplay: 'none',
+        dispButton: 'block',
+        radioValue: '',
+        directions: []
     };
 
-    addIngredient = () => {
-        this.setState({ingredients: [...this.state.ingredients, ""]});
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.value});
     }
 
-    handleIngredients = (e, index) => {
-        var ingredients = this.state.ingredients;
-        ingredients[index] = (e.target.value);
-        // this.state.ingredients[index] = e.target.value;
-        // this.setState({ingredients: this.state.ingredients});
+    handleIngredients = (e) => {
+        var ingredients = [];
+        if(e) {
+            for(var i = 0; i < e.length; i++) {
+                ingredients.push(e[i].value);
+            }
+        }
         this.setState({ingredients: ingredients});
     }
 
@@ -47,6 +56,7 @@ class Contribute extends Component {
     }
 
     render() { 
+        console.log(this.state.ingredients);
         return (  
             <div>
                 <Paper 
@@ -80,22 +90,83 @@ class Contribute extends Component {
                                         </input>
                                     </Button>
                                     <label htmlFor='customImage'>{this.filename}</label>
-                                    <img style={{width: '50%', display: 'block'}} src={this.state.image} />
+                                    <img style={{width: '50%', display: 'block'}} src={this.state.image} alt={''}/>
                                 </Grid>
-                                <Grid xs={3} align="center" style={{marginTop: '2em'}}>
+                                <Grid xs={4} align="center" style={{marginTop: '2em'}}>
                                     <h2>Nutrition:</h2>
-                                    <Button variant="contained">Add Nutrition</Button>
+                                    <Button 
+                                        variant="contained" 
+                                        style={{display: this.state.dispButton}}
+                                        onClick={() => {this.setState({nutritionDisplay: 'block', dispButton: 'none'})}}>
+                                        Add Nutrition
+                                    </Button>
+                                    <div style={{display: this.state.nutritionDisplay}}>
+                                        <p>Calories: <TextField style={{width: '3em'}}/></p>
+                                        <p>Carbs: <TextField style={{width: '3em'}}/></p>
+                                        <p>Protein: <TextField style={{width: '3em'}}/></p>
+                                        <p>Fat: <TextField style={{width: '3em'}}/></p>
+                                    </div>
                                 </Grid>
-                                <Grid xs={3} align="center" style={{marginTop: '2em'}}>
+                                <Grid xs={4} align="center" style={{marginTop: '2em'}}>
                                     <h2>Ingredients:</h2>
+                                    <Select
+                                        isMulti
+                                        onChange={this.handleIngredients}
+                                        options={IngredientList}
+                                        isSearchable={true}
+                                    />
+                                </Grid>
+                                <Grid xs={4} align="center" style={{marginTop: '2em'}}>
+                                    <h2>Amount:</h2>
                                     {this.state.ingredients.map((ingredient, index) => {
                                         return (
-                                            <div key={index}>
-                                                <TextField onChange={this.handleIngredients} />
+                                            <div>
+                                                <p style={{
+                                                    fontSize: '18px',
+                                                    display: 'inline' 
+                                                    }}>{ingredient}: </p>
+                                                <TextField style={{width: '5em'}}/>
                                             </div>
                                         );
                                     })}
-                                    <Button variant="contained" onClick={this.addIngredient} style={{marginTop: '1em'}}>Add Ingredient</Button>
+                                </Grid>
+                                <Grid xs={12} align="center">
+                                    <h2 style={{marginTop: '3em'}}>Who is this recipe for?</h2>
+                                </Grid>
+                                <Grid xs={4} align="right">
+                                    <p>Beginner Sous Chef</p>
+                                    <Radio
+                                        checked={this.state.radioValue === 'Easy'}
+                                        value={"Easy"}
+                                        onChange={this.onChange}
+                                        name="radioValue"
+                                        style={{marginRight: '2em'}}
+                                    />
+                                </Grid>
+                                <Grid xs={4} align="center">
+                                    <p>Experienced Cook</p>
+                                    <Radio
+                                        checked={this.state.radioValue === 'Medium'}
+                                        value={"Medium"}
+                                        onChange={this.onChange}
+                                        name="radioValue"
+                                    />
+                                </Grid>
+                                <Grid xs={4} align="left">
+                                    <p>Master Chef</p>
+                                    <Radio
+                                        checked={this.state.radioValue === 'Hard'}
+                                        value={"Hard"}
+                                        onChange={this.onChange}
+                                        name="radioValue"
+                                        style={{marginLeft: '1em'}}
+                                    />
+                                </Grid>
+                                <Grid xs={12}>
+                                    <h2>Directions:</h2>
+                                    {this.directions.map((step, index) => {
+
+                                    })}
                                 </Grid>
                             </Grid>
                         </form>
