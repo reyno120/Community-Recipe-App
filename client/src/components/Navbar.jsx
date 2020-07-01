@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { ReactComponent as Broccoli } from '../images/broccoli.svg';
 import { Link } from 'react-router-dom';
+import Login from './Login';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   return (
     <div className={classes.root}>
@@ -55,7 +58,7 @@ export default function ButtonAppBar() {
               </Link>
             </Typography>
           </Button>
-          <Button className={classes.button}>Login</Button>
+          <Login></Login>
         </Toolbar>
       </AppBar>
     </div>

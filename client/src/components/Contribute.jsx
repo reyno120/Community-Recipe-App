@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IngredientList from '../data/ingredients';
 import Select from 'react-select';
 import Radio from '@material-ui/core/Radio';
+import Directions from './contribute-components/Directions';
 
 class Contribute extends Component {
     state = {
@@ -17,8 +18,7 @@ class Contribute extends Component {
         selectedIngredient: '',
         nutritionDisplay: 'none',
         dispButton: 'block',
-        radioValue: '',
-        directions: []
+        radioValue: ''
     };
 
     onChange = (e) => {
@@ -163,15 +163,13 @@ class Contribute extends Component {
                                     />
                                 </Grid>
                                 <Grid xs={12}>
-                                    <h2>Directions:</h2>
-                                    {this.directions.map((step, index) => {
-
-                                    })}
+                                    <Directions></Directions>
                                 </Grid>
                             </Grid>
                         </form>
-                        <div style={{height: '2em'}}></div>
+                    <div style={{height: '2em'}}></div>
                 </Paper>
+                <div style={{height: '2em'}}></div>
             </div>
         );
     }
