@@ -8,16 +8,22 @@ import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
 class Login extends Component {
-    state = {  
-        open: false,
-        username: '',
-        password: '',
-        email: '',
-        loginError: 'none',
-        registerError: 'none'
-    };
+    constructor(props) {
+        super(props);
+        this.state = {  
+            open: false,
+            username: '',
+            password: '',
+            registerUser: '',
+            registerPass: '',
+            registerEmail: '',
+            loginError: 'none',
+            registerError: 'none'
+        };
+    }
 
     handleLogin = (e) => {
+        // e.preventDefault();
         const { username, password } = this.state;
         axios.post('/login', {username, password})
             .then((res) => {
@@ -29,8 +35,9 @@ class Login extends Component {
     }
 
     handleRegister = (e) => {
-        const { username, password, email } = this.state;
-        axios.post('/register', {username, password, email})
+        // e.preventDefault();
+        const { registerUser, registerPass, registerEmail } = this.state;
+        axios.post('/register', {registerUser, registerPass, registerEmail})
             .then((res) => {
                 if(res.data.userExists) {
                     this.setState({registerError: 'block'});
@@ -79,6 +86,7 @@ class Login extends Component {
                                 name="password"
                                 type="password"
                                 label="Password"
+                                onChange={this.onChange}
                                 required
                                 style={{display: 'block', marginBottom: '1em'}}
                             />
@@ -98,6 +106,7 @@ class Login extends Component {
                                 name="registerUser"
                                 type="text"
                                 label="Username"
+                                onChange={this.onChange}
                                 required
                             />
                             <TextField
@@ -106,6 +115,7 @@ class Login extends Component {
                                 name="registerEmail"
                                 type="email"
                                 label="Email"
+                                onChange={this.onChange}
                                 required
                                 style={{display: 'block'}}
                             />
@@ -115,6 +125,7 @@ class Login extends Component {
                                 name="registerPass"
                                 type="password"
                                 label="Password"
+                                onChange={this.onChange}
                                 required
                                 style={{display: 'block', marginBottom: '2em'}}
                             />

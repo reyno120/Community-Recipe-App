@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(uniqueValidator);
 
 userSchema.pre('save', function(next) {
-    const usre = this;
+    const user = this;
 
     bcrypt.hash(user.password, 10, (error, hash) => {
         user.password = hash;

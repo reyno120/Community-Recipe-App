@@ -14,6 +14,7 @@ const recipeController = require('./controllers/recipeController');
 const uploadImageController = require('./controllers/uploadImageController');
 const registerController = require('./controllers/registerController');
 const loginController = require('./controllers/loginController');
+const authController = require('./controllers/authController');
 
 
 
@@ -28,7 +29,7 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(expressSession ({
-    secret: 'plants',
+    secret: keys.sessionSecret,
     resave: true,       // maybe should look these up later
     saveUninitialized: true,
     path: '/home'
@@ -42,10 +43,11 @@ mongoose.set('useCreateIndex', true);
 // HTTP Request
 app.get('/home', homeController);
 app.get('/recipes', recipeController);
-app.get('/login', loginController);
+app.get('/user/auth', authController);
 
 app.post('/imageUpload', uploadImageController);
 app.post('/register', registerController);
+app.post('/login', loginController);
 
 
 
