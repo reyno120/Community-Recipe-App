@@ -3,23 +3,23 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
-class Directions extends Component {
+class Tips extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            directions: [],
+            tips: [],
             inputs: []
         }
     }
 
-    addStep = () => {
+    addTip = () => {
         var inputs = this.state.inputs;
-        // inputs.push(<TextField onChange={this.props.handleDirections} style={{marginLeft: '1em', width: '55em'}}></TextField>);
+        // inputs.push(<TextField onChange={this.props.handleTips(inputs.length + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>);
         inputs.push('');
         this.setState({inputs: inputs});
     }
 
-    removeStep = () => {
+    removeTip = () => {
         var inputs = this.state.inputs;
         inputs.pop();
         this.setState({inputs: inputs});
@@ -28,47 +28,47 @@ class Directions extends Component {
     render() { 
         return (  
             <div>
-                <h2 style={{marginLeft: '2em'}}>Directions:</h2>
+                <h2 style={{marginLeft: '2em'}}>Tips:</h2>
                 
                 <Grid container>
                     <Grid xs={2} align="center">
                         <Button 
                             variant="contained"
                             style={{display: 'block'}}
-                            onClick = {this.addStep}
-                            >Add Step
+                            onClick = {this.addTip}
+                            >Add tip
                         </Button>
                         <Button
                             variant="contained"
-                            onClick = {this.removeStep}
+                            onClick = {this.removeTip}
                             style={{display: 'inline-block', marginTop: '1em'}}
-                            >Remove Step  
+                            >Remove tip  
                         </Button>
                     </Grid>
 
 
                     <Grid xs={10} align="left">
-                        {this.state.directions.map((step, index) => {
+                        {this.state.tips.map((tip, index) => {
                             return (
                                 <div>
                                     <p>     
                                         <span style={{
                                                 fontWeight: "bold"
-                                            }}>Step {index + 1}:
-                                        </span> {step}
+                                            }}>#{index + 1}:
+                                        </span> {tip}
                                     </p>
                                 </div>
                             );
                         })}
 
-                        <p style={{fontWeight: "bold"}}>Step 1: 
-                                    <TextField onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                        <p style={{fontWeight: "bold"}}>#1: 
+                                    <TextField onChange={this.props.handleTips(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                         </p>
 
                         {this.state.inputs.map((input, index) => {
                             return (
-                                <p style={{fontWeight: "bold"}}>Step {index + 2}: 
-                                    <TextField onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                <p style={{fontWeight: "bold"}}>#{index + 2}: 
+                                    <TextField onChange={this.props.handleTips(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                                 </p>
                             );
                         })}
@@ -80,4 +80,4 @@ class Directions extends Component {
     }
 }
  
-export default Directions;
+export default Tips;

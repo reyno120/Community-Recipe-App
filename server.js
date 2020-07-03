@@ -11,7 +11,7 @@ const expressSession = require('express-session');
 // Controllers
 const homeController = require('./controllers/homeController');
 const recipeController = require('./controllers/recipeController');
-const uploadImageController = require('./controllers/uploadImageController');
+const uploadRecipeController = require('./controllers/uploadRecipeController');
 const registerController = require('./controllers/registerController');
 const loginController = require('./controllers/loginController');
 const authController = require('./controllers/authController');
@@ -45,7 +45,7 @@ app.get('/home', homeController);
 app.get('/recipes', recipeController);
 app.get('/user/auth', authController);
 
-app.post('/imageUpload', uploadImageController);
+app.post('/recipeUpload', uploadRecipeController);
 app.post('/register', registerController);
 app.post('/login', loginController);
 
