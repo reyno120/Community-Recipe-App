@@ -7,7 +7,7 @@ const recipeSchema = new mongoose.Schema({
     contributors: [{ type: String }],
     directions: [{ type: String }],
     ingredients: [{ type: String }],
-    date: { type: String },
+    amounts: [{ type: String }],
     tips: [{ type: String }],
     nutrition: {
         calories: { type: String},
@@ -18,7 +18,8 @@ const recipeSchema = new mongoose.Schema({
     time: { type: String },
     difficulty: { type: String },
     image: { type: String },
-    recipeID: { type: String }
+    recipeID: { type: String },
+    created: { type: String }
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema, 'recipes');

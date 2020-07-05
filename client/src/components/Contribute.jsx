@@ -51,11 +51,23 @@ class Contribute extends Component {
         this.setState({directions: newDirections});
     }
 
+    deleteDirection = () => {
+        var directions = this.state.directions;
+        directions.pop();
+        this.setState({directions: directions});
+    }
+
     handleTips = (index) => (e) => {
         const { tips } = this.state;
         const newTips = tips.slice(0);
         newTips[index] = e.target.value;
         this.setState({tips: newTips});
+    }
+
+    deleteTip = () => {
+        var tips = this.state.tips;
+        tips.pop();
+        this.setState({tips: tips});
     }
 
     handleIngredients = (e) => {
@@ -85,11 +97,15 @@ class Contribute extends Component {
         data.append('directions', this.state.directions);
         data.append('tips', this.state.tips);
         data.append('contributors', this.state.contributors);
+        data.append('created', new Date());
     
         axios.post('/recipeUpload', data, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
+        })
+        .then((res) => {
+            window.location.reload(false);
         });
     }
 
@@ -102,7 +118,6 @@ class Contribute extends Component {
     }
 
     render() { 
-        console.log(this.state.ingredients);
         return (  
             <div>
                 <Paper 
@@ -190,7 +205,7 @@ class Contribute extends Component {
                                 <Grid xs={4} align="right">
                                     <p>Beginner Sous Chef</p>
                                     <Radio
-                                        checked={this.state.radioValue === 'Easy'}
+                                        checked={this.state.difficulty === 'Easy'}
                                         value={"Easy"}
                                         onChange={this.onChange}
                                         name="difficulty"
@@ -200,7 +215,7 @@ class Contribute extends Component {
                                 <Grid xs={4} align="center">
                                     <p>Experienced Cook</p>
                                     <Radio
-                                        checked={this.state.radioValue === 'Medium'}
+                                        checked={this.state.difficulty === 'Medium'}
                                         value={"Medium"}
                                         onChange={this.onChange}
                                         name="difficulty"
@@ -209,7 +224,7 @@ class Contribute extends Component {
                                 <Grid xs={4} align="left">
                                     <p>Master Chef</p>
                                     <Radio
-                                        checked={this.state.radioValue === 'Hard'}
+                                        checked={this.state.difficulty === 'Hard'}
                                         value={"Hard"}
                                         onChange={this.onChange}
                                         name="difficulty"
@@ -227,19 +242,19 @@ class Contribute extends Component {
     
                                 {/*****************Directions*************/}
                                 <Grid xs={12}>
-                                    <Directions handleDirections={this.handleDirections}></Directions>
+                                    <Directions handleDirections={this.handleDirections} deleteDirection={this.deleteDirection}></Directions>
                                 </Grid>
 
 
                                 {/*****************Tips*************/}
                                 <Grid xs={12} style={{marginTop: '3em'}}>
-                                    <Tips handleTips={this.handleTips}></Tips>
+                                    <Tips handleTips={this.handleTips} deleteTip={this.deleteTip}></Tips>
                                 </Grid>
 
 
                                 {/*****************Contributos*************/}
                                 <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
-                                    <h2>Contributors: <TextField name="contributors" onChange="contributors" style={{width: '20em'}}></TextField></h2>
+                                    <h2>Contributors: <TextField name="contributors" onChange={this.onChange} style={{width: '20em'}}></TextField></h2>
                                 </Grid>
                             </Grid>
 

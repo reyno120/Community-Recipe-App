@@ -23,6 +23,7 @@ class Tips extends Component {
         var inputs = this.state.inputs;
         inputs.pop();
         this.setState({inputs: inputs});
+        this.props.deleteTip();
     }
 
     render() { 
