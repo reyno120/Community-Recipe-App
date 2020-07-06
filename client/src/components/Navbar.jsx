@@ -11,30 +11,21 @@ import User from './User';
 
 class Navbar extends Component {
     state = {  
-        loggedIn: false
+        component: ''
     };
 
     componentDidMount() {
-        axios.get('/user/auth')
-            .then((res) => {
-                if(res.data.loggedIn) {
-                    this.setState({loggedIn: true});
-                }
-            });
-            // error handling
-    }
+        const token = localStorage.getItem('token');
+        
+        if(token) {
+            this.setState({component: <User></User>});
+            // this.forceUpdate();
+        }
+        else {
+        this.setState({component: <Login></Login>});
+        }
 
-    User = () => {
-        if(!this.state.loggedIn) {
-            return <Login></Login>;
-          }
-          else {
-            return <User></User>;
-          }
-    }
 
-    setLoggedIn = () => {
-        this.setState({loggedIn: true});
     }
     
     render() { 
@@ -64,7 +55,7 @@ class Navbar extends Component {
                             </Link>
                         </Typography>
                     </Button>
-                    {this.User()}
+                    {this.state.component}
               </Toolbar>
             </AppBar>
           </div> 

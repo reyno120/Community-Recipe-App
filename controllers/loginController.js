@@ -1,4 +1,6 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
 const User = require('../models/User');
 
 module.exports = (req, res) => {
@@ -9,10 +11,22 @@ module.exports = (req, res) => {
         if(user) {
             bcrypt.compare(password, user.password, (error, match) => {
                 if(match) {
-                    req.session.userId = user._id;
-                    res.redirect('/home');
+                    jwt.sign({user: user}, keys.jwtKey, {expiresIn: '2h'}, (error, token) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        res.json({token: token, userFound: true});
+                    });
+                }
+                else {
+                    console.log("passwords don't match");
+                    res.send();
                 }
             });
+        }
+        else {  // no user found
+            console.log("no user found");
+            res.send();
         }
     });
 }

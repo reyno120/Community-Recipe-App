@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const keys = require('./config/keys');
-const expressSession = require('express-session');
 
 
 
@@ -28,24 +27,18 @@ const app = express();
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(expressSession ({
-    secret: keys.sessionSecret,
-    resave: true,       // maybe should look these up later
-    saveUninitialized: true,
-    path: '/home'
-}))
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-
+const verifyToken = require('./middleware/verifyToken');
 
 
 
 // HTTP Request
 app.get('/home', homeController);
 app.get('/recipes', recipeController);
-app.get('/user/auth', authController);
+app.get('/user/auth', verifyToken, authController);
 
-app.post('/recipeUpload', uploadRecipeController);
+app.post('/recipeUpload', verifyToken, uploadRecipeController);
 app.post('/register', registerController);
 app.post('/login', loginController);
 

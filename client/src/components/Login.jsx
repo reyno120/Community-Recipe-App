@@ -23,15 +23,21 @@ class Login extends Component {
     }
 
     handleLogin = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         const { username, password } = this.state;
         axios.post('/login', {username, password})
             .then((res) => {
                 if(!res.data.userFound) {
                     this.setState({loginError: 'block'})
                 }
+                else {
+                    localStorage.setItem('token', res.data.token);
+                    this.setState({open: false});
+                }
+            })
+            .catch(error => {
+                console.log(error);
             });
-            // error handling?
     }
 
     handleRegister = (e) => {
@@ -43,14 +49,13 @@ class Login extends Component {
                     this.setState({registerError: 'block'});
                 }
             });
-            // error handling?
     }
 
     onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
 
-    render() { 
+    render() {
         return (
             <div>
                 <Button 

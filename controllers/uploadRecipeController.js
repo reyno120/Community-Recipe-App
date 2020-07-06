@@ -1,12 +1,14 @@
 const path = require('path');
 const Recipe = require('../models/Recipe');
 const { v4: uuidv4 } = require('uuid');
+const { jwtKey } = require('../config/keys');
+const jwt = require('jsonwebtoken');
 
-function createRecipe(req, res, fileName) {
+function createRecipe(req, res, fileName, author) {
     Recipe.create({
         name: req.body.name,
         description: req.body.description,
-        author: 'temporary value',
+        author: author,
         contributors: req.body.contributors,
         directions: req.body.directions,
         ingredients: req.body.ingredients,
@@ -36,21 +38,29 @@ function createRecipe(req, res, fileName) {
 }
 
 module.exports = (req, res) => {
-    if(req.files !== null) {
-        const file = req.files.file;
-        const directory = path.join(__dirname, '../client/public/images/', file.name);
-
-        file.mv(directory, error => {
-            if(error) {
-                console.error(error);
-                return res.status(500).send(error);
+    jwt.verify(req.token, jwtKey, (error, decoded) => {
+        if(error) {
+            res.status(403);
+        }
+        else {
+            console.log(decoded);
+            if(req.files !== null) {
+                const file = req.files.file;
+                const directory = path.join(__dirname, '../client/public/images/', file.name);
+        
+                file.mv(directory, error => {
+                    if(error) {
+                        console.error(error);
+                        return res.status(500).send(error);
+                    }
+            
+                    // var filePath = path.join('../../public/images', file.name);
+                    createRecipe(req, res, file.name, decoded.user.username);
+                });
             }
-    
-            // var filePath = path.join('../../public/images', file.name);
-            createRecipe(req, res, file.name);
-        });
-    }
-    else {
-        createRecipe(req, res, '');
-    }
+            else {
+                createRecipe(req, res, '', decoded.user.username);
+            }
+        }
+    });
 }
