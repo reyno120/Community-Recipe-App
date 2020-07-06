@@ -27,7 +27,7 @@ class Login extends Component {
         const { username, password } = this.state;
         axios.post('/login', {username, password})
             .then((res) => {
-                if(!res.data.userFound) {
+                if(!res.data.token) {
                     this.setState({loginError: 'block'})
                 }
                 else {
@@ -41,11 +41,16 @@ class Login extends Component {
     }
 
     handleRegister = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         const { registerUser, registerPass, registerEmail } = this.state;
         axios.post('/register', {registerUser, registerPass, registerEmail})
             .then((res) => {
-                if(res.data.userExists) {
+                if(!res.data.userExists) {
+                    localStorage.setItem('token', res.data.token);
+                    this.setState({open: false});
+                }
+                else {
+                    console.log("test");
                     this.setState({registerError: 'block'});
                 }
             });

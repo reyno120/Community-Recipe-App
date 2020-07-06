@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import { ReactComponent as Broccoli } from '../images/broccoli.svg';
 import { Link } from 'react-router-dom';
 import Login from './Login';
-import axios from 'axios';
 import User from './User';
 
 class Navbar extends Component {
@@ -19,13 +18,10 @@ class Navbar extends Component {
         
         if(token) {
             this.setState({component: <User></User>});
-            // this.forceUpdate();
         }
         else {
         this.setState({component: <Login></Login>});
         }
-
-
     }
     
     render() { 

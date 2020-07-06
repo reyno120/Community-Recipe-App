@@ -15,7 +15,7 @@ module.exports = (req, res) => {
                         if(error) {
                             console.log(error);
                         }
-                        res.json({token: token, userFound: true});
+                        res.json({token: token});
                     });
                 }
                 else {

@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const { jwtKey } = require('../config/keys');
+const jwt = require('jsonwebtoken');
 
 module.exports = (req, res) => {
     User.create({
@@ -9,9 +11,18 @@ module.exports = (req, res) => {
     (error, user) => {
         if(error) {
             console.log(error);
+            res.json({userExists: true});
         }
         else {
-            req.session.userId = user._id;
+            jwt.sign({user: user}, jwtKey, {expiresIn: '2h'}, (error, token) => {
+                if(error) {
+                    console.log(error);
+                    res.json({userExists: true});
+                }
+                else {
+                    res.json({token: token, userExists: false});
+                }
+            });    
         }
     });
 }
