@@ -29,6 +29,7 @@ const ingredients = [
     { value: 'red lentils', label: 'red lentils'},
     { value: 'yellow lentils', label: 'yellow lentils'},
     { value: 'black lentils', label: 'black lentils'},
+    { value: 'brown lentils', label: 'brown lentils'},
     { value: 'chickpea flour', label: 'chickpea flour'},
     { value: 'chipotle chilies', label: 'chipotle chilies'},
     { value: 'date sugar', label: 'date sugar'},
@@ -99,6 +100,7 @@ const ingredients = [
     { value: 'onions', label: 'onions'},
     { value: 'red onions', label: 'red onions'},
     { value: 'sweet onions', label: 'sweet onions'},
+    { value: 'green onions', label: 'green onions'},
     { value: 'garlic', label: 'garlic'},
     { value: 'carrots', label: 'carrots'},
     { value: 'potatoes', label: 'potatoes'},
@@ -180,6 +182,7 @@ const ingredients = [
     { value: 'mint', label: 'mint'},
     { value: 'tarragon', label: 'tarragon'},
     { value: 'chili powder', label: 'chili powder'},
+    { value: 'yellow curry powder', label: 'yellow curry powder'},
     { value: 'poblano pepper', label: 'poblano pepper'},
     { value: 'plant milk', label: 'plant milk'},
     { value: 'plant milk (unsweetened)', label: 'plant milk (unsweetened)'},
@@ -208,6 +211,14 @@ const ingredients = [
     { value: 'hemp milk', label: 'hemp milk'},
     { value: 'hemp milk (unsweetened)', label: 'hemp milk (unsweetened)'},
     { value: 'water', label: 'water'},
+    { value: 'soy sauce', label: 'soy sauce'},
+    { value: 'dijon mustard', label: 'dijon mustard'},
+    { value: 'vegan worcestershire sauce', label: 'vegan worcestershire sauce'},
+    { value: 'brown sugar', label: 'brown sugar'},
+    { value: 'vegetable stock', label: 'vegetable stock'},
+    { value: 'peanut sauce', label: 'peanut sauce'},
+    { value: 'tortilla chips', label: 'tortilla chips'},
+    { value: 'salsa', label: 'salsa'},
 ];
 
 export default ingredients;

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 class Cards extends Component {
     state = {  
-        popularRecipes: []
+        recipes: []
     };
 
     componentDidMount() {
@@ -16,12 +16,12 @@ class Cards extends Component {
             }
         })
         .then(res => {
-            var recipes = this.state.popularRecipes;
+            var recipes = this.state.recipes;
             recipes.push(res.data.recipes[0]);
             recipes.push(res.data.recipes[1]);
             recipes.push(res.data.recipes[2]);
             recipes.push(res.data.recipes[3]);
-            this.setState({popularRecipes: recipes});
+            this.setState({recipes: recipes});
         })
         .catch(error => {
             console.log(error);
@@ -48,7 +48,7 @@ class Cards extends Component {
                 }}>
                 </div>
                 <Grid container spacing={2} style={{marginLeft: '.5em'}}>
-                    {this.state.popularRecipes.map((details, index) => (
+                    {this.state.recipes.map((details, index) => (
                         <Grid item xs={3}>
                             <SingleCard 
                                 key={index} 
