@@ -8,7 +8,8 @@ class Directions extends Component {
         super(props);
         this.state = {
             directions: [],
-            inputs: []
+            inputs: [],
+            step: ''
         }
     }
 
@@ -63,13 +64,13 @@ class Directions extends Component {
                         })}
 
                         <p style={{fontWeight: "bold"}}>Step 1: 
-                                    <TextField onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    <TextField name="step" onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                         </p>
 
                         {this.state.inputs.map((input, index) => {
                             return (
                                 <p style={{fontWeight: "bold"}}>Step {index + 2}: 
-                                    <TextField onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    <TextField name="step" onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                                 </p>
                             );
                         })}

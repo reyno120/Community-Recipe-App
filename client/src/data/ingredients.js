@@ -79,11 +79,14 @@ const ingredients = [
     { value: 'lasagna (whole-grain)', label: 'lasagna (whole-grain)'},
     { value: 'soba', label: 'soba'},
     { value: 'soba (whole-grain)', label: 'soba (whole-grain)'},
+    { value: 'elbow macaroni', label: 'elbow macaroni'},
+    { value: 'elbow macaroni (whole-grain)', label: 'elbow macaroni (whole-grain)'},
     { value: 'roasted red peppers, jarred', label: 'roasted red peppers, jarred'},
     { value: 'tomatoes', label: 'tomatoes'},
     { value: 'tomatoes (diced, canned)', label: 'tomatoes (diced, canned)'},
     { value: 'tomatoes (whole, canned)', label: 'tomatoes (whole, canned)'},
     { value: 'tomato paste', label: 'tomato paste'},
+    { value: 'fire roasted tomatoes', label: 'fire roasted tomatoes'},
     { value: 'marinara sauce', label: 'marinara sauce'},
     { value: 'tortillas', label: 'tortillas'},
     { value: 'tortillas (whole-grain)', label: 'tortillas (whole-grain)'},
@@ -204,6 +207,7 @@ const ingredients = [
     { value: 'cashew milk (unsweetened)', label: 'cashew milk (unsweetened)'},
     { value: 'hemp milk', label: 'hemp milk'},
     { value: 'hemp milk (unsweetened)', label: 'hemp milk (unsweetened)'},
+    { value: 'water', label: 'water'},
 ];
 
 export default ingredients;

@@ -10,6 +10,7 @@ function createRecipe(req, res, fileName, author) {
         description: req.body.description,
         author: author,
         contributors: req.body.contributors,
+        source: req.body.source,
         directions: req.body.directions,
         ingredients: req.body.ingredients,
         amounts: req.body.amounts,
@@ -30,10 +31,8 @@ function createRecipe(req, res, fileName, author) {
         if(error) {
             console.log(error);
         }
-
-        console.log(recipe);
-
-        res.redirect('/');
+        // res.redirect('/');
+        res.send();
     });
 }
 
@@ -43,7 +42,6 @@ module.exports = (req, res) => {
             res.status(403);
         }
         else {
-            console.log(decoded);
             if(req.files !== null) {
                 const file = req.files.file;
                 const directory = path.join(__dirname, '../client/public/images/', file.name);

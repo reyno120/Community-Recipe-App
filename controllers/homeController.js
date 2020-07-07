@@ -45,8 +45,11 @@ const Recipes = require('../models/Recipe');
 module.exports = (req, res) => {
     Recipes.find({}, (error, recipes) => {
         if (error) throw error;
-        // console.log(req.query);
-        res.json({recipes: recipes});
+        var filteredRecipes = [];
+        for(var i = 0; i < 4; i++) {
+            filteredRecipes.push(recipes[i]);
+        }
+        res.json({recipes: filteredRecipes});
     });
 }
 

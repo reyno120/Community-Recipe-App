@@ -28,9 +28,12 @@ class ContributeRecipe extends Component {
         directions: [],
         tips: [],
         contributors: '',
+        source: '',
         selectedIngredient: '',
         nutritionDisplay: 'none',
-        dispButton: 'block'
+        dispButton: 'block',
+        displaySuccess: 'none',
+        displayContribute: 'block'
     };
 
     onChange = (e) => {
@@ -83,6 +86,7 @@ class ContributeRecipe extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData();
+
         data.append('file', this.state.file);
         data.append('name', this.state.name);
         data.append('description', this.state.description);
@@ -90,14 +94,27 @@ class ContributeRecipe extends Component {
         data.append('carbs', this.state.carbs);
         data.append('fat', this.state.fat);
         data.append('protein', this.state.protein);
-        data.append('ingredients', this.state.ingredients);
-        data.append('amounts', this.state.amounts);
         data.append('difficulty', this.state.difficulty);
         data.append('time', this.state.time);
-        data.append('directions', this.state.directions);
-        data.append('tips', this.state.tips);
         data.append('contributors', this.state.contributors);
+        data.append('source', this.state.source);
         data.append('created', new Date());
+
+        for(var i = 0; i < this.state.ingredients.length; i++) {
+            data.append('ingredients', this.state.ingredients[i]);
+        }
+
+        for(var i = 0; i < this.state.amounts.length; i++) {
+            data.append('amounts', this.state.amounts[i]);
+        }
+
+        for(var i = 0; i < this.state.directions.length; i++) {
+            data.append('directions', this.state.directions[i]);
+        }
+
+        for(var i = 0; i < this.state.tips.length; i++) {
+            data.append('tips', this.state.tips[i]);
+        }
     
         axios.post('/recipeUpload', data, {
           headers: {
@@ -106,7 +123,8 @@ class ContributeRecipe extends Component {
           }
         })
         .then((res) => {
-            window.location.reload(false);
+            this.setState({displaySuccess: 'block'});
+            this.setState({displayContribute: 'none'});
         });
     }
 
@@ -121,12 +139,27 @@ class ContributeRecipe extends Component {
     render() { 
         return (  
             <div>
+                <Paper
+                    elevation={3}
+                    style={{
+                        backgroundColor: 'rgb(228, 221, 211)',
+                        width: '1366px',
+                        margin: 'auto',
+                        display: this.state.displaySuccess
+                    }}>
+                        <h2 style={{
+                                color: 'rgb(25, 26, 23)', 
+                                textAlign: 'center', 
+                                fontSize: '36px'
+                            }}>Your recipe has been successfully posted!</h2>
+                </Paper>
                 <Paper 
                     elevation={3} 
                     style={{
                         backgroundColor: 'rgb(228, 221, 211)',
                         width: '1366px',
-                        margin: 'auto'
+                        margin: 'auto',
+                        display: this.state.displayContribute
                     }}>
                         <h1 style={{
                                 color: 'rgb(25, 26, 23)',
@@ -253,10 +286,16 @@ class ContributeRecipe extends Component {
                                 </Grid>
 
 
-                                {/*****************Contributos*************/}
+                                {/*****************Contributors*************/}
                                 <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
                                     <h2>Contributors: <TextField name="contributors" onChange={this.onChange} style={{width: '20em'}}></TextField></h2>
                                 </Grid>
+                            </Grid>
+
+
+                                {/* **************Source**************** */}
+                            <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
+                                <h2>Source: <TextField name='source' onChange={this.onChange} style={{width: '23em'}}></TextField></h2>
                             </Grid>
 
 

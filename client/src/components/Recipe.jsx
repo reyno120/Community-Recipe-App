@@ -61,7 +61,7 @@ class Recipe extends Component {
                                     <h2>Ingredients</h2>
                                     <ul style={{listStylePosition: 'inside'}}>
                                         {details.ingredients.map((value, index) => {
-                                            return <li key={index}>{value}</li>
+                                            return <li key={index}>{details.amounts[index]} {value}</li>
                                         })}
                                     </ul>
                                 </Grid>
@@ -78,11 +78,11 @@ class Recipe extends Component {
                                 fontWeight: '800', 
                                 fontSize: '24px', 
                                 textDecoration: 'underline',
-                                marginLeft: '7em'
+                                marginLeft: '2em'
                                 }}>Directions:</h2>
-                            <ul style={{marginLeft: '12em', listStyleType: 'decimal'}}>
+                            <ul style={{marginLeft: '2em', marginRight: '2em', listStyleType: 'decimal'}}>
                                 {details.directions.map((value, index) => {
-                                    return <li key={index}>{value}</li>
+                                    return <li style={{marginBottom: '1em'}} key={index}>{value}</li>
                                 })}
                             </ul>
                             <Grid container>
