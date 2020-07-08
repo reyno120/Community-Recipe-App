@@ -7,6 +7,7 @@ import { ReactComponent as Broccoli } from '../images/broccoli.svg';
 import { Link } from 'react-router-dom';
 import Login from './Login';
 import User from './User';
+import axios from 'axios';
 
 class Navbar extends Component {
     state = {  
@@ -15,12 +16,25 @@ class Navbar extends Component {
 
     componentDidMount() {
         const token = localStorage.getItem('token');
-        
+
         if(token) {
-            this.setState({component: <User></User>});
+            axios.get('/user/auth', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then((res) => {
+                if(res.data.expired) {
+                    localStorage.removeItem('token');
+                    this.setState({component: <Login></Login>});
+                }
+                else {
+                    this.setState({component: <User></User>});
+                }
+            })
         }
         else {
-        this.setState({component: <Login></Login>});
+            this.setState({component: <Login></Login>});
         }
     }
     

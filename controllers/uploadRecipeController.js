@@ -39,13 +39,13 @@ function createRecipe(req, res, fileName, author) {
 module.exports = (req, res) => {
     jwt.verify(req.token, jwtKey, (error, decoded) => {
         if(error) {
-            res.status(403);
+            res.status(403).json({expired: true});
         }
         else {
             if(req.files !== null) {
                 var date = new Date();
                 req.files.file.name = date.getTime() + req.files.file.name;
-                
+
                 const file = req.files.file;
                 const directory = path.join(__dirname, '../client/public/images/', file.name);
         

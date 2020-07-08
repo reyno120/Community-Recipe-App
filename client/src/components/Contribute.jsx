@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ContributeRecipe from './contribute-sub-components/ContributeRecipe';
+import axios from 'axios';
 
 class Contribute extends Component {
     state = {  
@@ -8,6 +9,7 @@ class Contribute extends Component {
 
     componentDidMount() {
         const userToken = localStorage.getItem('token');
+        
         if(userToken) {
             this.setState({component: <ContributeRecipe></ContributeRecipe>});
         }

@@ -5,12 +5,11 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res) => {
     jwt.verify(req.token, jwtKey, (error, decoded) => {
         if(error) {
-            console.log(error);
-            res.send();
+            // console.log(error);
+            res.json({expired: true});
         }
         else {
-            console.log(decoded);
-            res.json({loggedIn: true});
+            res.json({expired: false});
         }
     });
 }
