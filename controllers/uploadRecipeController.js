@@ -23,7 +23,7 @@ function createRecipe(req, res, fileName, author) {
         },
         time: req.body.time,
         difficulty: req.body.difficulty,
-        image: '/images/' + fileName,
+        image: '/images/'+ fileName,
         recipeID: uuidv4(),
         created: req.body.created
     },
@@ -43,6 +43,9 @@ module.exports = (req, res) => {
         }
         else {
             if(req.files !== null) {
+                var date = new Date();
+                req.files.file.name = date.getTime() + req.files.file.name;
+                
                 const file = req.files.file;
                 const directory = path.join(__dirname, '../client/public/images/', file.name);
         
