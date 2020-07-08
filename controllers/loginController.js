@@ -11,7 +11,7 @@ module.exports = (req, res) => {
         if(user) {
             bcrypt.compare(password, user.password, (error, match) => {
                 if(match) {
-                    jwt.sign({user: user}, keys.jwtKey, {expiresIn: '5s'}, (error, token) => {
+                    jwt.sign({user: user}, keys.jwtKey, {expiresIn: '3h'}, (error, token) => {
                         if(error) {
                             console.log(error);
                         }
