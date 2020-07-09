@@ -45,15 +45,14 @@ class SingleCard extends Component {
     
       // See which recipes user has bookmarked, bookmarked recipes are stored,
       // with each user in user collection
-      // avoiding doing it in here cause that would result in a lot of get request
-      // axios.get('user/bookmarks', {
-      //   headers: {
-      //     'Authorization': 'Bearer ' + localStorage.getItem('token')
-      //   }
-      // })
-      // .then((res) => {
-      //   this.setState({bookmarks: res.data.bookmarks});
-      // });
+      var bookmarksString = sessionStorage.getItem('bookmarks');
+      var bookmarks = bookmarksString.split(',');
+      bookmarks.splice(0, 1);   // first element is empty, so remove it
+      
+      if(bookmarks.includes(this.props.recipeID)) {
+        this.setState({bookmarked: true});
+        this.setState({bookmarkColor: 'blue'});
+      }
     }
   }
 
@@ -90,7 +89,7 @@ class SingleCard extends Component {
   handleBookmark = () => {
     this.setState({bookmarkColor: 'blue'});
 
-    if(sessionStorage.getItem('token') || !this.state.bookmarked) {
+    if(sessionStorage.getItem('token') && !this.state.bookmarked) {
       axios.post('/recipe/bookmark', {
         recipeID: this.props.recipeID
       },
@@ -98,6 +97,12 @@ class SingleCard extends Component {
         headers: {
           'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         }
+      })
+      .then((res) => {
+        var bookmarks = sessionStorage.getItem('bookmarks');
+        bookmarks = bookmarks + ',' + this.props.recipeID;
+        sessionStorage.setItem('bookmarks', bookmarks);
+        this.setState({bookmarked: true});
       });
     }
 
