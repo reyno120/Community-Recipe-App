@@ -5,6 +5,8 @@ import Discover from './components/Discover';
 import Contribute from './components/Contribute';
 import Recipe from './components/Recipe';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import './App.css';
 
 class App extends Component {

@@ -16,7 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide email'],
         unique: true
-    }
+    },
+    bookmarks: [{
+        type: String
+    }]
 });
 
 userSchema.plugin(uniqueValidator);

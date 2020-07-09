@@ -26,11 +26,15 @@ class SingleCard extends Component {
       liked: false,
       likeCount: this.props.likes,
       shareColor: 'gray',
-      bookmarkColor: 'gray'
+      bookmarkColor: 'gray',
+      bookmarked: false,
+      bookmarks: []
     }
   }
 
   componentDidMount() {
+    // See which recipes user has already liked, liked recipes are stored
+    // in recipes collection
     var username = localStorage.getItem('username');
 
     if(username) {
@@ -38,6 +42,18 @@ class SingleCard extends Component {
         this.setState({liked: true});
         this.setState({likeColor: 'red'});
       }
+    
+      // See which recipes user has bookmarked, bookmarked recipes are stored,
+      // with each user in user collection
+      // avoiding doing it in here cause that would result in a lot of get request
+      // axios.get('user/bookmarks', {
+      //   headers: {
+      //     'Authorization': 'Bearer ' + localStorage.getItem('token')
+      //   }
+      // })
+      // .then((res) => {
+      //   this.setState({bookmarks: res.data.bookmarks});
+      // });
     }
   }
 
@@ -72,7 +88,19 @@ class SingleCard extends Component {
   }
 
   handleBookmark = () => {
-    this.setState({bookmarkColor: 'blue'})
+    this.setState({bookmarkColor: 'blue'});
+
+    if(localStorage.getItem('token') || !this.state.bookmarked) {
+      axios.post('/recipe/bookmark', {
+        recipeID: this.props.recipeID
+      },
+      {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      });
+    }
+
   }
 
   render() { 

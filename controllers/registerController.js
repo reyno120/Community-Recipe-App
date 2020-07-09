@@ -6,7 +6,8 @@ module.exports = (req, res) => {
     User.create({
         username: req.body.registerUser,
         password: req.body.registerPass,
-        email: req.body.registerEmail
+        email: req.body.registerEmail,
+        bookmarks: []
     },
     (error, user) => {
         if(error) {
