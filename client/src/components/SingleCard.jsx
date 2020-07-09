@@ -35,7 +35,7 @@ class SingleCard extends Component {
   componentDidMount() {
     // See which recipes user has already liked, liked recipes are stored
     // in recipes collection
-    var username = localStorage.getItem('username');
+    var username = sessionStorage.getItem('username');
 
     if(username) {
       if(this.props.likedBy.includes(username, 0)) {
@@ -60,7 +60,7 @@ class SingleCard extends Component {
   handleLike = () => {
     if(!this.state.liked) {
       this.setState({likeColor: 'red'});
-      var username = localStorage.getItem('username');
+      var username = sessionStorage.getItem('username');
 
       if(username) {
         var usersLikedRecipe = this.props.likedBy;
@@ -90,13 +90,13 @@ class SingleCard extends Component {
   handleBookmark = () => {
     this.setState({bookmarkColor: 'blue'});
 
-    if(localStorage.getItem('token') || !this.state.bookmarked) {
+    if(sessionStorage.getItem('token') || !this.state.bookmarked) {
       axios.post('/recipe/bookmark', {
         recipeID: this.props.recipeID
       },
       {
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         }
       });
     }

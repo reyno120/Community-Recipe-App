@@ -7,7 +7,7 @@ class Contribute extends Component {
     }
 
     componentDidMount() {
-        const userToken = localStorage.getItem('token');
+        const userToken = sessionStorage.getItem('token');
         
         if(userToken) {
             this.setState({component: <ContributeRecipe></ContributeRecipe>});

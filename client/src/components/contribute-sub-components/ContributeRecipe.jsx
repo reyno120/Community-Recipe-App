@@ -119,7 +119,7 @@ class ContributeRecipe extends Component {
         axios.post('/recipeUpload', data, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
           }
         })
         .then((res) => {

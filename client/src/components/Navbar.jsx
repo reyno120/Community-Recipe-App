@@ -15,7 +15,7 @@ class Navbar extends Component {
     };
 
     componentDidMount() {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
 
         if(token) {
             axios.get('/user/auth', {
@@ -25,7 +25,7 @@ class Navbar extends Component {
             })
             .then((res) => {
                 if(res.data.expired) {
-                    localStorage.removeItem('token');
+                    sessionStorage.removeItem('token');
                     this.setState({component: <Login></Login>});
                 }
                 else {

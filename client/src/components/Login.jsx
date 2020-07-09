@@ -31,8 +31,8 @@ class Login extends Component {
                     this.setState({loginError: 'block'})
                 }
                 else {
-                    localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('username', res.data.username);
+                    sessionStorage.setItem('token', res.data.token);
+                    sessionStorage.setItem('username', res.data.username);
                     this.setState({open: false});
                     window.location.reload();
                 }
@@ -48,8 +48,8 @@ class Login extends Component {
         axios.post('/register', {registerUser, registerPass, registerEmail})
             .then((res) => {
                 if(!res.data.userExists) {
-                    localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('username', res.data.username);
+                    sessionStorage.setItem('token', res.data.token);
+                    sessionStorage.setItem('username', res.data.username);
                     this.setState({open: false});
                     window.location.reload();
                 }
