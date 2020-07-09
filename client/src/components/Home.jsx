@@ -6,7 +6,7 @@ class Home extends Component {
     render() { 
         return (
             <div> 
-                <h1>Community Vegan Recipes</h1>
+                <h1>Community Plant-Based Recipes</h1>
                 <CenterCard></CenterCard>
             </div> 
         );

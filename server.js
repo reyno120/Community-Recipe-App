@@ -15,6 +15,7 @@ const uploadRecipeController = require('./controllers/uploadRecipeController');
 const registerController = require('./controllers/registerController');
 const loginController = require('./controllers/loginController');
 const authController = require('./controllers/authController');
+const likeController = require('./controllers/likeController');
 
 
 
@@ -42,6 +43,7 @@ app.get('/user/auth', verifyToken, authController);
 app.post('/recipeUpload', verifyToken, uploadRecipeController);
 app.post('/register', registerController);
 app.post('/login', loginController);
+app.post('/recipe/like', verifyToken, likeController);
 
 
 

@@ -24,6 +24,8 @@ function createRecipe(req, res, fileName, author) {
         time: req.body.time,
         difficulty: req.body.difficulty,
         image: '/images/'+ fileName,
+        likes: 0,
+        likedBy: [''],
         recipeID: uuidv4(),
         created: req.body.created
     },

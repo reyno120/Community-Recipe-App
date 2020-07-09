@@ -32,6 +32,7 @@ class Login extends Component {
                 }
                 else {
                     localStorage.setItem('token', res.data.token);
+                    localStorage.setItem('username', res.data.username);
                     this.setState({open: false});
                     window.location.reload();
                 }
@@ -48,6 +49,7 @@ class Login extends Component {
             .then((res) => {
                 if(!res.data.userExists) {
                     localStorage.setItem('token', res.data.token);
+                    localStorage.setItem('username', res.data.username);
                     this.setState({open: false});
                     window.location.reload();
                 }

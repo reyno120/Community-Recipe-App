@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,99 +15,108 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 300,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
+class SingleCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {  
+      likeColor: 'gray',
+      liked: false,
+      likeCount: this.props.likes,
+      shareColor: 'gray',
+      bookmarkColor: 'gray'
+    }
+  }
 
-export default function RecipeReviewCard(props) {
-  const classes = useStyles();
-  const [expanded] = React.useState(false);
+  componentDidMount() {
+    var username = localStorage.getItem('username');
 
-  return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={<Link to={`/recipes/${props.recipeID}`}>{props.name}</Link>}
-        subheader={props.author}
-      />
-      <CardMedia
-        className={classes.media}
-        image={props.image}
-        title={props.name}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {props.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton style={{marginLeft: 'auto'}}>
-            <BookmarkIcon></BookmarkIcon>
-        </IconButton>
-      </CardActions>
-      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse> */}
-    </Card>
-  );
+    if(username) {
+      if(this.props.likedBy.includes(username, 0)) {
+        this.setState({liked: true});
+        this.setState({likeColor: 'red'});
+      }
+    }
+  }
+
+  handleLike = () => {
+    if(!this.state.liked) {
+      this.setState({likeColor: 'red'});
+      var username = localStorage.getItem('username');
+
+      if(username) {
+        var usersLikedRecipe = this.props.likedBy;
+        usersLikedRecipe.push(username);
+        var likes = this.state.likeCount;
+        likes++;
+        this.setState({likeCount: likes});
+
+        axios.post('/recipe/like', {
+          recipeID: this.props.recipeID, 
+          likedBy: usersLikedRecipe,
+          likes: likes
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        });
+      }
+    }
+  }
+
+  handleShare = () => {
+    this.setState({shareColor: 'blue'});
+  }
+
+  handleBookmark = () => {
+    this.setState({bookmarkColor: 'blue'})
+  }
+
+  render() { 
+      return (  
+      <Card style={{maxWidth: 300}}>
+          <CardHeader
+              avatar={
+                <Avatar aria-label="recipe" style={{backgroundColor: red[500]}}>
+                  R
+                </Avatar>
+              }
+              action={
+                <IconButton aria-label="settings">
+                  <MoreVertIcon />
+                </IconButton>
+              }
+              title={<Link to={`/recipes/${this.props.recipeID}`}>{this.props.name}</Link>}
+              subheader={this.props.author}
+            />
+            <CardMedia
+              style={{height: 0, paddingTop: '56.25%'}}
+              image={this.props.image}
+              title={this.props.name}
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {this.props.description}
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon onClick={this.handleLike} style={{color: this.state.likeColor}} />
+                <div style={{fontSize: '16px', color: 'gray'}}>&nbsp;({this.state.likeCount})</div>
+              </IconButton>
+              <IconButton aria-label="share">
+                <ShareIcon onClick={this.handleShare} style={{color: this.state.shareColor}} />
+              </IconButton>
+              <IconButton style={{marginLeft: 'auto'}}>
+                  <BookmarkIcon onClick={this.handleBookmark} style={{color: this.state.bookmarkColor}}></BookmarkIcon>
+              </IconButton>
+            </CardActions>
+        </Card>
+      );
+    }
 }
+ 
+export default SingleCard;

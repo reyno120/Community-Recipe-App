@@ -11,6 +11,7 @@ class User extends Component {
 
     handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('username');
         window.location.reload();
     }
 

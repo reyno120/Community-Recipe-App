@@ -20,6 +20,7 @@ const recipeSchema = new mongoose.Schema({
     difficulty: { type: String },
     image: { type: String },
     likes: { type: Number },
+    likedBy: [{ type: String }],
     recipeID: { type: String },
     created: { type: String }
 });

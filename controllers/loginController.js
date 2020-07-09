@@ -15,7 +15,7 @@ module.exports = (req, res) => {
                         if(error) {
                             console.log(error);
                         }
-                        res.json({token: token});
+                        res.json({token: token, username: user.username});
                     });
                 }
                 else {

@@ -20,7 +20,7 @@ module.exports = (req, res) => {
                     res.json({userExists: true});
                 }
                 else {
-                    res.json({token: token, userExists: false});
+                    res.json({token: token, userExists: false, username: user.username});
                 }
             });    
         }
