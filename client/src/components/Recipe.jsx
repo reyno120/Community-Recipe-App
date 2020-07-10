@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 class Recipe extends Component {
     state = {  
-        recipe: []
+        recipe: [],
+        likeColor: 'gray',
+        liked: false,
+        likeCount: 0,
+        bookmarkColor: 'gray',
+        bookmarked: false
     };
 
     componentDidMount() {
@@ -16,10 +24,99 @@ class Recipe extends Component {
         })
         .then(res => {
             this.setState({recipe: res.data.recipe});
+            this.setState({likeCount: res.data.recipe[0].likes});
+
+            var username = sessionStorage.getItem('username');
+            if(username) {
+                if(this.state.recipe[0].likedBy.includes(username, 0)) {
+                    this.setState({likeColor: 'red'});
+                    this.setState({liked: true});
+                }
+
+                var bookmarksString = sessionStorage.getItem('bookmarks');
+                var bookmarks = bookmarksString.split(',');
+                if(bookmarks.includes(this.state.recipe[0].recipeID, 0)) {
+                    this.setState({bookmarkColor: 'blue'});
+                    this.setState({bookmarked: true});
+                }
+            }
         })
         .catch(error => {
             console.log(error);
         });
+    }
+
+    handleLike = () => {
+        if(!this.state.liked) {
+          this.setState({likeColor: 'red'});
+          var username = sessionStorage.getItem('username');
+    
+          if(username) {
+            var usersLikedRecipe = this.state.recipe[0].likedBy;
+            usersLikedRecipe.push(username);
+            var likes = this.state.likeCount;
+            likes++;
+            this.setState({likeCount: likes});
+    
+            axios.post('/recipe/like', {
+              recipeID: this.state.recipe[0].recipeID, 
+              likedBy: usersLikedRecipe,
+              likes: likes
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+              }
+            });
+          }
+        }
+    }
+
+
+      handleBookmark = () => {
+        if(sessionStorage.getItem('token')) {
+          if(!this.state.bookmarked) {  // add to bookmarks if recipe is not already bookmarked
+            this.setState({bookmarkColor: 'blue'});
+    
+            axios.post('/recipe/bookmark', {
+              recipeID: this.state.recipe[0].recipeID,
+              action: 'add'
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+              }
+            })
+            .then((res) => {
+              var bookmarks = sessionStorage.getItem('bookmarks');
+              bookmarks = bookmarks + ',' + this.state.recipe[0].recipeID;
+              sessionStorage.setItem('bookmarks', bookmarks);
+              this.setState({bookmarked: true});
+            });
+          }
+          else {  //remove from bookmarks if already bookmarked
+            this.setState({bookmarkColor: 'gray'});
+    
+            var bookmarksString = sessionStorage.getItem('bookmarks');
+            var bookmarks = bookmarksString.split(',');
+            var index = bookmarks.indexOf(this.state.recipe[0].recipeID);
+            bookmarks.splice(index, 1);
+            sessionStorage.setItem('bookmarks', bookmarks);
+            this.setState({bookmarked: false});
+    
+            console.log(bookmarks);
+            console.log("posting");
+            axios.post('/recipe/bookmark', {
+              bookmarks: bookmarks,
+              action: 'remove'
+            }, 
+            {
+              headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+              }
+            });
+          }
+        }
     }
 
     render() {
@@ -45,9 +142,18 @@ class Recipe extends Component {
                                 <p style={{display: 'inline-block', fontSize: '24px', marginLeft: '3em' , marginBottom: '1em'}}>Time: {details.time}</p>
                             </div>
                             <img src={details.image} alt="temporary" style={{width: '40%', marginLeft: '25em', display: 'block'}} />
+                            <div style={{textAlign: 'center', marginTop: '1em'}}>
+                                <IconButton>
+                                    <FavoriteIcon style={{color: this.state.likeColor}} onClick={this.handleLike} />
+                                </IconButton>
+                                <p style={{marginLeft: '-.5em', marginRight: '1em', fontSize: '18px', display: 'inline'}}>&nbsp;({this.state.likeCount})</p>
+                                <IconButton>
+                                    <BookmarkIcon style={{color: this.state.bookmarkColor}} onClick={this.handleBookmark} />
+                                </IconButton>
+                            </div>
                             <p style={{
                                 fontSize: '18px',
-                                margin: '3em 10em 3em 10em',  
+                                margin: '1em 10em 3em 10em',  
                                 textAlign: 'center',
                                 }}>{details.description}</p>
                             <Grid container>

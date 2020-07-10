@@ -27,8 +27,7 @@ class SingleCard extends Component {
       likeCount: this.props.likes,
       shareColor: 'gray',
       bookmarkColor: 'gray',
-      bookmarked: false,
-      bookmarks: []
+      bookmarked: false
     }
   }
 
@@ -75,7 +74,7 @@ class SingleCard extends Component {
         },
         {
           headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
           }
         });
       }
@@ -130,7 +129,6 @@ class SingleCard extends Component {
         });
       }
     }
-
   }
 
   render() { 
