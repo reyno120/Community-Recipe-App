@@ -8,20 +8,36 @@ module.exports = (req, res) => {
             res.status(403);
         }
         else {
-            User.updateOne({
-                username: decoded.user.username
-            },
-            {
-                $push: {
-                    bookmarks: req.body.recipeID
-                }
-            }, 
-            (error, user) => {
-                if(error) {
-                    console.log(error);
-                };
-                res.send();
-            });
+            if(req.body.action === 'add') {
+                User.updateOne({
+                    username: decoded.user.username
+                },
+                {
+                    $push: {
+                        bookmarks: req.body.recipeID
+                    }
+                }, 
+                (error, user) => {
+                    if(error) {
+                        console.log(error);
+                    };
+                    res.send();
+                });
+            }
+            else if(req.body.action === 'remove') {
+                User.updateOne({
+                    username: decoded.user.username
+                },
+                {
+                    bookmarks: req.body.bookmarks
+                }, 
+                (error, user) => {
+                    if(error) {
+                        console.log(error);
+                    };
+                    res.send();
+                });
+            }
         }
     });
 }

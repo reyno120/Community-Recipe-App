@@ -45,7 +45,7 @@ app.post('/recipeUpload', verifyToken, uploadRecipeController);
 app.post('/register', registerController);
 app.post('/login', loginController);
 app.post('/recipe/like', verifyToken, likeController);
-app.post('/recipe/bookmark', verifyToken, bookmarkController);
+app.post('/recipe/bookmark', verifyToken, bookmarkController)
 
 
 

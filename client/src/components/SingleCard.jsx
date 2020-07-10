@@ -87,23 +87,48 @@ class SingleCard extends Component {
   }
 
   handleBookmark = () => {
-    this.setState({bookmarkColor: 'blue'});
+    if(sessionStorage.getItem('token')) {
+      if(!this.state.bookmarked) {  // add to bookmarks if recipe is not already bookmarked
+        this.setState({bookmarkColor: 'blue'});
 
-    if(sessionStorage.getItem('token') && !this.state.bookmarked) {
-      axios.post('/recipe/bookmark', {
-        recipeID: this.props.recipeID
-      },
-      {
-        headers: {
-          'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-        }
-      })
-      .then((res) => {
-        var bookmarks = sessionStorage.getItem('bookmarks');
-        bookmarks = bookmarks + ',' + this.props.recipeID;
+        axios.post('/recipe/bookmark', {
+          recipeID: this.props.recipeID,
+          action: 'add'
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+          }
+        })
+        .then((res) => {
+          var bookmarks = sessionStorage.getItem('bookmarks');
+          bookmarks = bookmarks + ',' + this.props.recipeID;
+          sessionStorage.setItem('bookmarks', bookmarks);
+          this.setState({bookmarked: true});
+        });
+      }
+      else {  //remove from bookmarks if already bookmarked
+        this.setState({bookmarkColor: 'gray'});
+
+        var bookmarksString = sessionStorage.getItem('bookmarks');
+        var bookmarks = bookmarksString.split(',');
+        var index = bookmarks.indexOf(this.props.recipeID);
+        bookmarks.splice(index, 1);
         sessionStorage.setItem('bookmarks', bookmarks);
-        this.setState({bookmarked: true});
-      });
+        this.setState({bookmarked: false});
+
+        console.log(bookmarks);
+        console.log("posting");
+        axios.post('/recipe/bookmark', {
+          bookmarks: bookmarks,
+          action: 'remove'
+        }, 
+        {
+          headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+          }
+        });
+      }
     }
 
   }
