@@ -16,7 +16,7 @@ const registerController = require('./controllers/registerController');
 const loginController = require('./controllers/loginController');
 const authController = require('./controllers/authController');
 const likeController = require('./controllers/likeController');
-const bookmarkController = require('./controllers/bookmarkController');
+const bookmarkController = require('./controllers/bookmarkController')
 
 
 

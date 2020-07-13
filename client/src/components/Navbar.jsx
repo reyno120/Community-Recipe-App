@@ -26,6 +26,8 @@ class Navbar extends Component {
             .then((res) => {
                 if(res.data.expired) {
                     sessionStorage.removeItem('token');
+                    sessionStorage.removeItem('bookmarks');
+                    sessionStorage.removeItem('username');
                     this.setState({component: <Login></Login>});
                 }
                 else {
