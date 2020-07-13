@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import SingleCard from './SingleCard';
+import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 class Bookmarks extends Component {
@@ -29,7 +31,6 @@ class Bookmarks extends Component {
                     }
                 })
                 .then((res) => {
-                    console.log(res.data.recipes);
                     this.setState({recipes: res.data.recipes});
                 });
             }
@@ -53,13 +54,28 @@ class Bookmarks extends Component {
         }
         else if(this.state.component === 'show bookmarks') {
             return (
-                <div>
+                <Grid container spacing={2} style={{justifyContent: 'center', marginTop: '2em'}}>
                     {this.state.recipes.map((details, index) => {
                         return (
-                            <h2>{details.name}</h2>
+                            <Grid item xs={3}>
+                                <SingleCard
+                                    key={index}
+                                    name={details.name}
+                                    description={details.description}
+                                    author={details.author}
+                                    source={details.source}
+                                    directions={details.directions}
+                                    ingredients={details.ingredients}
+                                    date={details.date}
+                                    image={details.image}
+                                    recipeID={details.recipeID}
+                                    likedBy={details.likedBy}
+                                    likes={details.likes}
+                                />
+                            </Grid>
                         );
                     })}
-                </div>
+                </Grid>
             );
         }
     }
