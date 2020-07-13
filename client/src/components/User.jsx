@@ -13,6 +13,7 @@ class User extends Component {
     handleLogout = () => {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('username');
+        sessionStorage.removeItem('bookmarks');
         window.location.reload();
     }
 
@@ -23,10 +24,10 @@ class User extends Component {
                     <AccountCircleIcon fontSize={'large'} onClick={() => {this.setState({open: true})}}></AccountCircleIcon>
                     <Drawer anchor={'right'} open={this.state.open} onClose={() => {this.setState({open: false})}}>
                         <Link to="/user/account">
-                            <Button style={{fontSize: '18px'}}>My Account</Button>
+                            <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Account</Button>
                         </Link>
                         <Link to="/bookmarks">
-                            <Button style={{fontSize: '18px'}}>Bookmarks</Button>
+                            <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>Bookmarks</Button>
                         </Link>
                         <Button style={{fontSize: '18px'}} onClick={this.handleLogout}>Logout</Button>
                     </Drawer>

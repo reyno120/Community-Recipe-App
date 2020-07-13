@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Discover from './components/Discover';
 import Contribute from './components/Contribute';
 import Recipe from './components/Recipe';
+import Bookmarks from './components/Bookmarks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
@@ -16,6 +17,7 @@ class App extends Component {
         <div>
           <Navbar></Navbar>
           <Switch>
+            <Route exact path="/bookmarks" component={Bookmarks} />
             <Route exact path="/contribute" component={Contribute} />
             <Route exact path="/discover" component={Discover} />
             <Route exact path="/recipes/:recipeID" component={Recipe} />

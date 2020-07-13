@@ -38,18 +38,6 @@ module.exports = (req, res) => {
                     res.send();
                 });
             }
-            // else if(req.body.action === 'display') {
-            //     User.find({
-            //         username: decoded.user.username,
-            //         bookmarks: {}
-            //     },
-            //     (error, user) => {
-            //         if(error) {
-            //             console.log(error);
-            //         }
-            //         res.send()
-            //     });
-            // }
         }
     });
 }

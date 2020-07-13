@@ -16,7 +16,8 @@ const registerController = require('./controllers/registerController');
 const loginController = require('./controllers/loginController');
 const authController = require('./controllers/authController');
 const likeController = require('./controllers/likeController');
-const bookmarkController = require('./controllers/bookmarkController')
+const editBookmarkController = require('./controllers/editBookmarkController');
+const showBookmarksController = require('./controllers/showBookmarksController');
 
 
 
@@ -45,7 +46,8 @@ app.post('/recipeUpload', verifyToken, uploadRecipeController);
 app.post('/register', registerController);
 app.post('/login', loginController);
 app.post('/recipe/like', verifyToken, likeController);
-app.post('/recipe/bookmark', verifyToken, bookmarkController)
+app.post('/recipe/bookmark', verifyToken, editBookmarkController);
+app.post('/user/bookmarks', verifyToken, showBookmarksController);
 
 
 
