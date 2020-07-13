@@ -21,6 +21,10 @@ const recipeSchema = new mongoose.Schema({
     image: { type: String },
     likes: { type: Number },
     likedBy: [{ type: String }],
+    comments: [{
+        author: { type: String },
+        comment: { type: String }
+    }],
     recipeID: { type: String },
     created: { type: String }
 });

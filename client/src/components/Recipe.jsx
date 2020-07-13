@@ -5,10 +5,12 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import Comments from './Comments';
 
 class Recipe extends Component {
     state = {  
         recipe: [],
+        comments: [],
         likeColor: 'gray',
         liked: false,
         likeCount: 0,
@@ -25,6 +27,7 @@ class Recipe extends Component {
         .then(res => {
             this.setState({recipe: res.data.recipe});
             this.setState({likeCount: res.data.recipe[0].likes});
+            this.setState({comments: res.data.recipe[0].comments})
 
             var username = sessionStorage.getItem('username');
             if(username) {
@@ -203,6 +206,7 @@ class Recipe extends Component {
                     ))}
                 </Paper>
                 <div style={{height: '2em'}}></div>
+                <Comments comments={this.state.comments}></Comments>          
             </div>
         );
     }

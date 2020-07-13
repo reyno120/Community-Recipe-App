@@ -14,6 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import ChatIcon from '@material-ui/icons/Chat';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -162,6 +163,9 @@ class SingleCard extends Component {
               <IconButton aria-label="add to favorites">
                 <FavoriteIcon onClick={this.handleLike} style={{color: this.state.likeColor}} />
                 <div style={{fontSize: '16px', color: 'gray'}}>&nbsp;({this.state.likeCount})</div>
+              </IconButton>
+              <IconButton>
+                <ChatIcon />
               </IconButton>
               <IconButton aria-label="share">
                 <ShareIcon onClick={this.handleShare} style={{color: this.state.shareColor}} />
