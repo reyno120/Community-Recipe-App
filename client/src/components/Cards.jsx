@@ -63,6 +63,7 @@ class Cards extends Component {
                                 recipeID={details.recipeID}
                                 likedBy={details.likedBy}
                                 likes={details.likes}
+                                authorImage={details.authorImage}
                             ></SingleCard>
                         </Grid>
                     ))}

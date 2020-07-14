@@ -137,9 +137,7 @@ class SingleCard extends Component {
       <Card style={{maxWidth: 300}}>
           <CardHeader
               avatar={
-                <Avatar aria-label="recipe" style={{backgroundColor: red[500]}}>
-                  R
-                </Avatar>
+                <Avatar alt={this.props.author} src={this.props.authorImage}/>
               }
               action={
                 <IconButton aria-label="settings">
@@ -155,7 +153,7 @@ class SingleCard extends Component {
               title={this.props.name}
             />
             <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textPrimary" component="p">
                 {this.props.description}
               </Typography>
             </CardContent>

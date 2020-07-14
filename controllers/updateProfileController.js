@@ -1,6 +1,7 @@
 const { jwtKey } = require('../config/keys');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Recipe = require('../models/Recipe');
 const path = require('path');
 
 function updateUser(req, res, filename, username) {
@@ -15,7 +16,18 @@ function updateUser(req, res, filename, username) {
             console.log(error);
         }
         else {
-            res.send();
+            Recipe.updateMany({
+                author: username
+            },
+            {
+                authorImage: '/images/'+ filename
+            },
+            (error, recipe) => {
+                if(error) {
+                    console.log(error);
+                }
+                res.send();
+            });
         }
     });
 }

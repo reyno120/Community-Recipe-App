@@ -4,6 +4,7 @@ const recipeSchema = new mongoose.Schema({
     name: { type: String },
     description: { type: String },
     author: { type: String },
+    authorImage: { type: String },
     contributors: [{ type: String }],
     source: { type: String },
     directions: [{ type: String }],
