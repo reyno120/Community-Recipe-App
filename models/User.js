@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
     },
     bookmarks: [{
         type: String
-    }]
+    }],
+    image: { type: String }
 });
 
 userSchema.plugin(uniqueValidator);

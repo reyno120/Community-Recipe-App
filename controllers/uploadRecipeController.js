@@ -46,7 +46,7 @@ module.exports = (req, res) => {
         else {
             if(req.files !== null) {
                 var date = new Date();
-                req.files.file.name = date.getTime() + req.files.file.name;
+                req.files.file.name = date.getTime() + req.files.file.name; // add time stamp
 
                 const file = req.files.file;
                 const directory = path.join(__dirname, '../client/public/images/', file.name);

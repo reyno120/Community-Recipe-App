@@ -18,6 +18,8 @@ const authController = require('./controllers/authController');
 const likeController = require('./controllers/likeController');
 const editBookmarkController = require('./controllers/editBookmarkController');
 const showBookmarksController = require('./controllers/showBookmarksController');
+const updateProfileController = require('./controllers/updateProfileController');
+const userInfoController = require('./controllers/userInfoController');
 
 
 
@@ -41,6 +43,7 @@ const verifyToken = require('./middleware/verifyToken');
 app.get('/home', homeController);
 app.get('/recipes', recipeController);
 app.get('/user/auth', verifyToken, authController);
+app.get('/user/info', verifyToken, userInfoController);
 
 app.post('/recipeUpload', verifyToken, uploadRecipeController);
 app.post('/register', registerController);
@@ -48,6 +51,7 @@ app.post('/login', loginController);
 app.post('/recipe/like', verifyToken, likeController);
 app.post('/recipe/bookmark', verifyToken, editBookmarkController);
 app.post('/user/bookmarks', verifyToken, showBookmarksController);
+app.post('/user/update', verifyToken, updateProfileController);
 
 
 
