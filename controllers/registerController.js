@@ -7,7 +7,8 @@ module.exports = (req, res) => {
         username: req.body.registerUser,
         password: req.body.registerPass,
         email: req.body.registerEmail,
-        bookmarks: []
+        bookmarks: [],
+        image: ''
     },
     (error, user) => {
         if(error) {
@@ -21,7 +22,7 @@ module.exports = (req, res) => {
                     res.json({userExists: true});
                 }
                 else {
-                    res.json({token: token, userExists: false, username: user.username});
+                    res.json({token: token, userExists: false, username: user.username, bookmarks: user.bookmarks});
                 }
             });    
         }

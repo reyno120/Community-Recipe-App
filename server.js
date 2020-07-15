@@ -20,6 +20,7 @@ const editBookmarkController = require('./controllers/editBookmarkController');
 const showBookmarksController = require('./controllers/showBookmarksController');
 const updateProfileController = require('./controllers/updateProfileController');
 const userInfoController = require('./controllers/userInfoController');
+const commentController = require('./controllers/commentController');
 
 
 
@@ -52,6 +53,7 @@ app.post('/recipe/like', verifyToken, likeController);
 app.post('/recipe/bookmark', verifyToken, editBookmarkController);
 app.post('/user/bookmarks', verifyToken, showBookmarksController);
 app.post('/user/update', verifyToken, updateProfileController);
+app.post('/comments', commentController);
 
 
 

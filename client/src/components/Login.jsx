@@ -51,6 +51,7 @@ class Login extends Component {
                 if(!res.data.userExists) {
                     sessionStorage.setItem('token', res.data.token);
                     sessionStorage.setItem('username', res.data.username);
+                    sessionStorage.setItem('bookmarks', res.data.bookmarks);
                     this.setState({open: false});
                     window.location.reload();
                 }

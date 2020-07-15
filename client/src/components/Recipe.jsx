@@ -6,6 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import Comments from './Comments';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
 
 class Recipe extends Component {
     state = {  
@@ -15,7 +17,9 @@ class Recipe extends Component {
         liked: false,
         likeCount: 0,
         bookmarkColor: 'gray',
-        bookmarked: false
+        bookmarked: false,
+        commentAuthors: [],
+        expanded: false
     };
 
     componentDidMount() {
@@ -123,6 +127,16 @@ class Recipe extends Component {
     }
 
     render() {
+
+        const styles = {
+            expand: {
+                transform: 'rotate(0deg)'
+            },
+            expandOpen: {
+                transform: 'rotate(180deg)'
+            }
+        }
+
         return (  
             <div>
                 <Paper 
@@ -206,7 +220,23 @@ class Recipe extends Component {
                     ))}
                 </Paper>
                 <div style={{height: '2em'}}></div>
-                <Comments comments={this.state.comments}></Comments>          
+
+                <Paper
+                    elevation={3}
+                    style={{
+                        backgroundColor: 'rgb(228, 221, 211)',
+                        width: '1366px',
+                        margin: 'auto' 
+                    }}>
+                    <IconButton>
+                        <ExpandMoreIcon onClick={() => this.setState({expanded: !this.state.expanded})} style={this.state.expanded ? styles.expandOpen : styles.expand} />
+                    </IconButton>
+                    <p style={{display: 'inline'}}>{this.state.expanded ? 'Hide Comments' : 'Show Comments'}</p>
+                    <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                        <Comments comments={this.state.comments} authors={this.state.authors}/>
+                    </Collapse>  
+                </Paper>
+                <div style={{height: '2em'}}></div>       
             </div>
         );
     }
