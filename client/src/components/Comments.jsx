@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 
 class Comments extends Component {
     state={
-        userImages: {}
+        userImages: {},
+        comment: '',
+        newComment: '',
+        image: ''
     };
 
     componentDidMount() {
@@ -19,10 +24,68 @@ class Comments extends Component {
 
         authors = [...new Set(authors)];
 
-        axios.post('/comments', {authors})
+        axios.post('/comments/get', {
+            authors: authors,
+            action: 'get'
+        })
         .then((res) => {
             this.setState({userImages: res.data.userImages})
         })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const { comment } = this.state;
+        
+        axios.post('/comments/add', {
+            comment: comment,
+            recipeID: this.props.recipeID,
+            action: 'add'
+        }, 
+        {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            this.setState({comment: ''});
+            this.setState({newComment: res.data.newComment});
+            this.setState({image: res.data.image});
+        });
+    }
+
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.value})
+    }
+
+    renderForm() {
+        if(sessionStorage.getItem('token')) {
+            return (
+                <form style={{display: 'block'}}>
+                    <TextField label="Add Comment" value={this.state.comment} name="comment" onChange={this.onChange} style={{width: '40em'}}></TextField>
+                    <Button type="submit" variant="outlined" onClick={this.handleSubmit}>Send</Button>
+                </form>
+            );
+        }
+        else {
+            return (
+                <p>You must be logged in to add comments</p>
+            );
+        }
+    }
+
+    renderNewComment() {
+        if(this.state.newComment !== '') {
+            return (
+                <Grid container>
+                <Grid item xs={12} style={{marginLeft: '1em'}}>
+                    <Avatar alt={sessionStorage.getItem('username')} style={{float: 'left'}} src={this.state.image} />
+                    <p>{sessionStorage.getItem('username')}</p>
+                    <p style={{marginLeft: '4em'}}>{this.state.newComment}</p>
+                </Grid>
+                </Grid>
+            );
+        }
     }
 
     render() { 
@@ -40,6 +103,8 @@ class Comments extends Component {
                         </Grid>
                     );
                 })}
+                {this.renderNewComment()}
+                {this.renderForm()}
             </div>
         );
     }

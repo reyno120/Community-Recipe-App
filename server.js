@@ -53,7 +53,8 @@ app.post('/recipe/like', verifyToken, likeController);
 app.post('/recipe/bookmark', verifyToken, editBookmarkController);
 app.post('/user/bookmarks', verifyToken, showBookmarksController);
 app.post('/user/update', verifyToken, updateProfileController);
-app.post('/comments', commentController);
+app.post('/comments/get', commentController);
+app.post('/comments/add', verifyToken, commentController);
 
 
 

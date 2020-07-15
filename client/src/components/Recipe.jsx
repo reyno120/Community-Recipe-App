@@ -233,7 +233,7 @@ class Recipe extends Component {
                     </IconButton>
                     <p style={{display: 'inline'}}>{this.state.expanded ? 'Hide Comments' : 'Show Comments'}</p>
                     <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                        <Comments comments={this.state.comments} authors={this.state.authors}/>
+                        <Comments comments={this.state.comments} recipeID={this.props.match.params.recipeID}/>
                     </Collapse>  
                 </Paper>
                 <div style={{height: '2em'}}></div>       
