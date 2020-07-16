@@ -56,17 +56,22 @@ class SingleCard extends Component {
   }
 
   handleLike = () => {
-    if(!this.state.liked) {
-      this.setState({likeColor: 'red'});
-      var username = sessionStorage.getItem('username');
+    if(sessionStorage.getItem('token')) {
+      if(!this.state.liked) {
 
-      if(username) {
+        // change like state
+        this.setState({likeColor: 'red'});
+        this.setState({liked: true});
+
+        // change likes and add user to likedBy
+        var username = sessionStorage.getItem('username');
         var usersLikedRecipe = this.props.likedBy;
         usersLikedRecipe.push(username);
         var likes = this.state.likeCount;
         likes++;
         this.setState({likeCount: likes});
-
+  
+        // post new data
         axios.post('/recipe/like', {
           recipeID: this.props.recipeID, 
           likedBy: usersLikedRecipe,
@@ -78,6 +83,35 @@ class SingleCard extends Component {
           }
         });
       }
+      else {  // for unliking
+
+        // set like state and update # of likes
+        this.setState({likeColor: 'gray'});
+        this.setState({liked: false});
+        var likes = this.state.likeCount;
+        likes--;
+        this.setState({likeCount: likes});
+  
+        // update likedBy
+        var likedBy = this.props.likedBy;
+        var index = likedBy.indexOf(sessionStorage.getItem('username'));
+        likedBy.splice(index, 1);
+  
+        // post new data
+        axios.post('/recipe/like', {
+          recipeID: this.props.recipeID,
+          likes: likes,
+          likedBy: likedBy
+        },
+        {
+          headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+          }
+        });
+      }
+    }
+    else {
+      alert("You must be logged in to use this feature");
     }
   }
 
@@ -128,6 +162,9 @@ class SingleCard extends Component {
           }
         });
       }
+    }
+    else {
+      alert("You must be logged in to save recipes");
     }
   }
 
