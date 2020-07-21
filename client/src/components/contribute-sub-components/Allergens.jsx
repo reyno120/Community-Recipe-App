@@ -7,10 +7,10 @@ class Allergens extends Component {
 
     checkSalt = () => {
         if(this.props.ingredients.includes('salt')) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 
@@ -20,10 +20,10 @@ class Allergens extends Component {
 
     checkSugar = () => {
         if(this.props.ingredients.includes('brown sugar')) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 
@@ -36,11 +36,11 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(gluten.includes(ingredients[i])) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     checkNut = () => {
@@ -52,11 +52,11 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(nuts.includes(ingredients[i])) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     checkSoy = () => {
@@ -67,11 +67,11 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(soy.includes(ingredients[i])) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     checkPeanut = () => {
@@ -80,11 +80,11 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(peanuts.includes(ingredients[i])) {
-                return true;
+                return false;
             }
         }
         
-        return false;
+        return true;
     }
 
     render() { 
