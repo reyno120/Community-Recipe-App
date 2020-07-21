@@ -9,6 +9,7 @@ import Select from 'react-select';
 import Radio from '@material-ui/core/Radio';
 import Directions from './Directions';
 import Tips from './Tips';
+import Allergens from './Allergens';
 
 class ContributeRecipe extends Component {
     state = {
@@ -231,6 +232,11 @@ class ContributeRecipe extends Component {
                                     })}
                                 </Grid>
 
+
+                                {/******** Allergens *********/}
+                                <Grid xs={12}>
+                                    <Allergens ingredients={this.state.ingredients}></Allergens>
+                                </Grid>
 
                                 {/*****************Difficulty*************/}
                                 <Grid xs={12} align="center">

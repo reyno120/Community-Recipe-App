@@ -21,6 +21,7 @@ const showBookmarksController = require('./controllers/showBookmarksController')
 const updateProfileController = require('./controllers/updateProfileController');
 const userInfoController = require('./controllers/userInfoController');
 const commentController = require('./controllers/commentController');
+const discoverController = require('./controllers/discoverController');
 
 
 
@@ -55,6 +56,7 @@ app.post('/user/bookmarks', verifyToken, showBookmarksController);
 app.post('/user/update', verifyToken, updateProfileController);
 app.post('/comments/get', commentController);
 app.post('/comments/add', verifyToken, commentController);
+app.post('/discover', discoverController);
 
 
 

@@ -9,6 +9,7 @@ const recipeSchema = new mongoose.Schema({
     source: { type: String },
     directions: [{ type: String }],
     ingredients: [{ type: String }],
+    allergens: [{ type: String }],
     amounts: [{ type: String }],
     tips: [{ type: String }],
     nutrition: {
