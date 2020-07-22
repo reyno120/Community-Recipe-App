@@ -3,27 +3,84 @@ import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 
 class Allergens extends Component {
-    state = { }
+    state = { 
+        saltFree: true,
+        saltFreeSelected: false,
+        oilFree: true,
+        oilFreeSelected: false,
+        sugarFree: true,
+        sugarFreeSelected: false,
+        glutenFree: true,
+        glutenFreeSelected: false,
+        nutFree: true,
+        nutFreeSelected: false,
+        soyFree: true,
+        soyFreeSelected: false,
+        peanutFree: true,
+        peanutFreeSelected: false
+    };
+
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.checked});
+        this.props.handleAllergens(e.target.name, e.target.checked);
+    }
+
 
     checkSalt = () => {
         if(this.props.ingredients.includes('salt')) {
-            return false;
+            if(!this.state.saltFreeSelected) {
+                this.setState({saltFreeSelected: true});
+                this.setState({saltFree: false});
+                this.props.handleAllergens("saltFree", false);
+                return this.state.saltFree;
+            }
+            else {
+                return this.state.saltFree;
+            }
         }
         else {
-            return true;
+            return this.state.saltFree;
         }
     }
 
     checkOil = () => {
+        var { ingredients } = this.props;
+        var oils = ["olive oil", "coconut oil"];
 
+        for(var i = 0; i < ingredients.length; i++) {
+            if(oils.includes(ingredients[i])) {
+                if(!this.state.oilFreeSelected) {
+                    this.setState({oilFreeSelected: true});
+                    this.setState({oilFree: false});
+                    this.props.handleAllergens("oilFree", false);
+                    return this.state.oilFree;
+                }
+                else {
+                    return this.state.oilFree;
+                }
+            }
+            else {
+                return this.state.oilFree;
+            }
+        }
+
+        return this.state.oilFree;
     }
 
     checkSugar = () => {
         if(this.props.ingredients.includes('brown sugar')) {
-            return false;
+            if(!this.state.sugarFreeSelected) {
+                this.setState({sugarFreeSelected: true});
+                this.setState({sugarFree: false});
+                this.props.handleAllergens("sugarFree", false);
+                return this.state.sugarFree;
+            }
+            else {
+                return this.state.sugarFree;
+            }
         }
         else {
-            return true;
+            return this.state.sugarFree;
         }
     }
 
@@ -36,11 +93,22 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(gluten.includes(ingredients[i])) {
-                return false;
+                if(!this.state.glutenFreeSelected) {
+                    this.setState({glutenFreeSelected: true});
+                    this.setState({glutenFree: false});
+                    this.props.handleAllergens("glutenFree", false);
+                    return this.state.glutenFree;
+                }
+                else {
+                    return this.state.glutenFree;
+                }
+            }
+            else {
+                return this.state.glutenFree;
             }
         }
 
-        return true;
+        return this.state.glutenFree;
     }
 
     checkNut = () => {
@@ -52,11 +120,22 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(nuts.includes(ingredients[i])) {
-                return false;
+                if(!this.state.nutFreeSelected) {
+                    this.setState({nutFreeSelected: true});
+                    this.setState({nutFree: false});
+                    this.props.handleAllergens("nutFree", false);
+                    return this.state.nutFree;
+                }
+                else {
+                    return this.state.nutFree;
+                }
+            }
+            else {
+                return this.state.nutFree;
             }
         }
 
-        return true;
+        return this.state.nutFree;
     }
 
     checkSoy = () => {
@@ -67,11 +146,22 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(soy.includes(ingredients[i])) {
-                return false;
+                if(!this.state.soyFreeSelected) {
+                    this.setState({soyFreeSelected: true});
+                    this.setState({soyFree: false});
+                    this.props.handleAllergens("soyFree", false);
+                    return this.state.soyFree
+                }
+                else {
+                    return this.state.soyFree;
+                }
+            }
+            else {
+                return this.state.soyFree;
             }
         }
 
-        return true;
+        return this.state.soyFree;
     }
 
     checkPeanut = () => {
@@ -80,11 +170,22 @@ class Allergens extends Component {
 
         for(var i = 0; i < ingredients.length; i++) {
             if(peanuts.includes(ingredients[i])) {
-                return false;
+                if(!this.state.peanutFreeSelected) {
+                    this.setState({peanutFreeSelected: true});
+                    this.setState({peanutFree: false});
+                    this.props.handleAllergens("peanutFree", false);
+                    return this.state.peanutFree;
+                }
+                else {
+                    return this.state.peanutFree;
+                }
+            }
+            else {
+                return this.state.peanutFree;
             }
         }
         
-        return true;
+        return this.state.peanutFree;
     }
 
     render() { 
@@ -94,17 +195,17 @@ class Allergens extends Component {
                     <h2>Allergens</h2>
                 </Grid>
                 <Grid item xs={4} align="center">
-                    <p><Checkbox checked={this.checkSalt()}/>no added salt</p>
-                    <p><Checkbox checked={this.checkOil()}/>oil free</p>
-                    <p><Checkbox checked={this.checkSugar()}/>no added sugar</p>
+                    <p><Checkbox name="saltFree" checked={this.checkSalt()} onChange={this.onChange}/>no added salt</p>
+                    <p><Checkbox name="oilFree" checked={this.checkOil()} onChange={this.onChange}/>oil free</p>
+                    <p><Checkbox name="sugarFree" checked={this.checkSugar()} onChange={this.onChange}/>no added sugar</p>
                 </Grid>
                 <Grid item xs={4} align="center">
-                    <p><Checkbox checked={this.checkGluten()}/>gluten free</p>
-                    <p><Checkbox checked={this.checkNut()}/>nut free</p>
+                    <p><Checkbox name="glutenFree" checked={this.checkGluten()} onChange={this.onChange}/>gluten free</p>
+                    <p><Checkbox name="nutFree" checked={this.checkNut()} onChange={this.onChange}/>nut free</p>
                 </Grid>
                 <Grid item xs={4} align="center">
-                    <p><Checkbox checked={this.checkSoy()}/>soy free</p>
-                    <p><Checkbox checked={this.checkPeanut()}/>peanut free</p>
+                    <p><Checkbox name="soyFree" checked={this.checkSoy()} onChange={this.onChange}/>soy free</p>
+                    <p><Checkbox name="peanutFree" checked={this.checkPeanut()} onChange={this.onChange}/>peanut free</p>
                 </Grid>
             </Grid>  
         );

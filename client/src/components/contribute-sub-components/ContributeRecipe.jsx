@@ -23,6 +23,7 @@ class ContributeRecipe extends Component {
         fat: '',
         protein: '',
         ingredients: [],
+        allergens: ["saltFree", "oilFree", "sugarFree", "glutenFree", "nutFree", "soyFree", "peanutFree"],
         amounts: [],
         difficulty: '',
         time: '',
@@ -84,6 +85,25 @@ class ContributeRecipe extends Component {
         this.setState({ingredients: ingredients});
     }
 
+    handleAllergens = (allergen, condition) => {
+        var { allergens } = this.state;
+
+        if(condition) {
+            if(!allergens.includes(allergen)) {
+                allergens.push(allergen);
+            }
+        }
+        else {
+            if(allergens.includes(allergen)) {
+                var index = allergens.indexOf(allergen);
+                allergens.splice(index, 1);
+            }
+        }
+
+        this.setState({allergens: allergens});
+        console.log(allergens);
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData();
@@ -103,6 +123,10 @@ class ContributeRecipe extends Component {
 
         for(var i = 0; i < this.state.ingredients.length; i++) {
             data.append('ingredients', this.state.ingredients[i]);
+        }
+        
+        for(var i = 0; i < this.state.allergens.length; i++) {
+            data.append('allergens', this.state.allergens[i]);
         }
 
         for(var i = 0; i < this.state.amounts.length; i++) {
@@ -235,7 +259,7 @@ class ContributeRecipe extends Component {
 
                                 {/******** Allergens *********/}
                                 <Grid xs={12}>
-                                    <Allergens ingredients={this.state.ingredients}></Allergens>
+                                    <Allergens ingredients={this.state.ingredients} handleAllergens={this.handleAllergens}></Allergens>
                                 </Grid>
 
                                 {/*****************Difficulty*************/}
