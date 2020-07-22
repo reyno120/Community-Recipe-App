@@ -34,7 +34,7 @@ class Discover extends Component {
             allergens.push(e.target.name);
         }
         else {
-            var index = allergens.includes(e.target.name);
+            var index = allergens.indexOf(e.target.name);
             allergens.splice(index, 1);
         }
     }

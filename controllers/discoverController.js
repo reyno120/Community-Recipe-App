@@ -3,7 +3,6 @@ const Recipe = require('../models/Recipe');
 
 module.exports = (req, res) => {
     const { ingredients, allergens, difficulty, time } = req.body;
-    console.log(allergens);
 
     // ingredients and allergens filter applied
     if(ingredients.length > 0 && allergens.length > 0) {
@@ -25,7 +24,7 @@ module.exports = (req, res) => {
         };
     }
     // allergens filter applied, no ingredients filter
-    else if(ingredients.length < 0 && allergens.length > 0) {
+    else if(ingredients.length == 0 && allergens.length > 0) {
         var filter = {
             allergens: {
                 $all: allergens
@@ -42,8 +41,25 @@ module.exports = (req, res) => {
             // filter out difficulty
             filteredRecipes = [];
             for (var i = 0; i < recipes.length; i++) {
-                if(recipes[i].difficulty === difficulty) {
-                    filteredRecipes.push(recipes[i]);
+                switch(difficulty) {
+                    case 'Easy':
+                        if(recipes[i].difficulty === 'Easy') {
+                            filteredRecipes.push(recipes[i]);
+                        }
+                        break;
+
+                    case 'Medium':
+                        if(recipes[i].difficulty === 'Medium' || recipes[i].difficulty === 'Easy') {
+                            filteredRecipes.push(recipes[i]);
+                        }
+                        break;
+                    
+                    case 'Hard':
+                        filteredRecipes.push(recipes[i]);
+                        break;
+
+                    default:
+                        filteredRecipes.push(recipes[i]);
                 }
             }
 
