@@ -13,6 +13,7 @@ function createRecipe(req, res, fileName, author) {
         source: req.body.source,
         directions: req.body.directions,
         ingredients: req.body.ingredients,
+        allergens: req.body.allergens,
         amounts: req.body.amounts,
         tips: req.body.tips,
         nutrition: {
