@@ -8,7 +8,9 @@ module.exports = (req, res) => {
         password: req.body.registerPass,
         email: req.body.registerEmail,
         bookmarks: [],
-        image: ''
+        image: '',
+        following: [],
+        followers: []
     },
     (error, user) => {
         if(error) {

@@ -20,7 +20,9 @@ const userSchema = new mongoose.Schema({
     bookmarks: [{
         type: String
     }],
-    image: { type: String }
+    image: { type: String },
+    following: [{ type: String }],
+    followers: [{ type: String }]
 });
 
 userSchema.plugin(uniqueValidator);

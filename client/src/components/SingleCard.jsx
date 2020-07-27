@@ -9,7 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import ChatIcon from '@material-ui/icons/Chat';
 import { Link } from 'react-router-dom';
@@ -168,25 +167,28 @@ class SingleCard extends Component {
     }
   }
 
+  handleImageClick = () => {
+    var link = `/recipes/${this.props.recipeID}`;
+    window.location.replace(link);
+  }
+
   render() { 
       return (  
       <Card style={{maxWidth: 300}}>
           <CardHeader
               avatar={
-                <Avatar alt={this.props.author} src={this.props.authorImage}/>
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
+                <Link to={`/users/${this.props.author}`}>
+                  <Avatar alt={this.props.author} src={this.props.authorImage}/>
+                </Link>
               }
               title={<Link to={`/recipes/${this.props.recipeID}`}>{this.props.name}</Link>}
-              subheader={this.props.author}
+              subheader={<Link to={`/users/${this.props.author}`}>{this.props.author}</Link>}
             />
             <CardMedia
-              style={{height: 0, paddingTop: '56.25%'}}
+              style={{height: 0, paddingTop: '56.25%', cursor: 'pointer'}}
               image={this.props.image}
               title={this.props.name}
+              onClick={this.handleImageClick}
             />
             <CardContent>
               <Typography variant="body2" color="textPrimary" component="p">
