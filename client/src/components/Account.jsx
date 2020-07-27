@@ -50,7 +50,7 @@ class Account extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <Avatar alt="name" style={{width: '12em', height: '12em', margin: 'auto', marginTop: '2em'}} src={this.state.image} />
+                    <Avatar alt={sessionStorage.getItem('username')} style={{width: '12em', height: '12em', margin: 'auto', marginTop: '2em'}} src={this.state.image} />
                     <div style={{textAlign: 'center', marginTop: '2em'}}>
                         <Button component="label" variant="contained">
                             Upload Image

@@ -23,6 +23,7 @@ const userInfoController = require('./controllers/userInfoController');
 const commentController = require('./controllers/commentController');
 const discoverController = require('./controllers/discoverController');
 const usersController = require('./controllers/usersController');
+const followController = require('./controllers/followController');
 
 
 
@@ -59,6 +60,7 @@ app.post('/user/update', verifyToken, updateProfileController);
 app.post('/comments/get', commentController);
 app.post('/comments/add', verifyToken, commentController);
 app.post('/discover', discoverController);
+app.post('/follow', verifyToken, followController);
 
 
 
