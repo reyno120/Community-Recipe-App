@@ -13,7 +13,8 @@ class Profile extends Component {
         image: '',
         followers: [],
         following: [],
-        recipes: []
+        recipes: [],
+        buttonDisplay: ''
     }
 
     componentDidMount() {
@@ -28,15 +29,61 @@ class Profile extends Component {
             this.setState({followers: res.data.followers});
             this.setState({following: res.data.following});
             this.setState({recipes: res.data.recipes});
+
+            // follow/unfollow button display
+            if(res.data.followers.includes(sessionStorage.getItem('username'))) {
+                this.setState({buttonDisplay: 
+                        <Button variant="contained" onClick={this.handleUnfollow} style={{
+                            backgroundColor: 'rgb(254, 98, 57)', 
+                            marginLeft: '36em', 
+                            marginTop: '3em', 
+                            textTransform: 'none', 
+                            fontSize: '1.1rem'}}>
+                            Unfollow
+                        </Button>
+                    });
+            }
+            else if(res.data.username === sessionStorage.getItem('username')) {
+                this.setState({buttonDisplay: 
+                    <Button variant="contained" disabled onClick={this.handleFollow} style={{
+                        backgroundColor: 'rgb(254, 98, 57)', 
+                        marginLeft: '36em', 
+                        marginTop: '3em', 
+                        textTransform: 'none', 
+                        fontSize: '1.1rem'}}>
+                        Follow +
+                    </Button>
+                });
+            }
+            else {
+                this.setState({buttonDisplay: 
+                    <Button variant="contained" onClick={this.handleFollow} style={{
+                        backgroundColor: 'rgb(254, 98, 57)', 
+                        marginLeft: '36em', 
+                        marginTop: '3em', 
+                        textTransform: 'none', 
+                        fontSize: '1.1rem'}}>
+                        Follow +
+                    </Button>
+                });
+            }
         })
         .catch(error => {
             console.log(error);
         });
     }
 
-    displayFollowButton = () => {
-        if(this.state.followers.includes(sessionStorage.getItem('username'))) {
-            return (
+
+    handleFollow = () => {
+        var username = sessionStorage.getItem('username');
+        if(username) {
+            // add user to followers list for current render
+            var followers = this.state.followers;
+            followers.push(username);
+            this.setState({followers: followers});
+
+            // change button
+            this.setState({buttonDisplay:
                 <Button variant="contained" onClick={this.handleUnfollow} style={{
                     backgroundColor: 'rgb(254, 98, 57)', 
                     marginLeft: '36em', 
@@ -45,39 +92,12 @@ class Profile extends Component {
                     fontSize: '1.1rem'}}>
                     Unfollow
                 </Button>
-            );
-        }
-        else if(this.state.username === sessionStorage.getItem('username')) {
-            return (
-                <Button variant="contained" disabled onClick={this.handleFollow} style={{
-                    backgroundColor: 'rgb(254, 98, 57)', 
-                    marginLeft: '36em', 
-                    marginTop: '3em', 
-                    textTransform: 'none', 
-                    fontSize: '1.1rem'}}>
-                    Follow +
-                </Button>
-            );
-        }
-        else {
-            return (
-                <Button variant="contained" onClick={this.handleFollow} style={{
-                    backgroundColor: 'rgb(254, 98, 57)', 
-                    marginLeft: '36em', 
-                    marginTop: '3em', 
-                    textTransform: 'none', 
-                    fontSize: '1.1rem'}}>
-                    Follow +
-                </Button>
-            );
-        }
-    }
-
-    handleFollow = () => {
-        var username = sessionStorage.getItem('username');
-        if(username) {
+            });
+            
+            // update database
             axios.post('/follow', {
-                userProfile: this.state.username
+                userProfile: this.state.username,
+                action: 'follow'
             },
             {
                 headers: {
@@ -91,7 +111,48 @@ class Profile extends Component {
     }
 
     handleUnfollow = () => {
+        var username = sessionStorage.getItem('username');
+        if(username) {
+            // remove user from followers list for current render
+            var followers = this.state.followers;
+            var index = followers.indexOf(username);
+            followers.splice(index, 1);
 
+            // change button
+            this.setState({buttonDisplay: 
+                <Button variant="contained" onClick={this.handleFollow} style={{
+                    backgroundColor: 'rgb(254, 98, 57)', 
+                    marginLeft: '36em', 
+                    marginTop: '3em', 
+                    textTransform: 'none', 
+                    fontSize: '1.1rem'}}>
+                    Follow +
+                </Button>
+            });
+
+            // update database
+            axios.post('/follow', {
+                userProfile: this.state.username,
+                action: 'unfollow'
+            },
+            {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token')
+                }
+            })
+            .then((res) => {
+                this.setState({buttonDisplay: 
+                    <Button variant="contained" onClick={this.handleFollow} style={{
+                        backgroundColor: 'rgb(254, 98, 57)', 
+                        marginLeft: '36em', 
+                        marginTop: '3em', 
+                        textTransform: 'none', 
+                        fontSize: '1.1rem'}}>
+                        Follow +
+                    </Button>
+                });
+            });
+        }
     }
 
 
@@ -108,7 +169,7 @@ class Profile extends Component {
                 >
                     <h2 style={{textAlign: 'center', paddingTop: '1em', fontSize: '2rem'}}>{this.state.username}</h2>
                     <Avatar alt="name" style={{width: '12em', height: '12em', margin: 'auto', marginTop: '2em'}} src={this.state.image} />
-                    {this.displayFollowButton()}
+                    {this.state.buttonDisplay}
 
                     <Tabs following={this.state.following} followers={this.state.followers}></Tabs>
                     <div style={{height: '7em'}}></div>

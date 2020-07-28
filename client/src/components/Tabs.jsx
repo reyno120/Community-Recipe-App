@@ -72,14 +72,14 @@ export default function SimpleTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <ul style={{listStyle: 'none'}}>
-            {props.following.map((user) =>
+            {props.followers.map((user) =>
                 <li key={user}>{user}</li>
             )}
         </ul>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <ul style={{listStyle: 'none'}}>
-            {props.followers.map((user) =>
+            {props.following.map((user) =>
                 <li key={user}>{user}</li>
             )}
         </ul>
