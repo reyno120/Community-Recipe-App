@@ -343,14 +343,14 @@ class ContributeRecipe extends Component {
                     <div style={{height: '2em'}}></div>
                 </Paper>
                 <div style={{height: '2em'}}></div>
-                <Paper>
+                <Paper style={{width: '1366px', margin: 'auto'}}>
                     <Multiform></Multiform>
                 </Paper>
                 <div style={{height: '2em'}}></div>
-                <Paper>
+                {/* <Paper>
                     <MultiformFunctional></MultiformFunctional>
                 </Paper>
-                <div style={{height: '2em'}}></div>
+                <div style={{height: '2em'}}></div> */}
             </div>
         );
     }

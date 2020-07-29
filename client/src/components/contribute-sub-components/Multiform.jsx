@@ -5,30 +5,68 @@ import StepButton from '@material-ui/core/StepButton';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper'
 import '../../App.css';
 
 class Multiform extends Component {
     state = {  
-        activeStep: 0,
+        activeStep: 1,
         completed: {},
-        steps: ['Select campaign settings', 'Create an ad group', 'Create an ad']
+        steps: ['Name/description', 'Image', 'Nutrition', 'Ingredients and Allergens', 'Difficulty and Time', 'Directions', 'Credit', 'Submit']
     }
-
-    // getSteps() {
-    //     return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-    // }
 
     getStepContent(step) {
         switch (step) {
           case 0:
-            return 'Step 1: Select campaign settings...';
+            return this.nameStep();
           case 1:
-            return 'Step 2: What is an ad group anyways?';
+            return this.imageStep();
           case 2:
-            return 'Step 3: This is the bit I really care about!';
+            return 'nutrition';
+          case 3:
+            return 'ingredients/allergens/amounts'
+          case 4: 
+            return 'difficulty/time'
+          case 5:
+            return 'directions/tips'
+          case 6: 
+            return 'contributors/source'
+          case 7: 
+            return 'submit'
           default:
             return 'Unknown step';
         }
+    }
+
+    nameStep = () => {
+        return (
+            <div style={{marginLeft: '3em', marginBottom: '2em'}}>
+                <h2 style={{marginBottom: '0'}}>What is the name of your Recipe?</h2>
+                <TextField name="name" onChange={this.onChange} label="Recipe Name" color="none" style={{width: '23em'}} />
+                <h2 style={{marginBottom: '0'}}>Describe your Recipe:</h2>
+                <TextField name="description" onChange={this.onChange} label="Description" multiline rowsMax={3} style={{width: '23em'}} />
+            </div>
+        );
+    }
+
+    imageStep = () => {
+        return (
+            <div>
+                <h2 style={{marginLeft: '3em'}}>Upload an image:</h2>
+                <Button component="label" variant="outlined" style={{marginBottom: '22em', marginLeft: '8em'}}>
+                    Upload
+                    <input type='file' 
+                           style={{display: 'none'}} 
+                           name="file" 
+                           id='customImage' 
+                           onChange={this.fileOnChange}>
+                    </input>
+                </Button>
+                <label htmlFor='customImage'>{this.filename}</label>
+                <img style={{width: '50%', display: 'block'}} src={this.state.image} alt={''}/>
+            </div>
+        );
     }
 
     totalSteps = () => {
@@ -81,7 +119,8 @@ class Multiform extends Component {
 
         const styles = {
             root: {
-                width: '100%',
+                width: '1366px',
+                margin: 'auto',
                 backgroundColor: 'rgb(228, 221, 211)'
               },
               button: {
@@ -102,7 +141,8 @@ class Multiform extends Component {
         }
 
         return (  
-            <div style={styles.root}>
+            <Paper style={styles.root}>
+                <h1 style={{color: 'black', paddingTop: '.5em'}}>Share your Delicious Recipe!</h1>
                 <Stepper nonLinear activeStep={this.state.activeStep}>
                     {this.state.steps.map((label, index) => (
                     <Step key={label}>
@@ -150,7 +190,7 @@ class Multiform extends Component {
                     </div>
                     )}
                 </div>
-            </div>
+            </Paper>
         );
     }
 }
