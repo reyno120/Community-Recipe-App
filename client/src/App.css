@@ -19,6 +19,12 @@ a {
 p {
   color: rgb(25, 26, 23);
 }
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: rgb(254, 98, 57) !important
+}
+.MuiStepIcon-root.MuiStepIcon-completed {
+  color: rgb(254, 98, 57) !important
+}
 .navbar {
   root: {
     flexGrow: 1;

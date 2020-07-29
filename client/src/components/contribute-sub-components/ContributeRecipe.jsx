@@ -10,6 +10,8 @@ import Radio from '@material-ui/core/Radio';
 import Directions from './Directions';
 import Tips from './Tips';
 import Allergens from './Allergens';
+import Multiform from './Multiform';
+import MultiformFunctional from './MultiformFunctional';
 
 class ContributeRecipe extends Component {
     state = {
@@ -339,6 +341,14 @@ class ContributeRecipe extends Component {
                             </Grid>
                         </form>
                     <div style={{height: '2em'}}></div>
+                </Paper>
+                <div style={{height: '2em'}}></div>
+                <Paper>
+                    <Multiform></Multiform>
+                </Paper>
+                <div style={{height: '2em'}}></div>
+                <Paper>
+                    <MultiformFunctional></MultiformFunctional>
                 </Paper>
                 <div style={{height: '2em'}}></div>
             </div>
