@@ -6,14 +6,26 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper'
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import '../../App.css';
+
 
 class Multiform extends Component {
     state = {  
-        activeStep: 1,
+        activeStep: 2,
         completed: {},
-        steps: ['Name/description', 'Image', 'Nutrition', 'Ingredients and Allergens', 'Difficulty and Time', 'Directions', 'Credit', 'Submit']
+        steps: ['Name/description', 'Image', 'Nutrition', 'Ingredients and Allergens', 'Difficulty and Time', 'Directions', 'Credit', 'Submit'],
+        file: null,
+        filename: '',
+        name: '',
+        description: '',
+        image: '',
+        calories: '',
+        carbs: '',
+        fat: '',
+        protein: ''
     }
 
     getStepContent(step) {
@@ -23,7 +35,7 @@ class Multiform extends Component {
           case 1:
             return this.imageStep();
           case 2:
-            return 'nutrition';
+            return this.nutritionStep();
           case 3:
             return 'ingredients/allergens/amounts'
           case 4: 
@@ -36,6 +48,18 @@ class Multiform extends Component {
             return 'submit'
           default:
             return 'Unknown step';
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    fileOnChange = (e) => {
+        if(e.target.files[0]) {
+            this.setState({file: e.target.files[0]});
+            this.setState({filename: e.target.files[0].name});
+            this.setState({image: URL.createObjectURL(e.target.files[0])});
         }
     }
 
@@ -54,7 +78,7 @@ class Multiform extends Component {
         return (
             <div>
                 <h2 style={{marginLeft: '3em'}}>Upload an image:</h2>
-                <Button component="label" variant="outlined" style={{marginBottom: '22em', marginLeft: '8em'}}>
+                <Button component="label" variant="outlined" style={{marginBottom: '2em', marginLeft: '8em'}}>
                     Upload
                     <input type='file' 
                            style={{display: 'none'}} 
@@ -64,7 +88,43 @@ class Multiform extends Component {
                     </input>
                 </Button>
                 <label htmlFor='customImage'>{this.filename}</label>
-                <img style={{width: '50%', display: 'block'}} src={this.state.image} alt={''}/>
+                <img style={{width: '50%', display: 'block', margin: 'auto', marginBottom: '10em'}} src={this.state.image} alt={''}/>
+            </div>
+        );
+    }
+
+    nutritionStep = () => {
+        const theme = createMuiTheme({
+            palette: {
+                primary: {
+                    main: 'rgb(254, 98, 57)'
+                }
+            }
+        }); 
+
+        return (
+            <div style={{marginLeft: '3em'}}>
+                <h2>Enter nutrition information:</h2>
+                <div>
+                    <div style={{height: '2em'}}></div>
+                    <ThemeProvider theme={theme}>
+                        <Grid container>
+                            <Grid item xs={3}>
+                                <p><span style={{fontWeight: 'bold'}}>Calories:</span> <TextField name="calories" onChange={this.onChange} color="primary" type="number" style={{width: '3em'}}/>grams</p>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <p><span style={{fontWeight: 'bold'}}>Carbs:</span> <TextField name="carbs" onChange={this.onChange} color="primary" type="number" style={{width: '3em'}}/>grams</p>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <p><span style={{fontWeight: 'bold'}}>Protein:</span> <TextField name="protein" onChange={this.onChange} color="primary" type="number" style={{width: '3em'}}/>grams</p>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <p><span style={{fontWeight: 'bold'}}>Fat:</span> <TextField name="fat" onChange={this.onChange} color="primary" type="number" style={{width: '3em'}}/>grams</p>
+                            </Grid>
+                        </Grid>
+                    </ThemeProvider>
+                    <div style={{height: '4em'}}></div>
+                </div>
             </div>
         );
     }
