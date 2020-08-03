@@ -20,7 +20,7 @@ class User extends Component {
     render() { 
         return (  
             <div>
-                <IconButton  style={{marginLeft: '60em'}}>
+                <IconButton>
                     <AccountCircleIcon fontSize={'large'} onClick={() => {this.setState({open: true})}}></AccountCircleIcon>
                     <Drawer anchor={'right'} open={this.state.open} onClose={() => {this.setState({open: false})}}>
                         <Link to="/user/account">

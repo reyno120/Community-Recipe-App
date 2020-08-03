@@ -45,7 +45,9 @@ class Navbar extends Component {
             <div style={{flexGrow: '1'}}>
                 <AppBar position="static" style={{backgroundColor: 'rgb(228, 221, 211)', color: 'rgb(25, 26, 23)'}}>
                     <Toolbar>
-                    <Broccoli style={{fill: 'green'}}></Broccoli>
+                        <div>
+                            <Broccoli style={{fill: 'green'}}></Broccoli>
+                        </div>    
                     <Button style={{textTransform: 'none', marginLeft: '3em'}}>
                         <Typography variant="h6">
                             <Link to="/home">
@@ -67,7 +69,9 @@ class Navbar extends Component {
                             </Link>
                         </Typography>
                     </Button>
-                    {this.state.component}
+                    <div style={{marginLeft: 'auto'}}>
+                        {this.state.component}
+                    </div>
               </Toolbar>
             </AppBar>
           </div> 
