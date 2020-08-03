@@ -98,6 +98,7 @@ const ingredients = [
     { value: 'rice vinegar', label: 'rice vinegar'},
     { value: 'tarragon vinegar', label: 'tarragon vinegar'},
     { value: 'onions', label: 'onions'},
+    { value: 'yellow onions', label: 'yellow onions'},
     { value: 'red onions', label: 'red onions'},
     { value: 'sweet onions', label: 'sweet onions'},
     { value: 'green onions', label: 'green onions'},
@@ -107,6 +108,7 @@ const ingredients = [
     { value: 'red potatoes', label: 'red potatoes'},
     { value: 'white potatoes', label: 'white potatoes'},
     { value: 'yukon gold potatoes', label: 'yukon gold potatoes'},
+    { value: 'russet potatoes', label: 'russet potatoes'},
     { value: 'sweet potatoes', label: 'sweet potatoes'},
     { value: 'japanese sweet potatoes', label: 'japanese sweet potatoes'},
     { value: 'celery', label: 'celery'},
@@ -219,6 +221,8 @@ const ingredients = [
     { value: 'peanut sauce', label: 'peanut sauce'},
     { value: 'tortilla chips', label: 'tortilla chips'},
     { value: 'salsa', label: 'salsa'},
+    { value: 'baking powder', label: 'baking powder'},
+    { value: 'oat flour', label: 'oat flour'}
 ];
 
 export default ingredients;
