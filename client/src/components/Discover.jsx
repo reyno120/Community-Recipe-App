@@ -130,6 +130,7 @@ class Discover extends Component {
                         <Button variant="outlined" onClick={this.handleSubmit}>Submit</Button> 
                     </Grid>
                 </Paper>
+                <div style={{height: '2em'}}></div>
                 <Paper
                     elevation={3}
                     style={{
@@ -137,7 +138,7 @@ class Discover extends Component {
                         width: '1366px',
                         margin: 'auto'
                     }}>
-                    <Grid container>
+                    <Grid spacing={3} style={{margin: 'auto'}} container>
                         {this.state.recipes.map((details, index) => (
                             <Grid item xs={3}>
                                 <SingleCard

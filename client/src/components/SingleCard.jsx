@@ -200,12 +200,12 @@ class SingleCard extends Component {
                 <FavoriteIcon onClick={this.handleLike} style={{color: this.state.likeColor}} />
                 <div style={{fontSize: '16px', color: 'gray'}}>&nbsp;({this.state.likeCount})</div>
               </IconButton>
-              <IconButton>
+              {/* <IconButton>
                 <ChatIcon />
-              </IconButton>
-              <IconButton aria-label="share">
+              </IconButton> */}
+              {/* <IconButton aria-label="share">
                 <ShareIcon onClick={this.handleShare} style={{color: this.state.shareColor}} />
-              </IconButton>
+              </IconButton> */}
               <IconButton style={{marginLeft: 'auto'}}>
                   <BookmarkIcon onClick={this.handleBookmark} style={{color: this.state.bookmarkColor}}></BookmarkIcon>
               </IconButton>
