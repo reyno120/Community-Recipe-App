@@ -12,6 +12,14 @@ class Tips extends Component {
         }
     }
 
+    componentDidMount() {
+        var inputs = [];
+        for(var i = 1; i < this.props.tips.length; i++) {
+            inputs.push(this.props.tips[i]);
+        }
+        this.setState({inputs: inputs});
+    }
+
     addTip = () => {
         var inputs = this.state.inputs;
         // inputs.push(<TextField onChange={this.props.handleTips(inputs.length + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>);
@@ -63,13 +71,13 @@ class Tips extends Component {
                         })}
 
                         <p style={{fontWeight: "bold"}}>#1: 
-                                    <TextField onChange={this.props.handleTips(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    <TextField value={this.props.tips[0]} onChange={this.props.handleTips(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                         </p>
 
                         {this.state.inputs.map((input, index) => {
                             return (
                                 <p style={{fontWeight: "bold"}}>#{index + 2}: 
-                                    <TextField onChange={this.props.handleTips(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    <TextField value={this.props.tips[index + 1]} onChange={this.props.handleTips(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                                 </p>
                             );
                         })}

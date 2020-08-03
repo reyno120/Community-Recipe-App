@@ -29,7 +29,7 @@ const theme = createMuiTheme({
 
 class Multiform extends Component {
     state = {  
-        activeStep: 7,
+        activeStep: 0,
         completed: {},
         steps: ['Name/description', 'Image', 'Nutrition', 'Ingredients and Allergens', 'Difficulty and Time', 'Directions', 'Credit', 'Submit'],
         file: null,
@@ -50,6 +50,8 @@ class Multiform extends Component {
         tips: [],
         contributors: '',
         source: '',
+        displaySuccess: 'none',
+        displayContribute: 'block'
     }
 
     getStepContent(step) {
@@ -175,19 +177,19 @@ class Multiform extends Component {
             data.append('ingredients', this.state.ingredients[i]);
         }
         
-        for(var i = 0; i < this.state.allergens.length; i++) {
+        for(i = 0; i < this.state.allergens.length; i++) {
             data.append('allergens', this.state.allergens[i]);
         }
 
-        for(var i = 0; i < this.state.amounts.length; i++) {
+        for(i = 0; i < this.state.amounts.length; i++) {
             data.append('amounts', this.state.amounts[i]);
         }
 
-        for(var i = 0; i < this.state.directions.length; i++) {
+        for(i = 0; i < this.state.directions.length; i++) {
             data.append('directions', this.state.directions[i]);
         }
 
-        for(var i = 0; i < this.state.tips.length; i++) {
+        for(i = 0; i < this.state.tips.length; i++) {
             data.append('tips', this.state.tips[i]);
         }
     
@@ -210,9 +212,9 @@ class Multiform extends Component {
         return (
             <div style={{marginLeft: '3em', marginBottom: '2em'}}>
                 <h2 style={{marginBottom: '0'}}>What is the name of your Recipe?</h2>
-                <TextField name="name" onChange={this.onChange} label="Recipe Name" color="none" style={{width: '23em'}} />
+                <TextField name="name" value={this.state.name} onChange={this.onChange} label="Recipe Name" color="none" style={{width: '23em'}} />
                 <h2 style={{marginBottom: '0'}}>Describe your Recipe:</h2>
-                <TextField name="description" onChange={this.onChange} label="Description" multiline rowsMax={3} style={{width: '23em'}} />
+                <TextField name="description" value={this.state.description} onChange={this.onChange} label="Description" multiline rowsMax={3} style={{width: '23em'}} />
             </div>
         );
     }
@@ -237,6 +239,12 @@ class Multiform extends Component {
     }
 
     ingredientsStep = () => {
+        var ingr = [];
+        for(var i = 0; i < this.state.ingredients.length; i++) {
+            ingr.push({value: this.state.ingredients[i], label: this.state.ingredients[i]});
+        }
+        console.log(ingr);
+
         return (
             <div style={{marginBottom: '6em'}}>
                 <ThemeProvider theme={theme}>
@@ -248,6 +256,7 @@ class Multiform extends Component {
                                 onChange={this.handleIngredients}
                                 options={IngredientList}
                                 isSearchable={true}
+                                defaultValue={ingr}
                             />
                         </Grid>
                         <Grid xs={6} align="center" style={{marginTop: '2em'}}>
@@ -293,6 +302,7 @@ class Multiform extends Component {
                                         type="number" 
                                         inputProps={{min: 0}} 
                                         style={{width: '3em'}}
+                                        value={this.state.calories}
                                     />grams
                                 </p>
                             </Grid>
@@ -308,6 +318,7 @@ class Multiform extends Component {
                                             type="number" 
                                             inputProps={{min: 0}} 
                                             style={{width: '3em'}}
+                                            value={this.state.carbs}
                                         />grams
                                     </p>
                             </Grid>
@@ -323,6 +334,7 @@ class Multiform extends Component {
                                         type="number" 
                                         inputProps={{min: 0}} 
                                         style={{width: '3em'}}
+                                        value={this.state.protein}
                                     />grams
                                 </p>
                             </Grid>
@@ -338,6 +350,7 @@ class Multiform extends Component {
                                         type="number" 
                                         inputProps={{min: 0}} 
                                         style={{width: '3em'}}
+                                        value={this.state.fat}
                                     />grams
                                 </p>
                             </Grid>
@@ -390,7 +403,7 @@ class Multiform extends Component {
                         </Grid>
                         <Grid xs={12} align="center">
                             <h2>How much time does this recipe take to make?</h2>
-                            <p><TextField name="time" type="number" inputProps={{min: 0}} onChange={this.onChange} style={{width: '3em'}} />minutes</p>
+                            <p><TextField name="time" value={this.state.time} type="number" inputProps={{min: 0}} onChange={this.onChange} style={{width: '3em'}} />minutes</p>
                         </Grid>
                 </Grid>
             </ThemeProvider>
@@ -401,10 +414,10 @@ class Multiform extends Component {
         return (
             <Grid container>
                 <Grid xs={12}>
-                    <Directions handleDirections={this.handleDirections} deleteDirection={this.deleteDirection}></Directions>
+                    <Directions directions={this.state.directions} handleDirections={this.handleDirections} deleteDirection={this.deleteDirection}></Directions>
                 </Grid>
                 <Grid xs={12} style={{marginTop: '3em'}}>
-                    <Tips handleTips={this.handleTips} deleteTip={this.deleteTip}></Tips>
+                    <Tips tips={this.state.tips} handleTips={this.handleTips} deleteTip={this.deleteTip}></Tips>
                 </Grid>
             </Grid>
         );
@@ -414,10 +427,10 @@ class Multiform extends Component {
         return (
             <Grid container>
                 <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
-                    <h2>Contributors: <TextField name="contributors" onChange={this.onChange} style={{width: '20em'}}></TextField></h2>
+                    <h2>Contributors: <TextField name="contributors" value={this.state.contributors} onChange={this.onChange} style={{width: '20em'}}></TextField></h2>
                 </Grid>
                 <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
-                    <h2>Source: <TextField name='source' onChange={this.onChange} style={{width: '23em'}}></TextField></h2>
+                    <h2>Source: <TextField name='source' value={this.state.source} onChange={this.onChange} style={{width: '23em'}}></TextField></h2>
                 </Grid>
             </Grid>
         );
@@ -469,16 +482,6 @@ class Multiform extends Component {
                     <p>Contributors: {this.state.contributors}</p>
                     <p>Source: {this.state.source}</p>
                 </div>
-                <ThemeProvider theme={theme}>
-                    <div style={{textAlign: 'center'}}>
-                        <Button type="submit" color="primary" variant="outlined" onClick={this.handleSubmit} style={{
-                                    textTransform: 'none',
-                                    fontSize: '1.2rem',
-                                    width: '8em'
-                                    }}>Submit!
-                        </Button>
-                    </div>
-                </ThemeProvider>
             </div>
         );
     }
@@ -568,53 +571,57 @@ class Multiform extends Component {
 
         return (  
             <Paper style={styles.root}>
-                <h1 style={{color: 'black', paddingTop: '.5em'}}>Share your Delicious Recipe!</h1>
-                <Stepper nonLinear activeStep={this.state.activeStep}>
-                    {this.state.steps.map((label, index) => (
-                    <Step key={label}>
-                        <StepButton onClick={this.handleStep(index)} completed={this.state.completed[index]}>
-                            <StepLabel className={{root: styles.stepIcon, active: styles.stepIcon}}>
-                                {label}
-                            </StepLabel>
-                        </StepButton>
-                    </Step>
-                    ))}
-                </Stepper>
-                <div>
-                    {this.allStepsCompleted() ? (
+                <div style={{display: this.state.displayContribute}}>
+                    <h1 style={{color: 'black', paddingTop: '.5em'}}>Share your Delicious Recipe!</h1>
+                    <Stepper nonLinear activeStep={this.state.activeStep}>
+                        {this.state.steps.map((label, index) => (
+                        <Step key={label}>
+                            <StepButton onClick={this.handleStep(index)} completed={this.state.completed[index]}>
+                                <StepLabel className={{root: styles.stepIcon, active: styles.stepIcon}}>
+                                    {label}
+                                </StepLabel>
+                            </StepButton>
+                        </Step>
+                        ))}
+                    </Stepper>
                     <div>
-                        <Typography style={styles.instructions}>
-                        All steps completed - you&apos;re finished
-                        </Typography>
-                        <Button onClick={this.handleReset}>Reset</Button>
-                    </div>
-                    ) : (
-                    <div>
-                        <Typography className={styles.instructions}>{this.getStepContent(this.state.activeStep)}</Typography>
+                        {this.allStepsCompleted() ? (
                         <div>
-                        <Button disabled={this.state.activeStep === 0} onClick={this.handleBack} style={styles.backButton}>
-                            Back
-                        </Button>
-                        <Button
-                            variant="contained"
-                            onClick={this.handleNext}
-                            style={styles.button}
-                        >
-                            Next
-                        </Button>
-                        {this.state.activeStep !== this.state.steps.length &&
-                            (this.state.completed[this.state.activeStep] ? (
-                            <Typography variant="caption" style={styles.completed}>
-                                Step {this.state.activeStep + 1} already completed
+                            <Typography style={styles.instructions}>
+                            All steps completed - you&apos;re finished
                             </Typography>
-                            ) : (
-                            <Button variant="contained" style={styles.button} onClick={this.handleComplete}>
-                                {this.completedSteps() === this.totalSteps() - 1 ? 'Finish' : 'Complete Step'}
-                            </Button>
-                            ))}
+                            <Button onClick={this.handleReset}>Reset</Button>
                         </div>
+                        ) : (
+                        <div>
+                            <Typography className={styles.instructions}>{this.getStepContent(this.state.activeStep)}</Typography>
+                            <div>
+                            <Button disabled={this.state.activeStep === 0} onClick={this.handleBack} style={styles.backButton}>
+                                Back
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={this.handleNext}
+                                style={styles.button}
+                                disabled={this.state.activeStep === 7}
+                            >
+                                Next
+                            </Button>
+                                {this.state.activeStep === 7 ? (
+                                    <Button variant="contained" style={styles.button} onClick={this.handleSubmit}>
+                                        Submit
+                                    </Button>
+                                ) : (
+                                    <Button variant="contained" disabled style={styles.button} >
+                                        Submit
+                                    </Button>)}
+                            </div>
+                        </div>
+                        )}
                     </div>
-                    )}
+                </div>
+                <div style={{display: this.state.displaySuccess}}>
+                    <h2>Your recipe has been successfully uploaded!</h2>
                 </div>
             </Paper>
         );

@@ -13,9 +13,16 @@ class Directions extends Component {
         }
     }
 
+    componentDidMount() {
+        var inputs = [];
+        for(var i = 1; i < this.props.directions.length; i++) {
+            inputs.push(this.props.directions[i]);
+        }
+        this.setState({inputs: inputs})
+    }
+
     addStep = () => {
         var inputs = this.state.inputs;
-        // inputs.push(<TextField onChange={this.props.handleDirections} style={{marginLeft: '1em', width: '55em'}}></TextField>);
         inputs.push('');
         this.setState({inputs: inputs});
     }
@@ -63,14 +70,15 @@ class Directions extends Component {
                             );
                         })}
 
+
                         <p style={{fontWeight: "bold"}}>Step 1: 
-                                    <TextField name="step" onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                            <TextField name="step" value={this.props.directions[0]} onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                         </p>
 
                         {this.state.inputs.map((input, index) => {
                             return (
                                 <p style={{fontWeight: "bold"}}>Step {index + 2}: 
-                                    <TextField name="step" onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    <TextField name="step" value={this.props.directions[index + 1]} onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
                                 </p>
                             );
                         })}
