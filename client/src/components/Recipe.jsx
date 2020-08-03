@@ -215,6 +215,9 @@ class Recipe extends Component {
                                 <Grid item xs={6} align="center">
                                     <p>Source: {details.source}</p>
                                 </Grid>
+                                <Grid item xs={12} align="right" style={{color: 'rgb(119, 116, 111, .6)'}}>
+                                    {details.created}
+                                </Grid>
                             </Grid>
                         </div>
                     ))}

@@ -1,42 +1,50 @@
 const path = require('path');
 const Recipe = require('../models/Recipe');
+const User = require('../models/User');
 const { v4: uuidv4 } = require('uuid');
 const { jwtKey } = require('../config/keys');
 const jwt = require('jsonwebtoken');
 
 function createRecipe(req, res, fileName, author) {
-    Recipe.create({
-        name: req.body.name,
-        description: req.body.description,
-        author: author,
-        contributors: req.body.contributors,
-        source: req.body.source,
-        directions: req.body.directions,
-        ingredients: req.body.ingredients,
-        allergens: req.body.allergens,
-        amounts: req.body.amounts,
-        tips: req.body.tips,
-        nutrition: {
-            calories: req.body.calories,
-            carbs: req.body.carbs,
-            fat: req.body.fat,
-            protein: req.body.protein
-        },
-        time: req.body.time,
-        difficulty: req.body.difficulty,
-        image: '/images/'+ fileName,
-        likes: 0,
-        likedBy: [''],
-        recipeID: uuidv4(),
-        created: req.body.created
-    },
-    (error, recipe) => {
+    User.find({username: author}, (error, user) => {
         if(error) {
             console.log(error);
         }
-        // res.redirect('/');
-        res.send();
-    });
+        else {
+            Recipe.create({
+                name: req.body.name,
+                description: req.body.description,
+                author: author,
+                authorImage: user[0].image,
+                contributors: req.body.contributors,
+                source: req.body.source,
+                directions: req.body.directions,
+                ingredients: req.body.ingredients,
+                allergens: req.body.allergens,
+                amounts: req.body.amounts,
+                tips: req.body.tips,
+                nutrition: {
+                    calories: req.body.calories,
+                    carbs: req.body.carbs,
+                    fat: req.body.fat,
+                    protein: req.body.protein
+                },
+                time: req.body.time,
+                difficulty: req.body.difficulty,
+                image: '/images/'+ fileName,
+                likes: 0,
+                likedBy: [''],
+                recipeID: uuidv4(),
+                created: req.body.created
+            },
+            (error, recipe) => {
+                if(error) {
+                    console.log(error);
+                }
+                res.send();
+            });
+        }
+    })
 }
 
 module.exports = (req, res) => {

@@ -7,6 +7,7 @@ import Recipe from './components/Recipe';
 import Bookmarks from './components/Bookmarks';
 import Account from './components/Account';
 import Profile from './components/Profile';
+import MyRecipes from './components/MyRecipes';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
@@ -24,6 +25,7 @@ class App extends Component {
             <Route exact path="/discover" component={Discover} />
             <Route exact path="/recipes/:recipeID" component={Recipe} />
             <Route exact path="/user/account" component={Account} />
+            <Route exact path="/user/recipes" component={MyRecipes} />
             <Route exact path="/users/:username" component={Profile} />
             <Route path="/" component={Home} />
           </Switch>

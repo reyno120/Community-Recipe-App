@@ -26,6 +26,9 @@ class User extends Component {
                         <Link to="/user/account">
                             <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Account</Button>
                         </Link>
+                        <Link to="/user/recipes">
+                            <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Recipes</Button>
+                        </Link>
                         <Link to="/bookmarks">
                             <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>Bookmarks</Button>
                         </Link>

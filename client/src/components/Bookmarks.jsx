@@ -54,7 +54,7 @@ class Bookmarks extends Component {
         }
         else if(this.state.component === 'show bookmarks') {
             return (
-                <Grid container spacing={2} style={{justifyContent: 'center', marginTop: '2em'}}>
+                <Grid container spacing={2} style={{justifyContent: 'center', margin: '2em auto auto auto', width: '1366px'}}>
                     {this.state.recipes.map((details, index) => {
                         return (
                             <Grid item xs={3}>
