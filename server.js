@@ -25,6 +25,7 @@ const discoverController = require('./controllers/discoverController');
 const usersController = require('./controllers/usersController');
 const followController = require('./controllers/followController');
 const myRecipesController = require('./controllers/myRecipesController');
+const deleteRecipeController = require('./controllers/deleteRecipeController');
 
 
 
@@ -63,6 +64,7 @@ app.post('/comments/get', commentController);
 app.post('/comments/add', verifyToken, commentController);
 app.post('/discover', discoverController);
 app.post('/follow', verifyToken, followController);
+app.post('/recipe/delete', verifyToken, deleteRecipeController);
 
 
 

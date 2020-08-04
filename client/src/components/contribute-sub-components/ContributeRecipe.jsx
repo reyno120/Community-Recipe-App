@@ -18,7 +18,7 @@ import axios from 'axios';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import '../../App.css';
-import { IconButton } from '@material-ui/core';
+import { IconButton, DialogTitle, DialogActions, Dialog } from '@material-ui/core';
 
 
 const theme = createMuiTheme({
@@ -56,7 +56,8 @@ class Multiform extends Component {
         source: '',
         displaySuccess: 'none',
         displaySuccessEdit: 'none',
-        displayContribute: 'block'
+        displayContribute: 'block',
+        open: false
     }
 
     getStepContent(step) {
@@ -319,9 +320,6 @@ class Multiform extends Component {
             this.setState({displaySuccessEdit: 'block'});
             this.setState({displayContribute: 'none'});
         });
-        // need to implement delete
-        // need to implement updateOne on server
-        // need to test!
     }
 
 
@@ -658,7 +656,18 @@ class Multiform extends Component {
     };
     
     handleDelete = () => {
-        
+        axios.post('/recipe/delete', {
+            recipeID: this.state.recipeID
+        },
+        {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            console.log("test");
+            window.location.replace("/contribute");
+        });
     };
 
     render() { 
@@ -705,7 +714,7 @@ class Multiform extends Component {
                             </Grid>
                             <Grid item xs={2} align="center" style={{marginTop: '.5em'}}>
                                 <IconButton>
-                                    <DeleteForeverIcon onClick={this.handleDelete} style={{fill: 'red', width: '40px', height: '40px'}}></DeleteForeverIcon>
+                                    <DeleteForeverIcon onClick={() => this.setState({open: true})} style={{fill: 'red', width: '40px', height: '40px'}}></DeleteForeverIcon>
                                 </IconButton>
                             </Grid>
                         </Grid>
@@ -772,6 +781,13 @@ class Multiform extends Component {
                 <div style={{display: this.state.displaySuccessEdit}}>
                     <h2>Your recipe has been successfully updated!</h2>
                 </div>
+                <Dialog onClose={() => {this.setState({open: false})}} open={this.state.open}>
+                    <DialogTitle>Are you sure you want to delete this recipe?</DialogTitle>
+                    <DialogActions style={{margin: 'auto'}}>
+                        <Button onClick={this.handleDelete}>Yes</Button>
+                        <Button onClick={() => {this.setState({open: false})}}>No</Button>
+                    </DialogActions>
+                </Dialog>
             </Paper>
         );
     }
