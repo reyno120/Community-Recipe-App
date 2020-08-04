@@ -69,6 +69,13 @@ class Navbar extends Component {
                             </Link>
                         </Typography>
                     </Button>
+                    <Button style={{textTransform: 'none', marginLeft: '3em'}}>
+                        <Typography variant="h6" >
+                            <Link to="/feedback">
+                                Feedback
+                            </Link>
+                        </Typography>
+                    </Button>
                     <div style={{marginLeft: 'auto'}}>
                         {this.state.component}
                     </div>

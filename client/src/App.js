@@ -9,6 +9,7 @@ import Account from './components/Account';
 import Profile from './components/Profile';
 import MyRecipes from './components/MyRecipes';
 import EditRecipe from './components/EditRecipe';
+import Feedback from './components/Feedback';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
@@ -23,6 +24,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/bookmarks" component={Bookmarks} />
             <Route exact path="/contribute" component={Contribute} />
+            <Route exact path="/feedback" component={Feedback} />
             <Route exact path="/discover" component={Discover} />
             <Route exact path="/recipes/:recipeID" component={Recipe} />
             <Route exact path="/user/account" component={Account} />
