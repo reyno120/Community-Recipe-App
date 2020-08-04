@@ -190,11 +190,15 @@ class Recipe extends Component {
                                 </Grid>
                                 <Grid item xs={3} align="center">
                                     <h2>Useful tips</h2>
-                                    <ul style={{listStylePosition: 'inside'}}>
-                                        {details.tips.map((value, index) => {
-                                            return <li key={index}>{value}</li>
-                                        })}
-                                    </ul>
+                                    {details.tips !== null ? (
+                                        <ul style={{listStylePosition: 'inside'}}>
+                                            {details.tips.map((value, index) => {
+                                                return <li key={index}>{value}</li>
+                                            })}
+                                        </ul>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </Grid>
                             </Grid>
                             <h2 style={{
@@ -203,11 +207,15 @@ class Recipe extends Component {
                                 textDecoration: 'underline',
                                 marginLeft: '2em'
                                 }}>Directions:</h2>
-                            <ul style={{marginLeft: '2em', marginRight: '2em', listStyleType: 'decimal'}}>
-                                {details.directions.map((value, index) => {
-                                    return <li style={{marginBottom: '1em'}} key={index}>{value}</li>
-                                })}
-                            </ul>
+                            {details.directions !== null ? (
+                                <ul style={{marginLeft: '2em', marginRight: '2em', listStyleType: 'decimal'}}>
+                                    {details.directions.map((value, index) => {
+                                        return <li style={{marginBottom: '1em'}} key={index}>{value}</li>
+                                    })}
+                                </ul>
+                            ) : (
+                                <div></div>
+                            )}
                             <Grid container>
                                 <Grid item xs={6} align="center">
                                     <p>Author: {details.author}</p>

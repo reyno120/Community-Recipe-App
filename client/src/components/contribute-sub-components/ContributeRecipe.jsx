@@ -15,8 +15,10 @@ import Allergens from './Allergens';
 import Directions from './Directions';
 import Tips from './Tips';
 import axios from 'axios';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import '../../App.css';
+import { IconButton } from '@material-ui/core';
 
 
 const theme = createMuiTheme({
@@ -32,6 +34,8 @@ class Multiform extends Component {
         activeStep: 0,
         completed: {},
         steps: ['Name/description', 'Image', 'Nutrition', 'Ingredients and Allergens', 'Difficulty and Time', 'Directions', 'Credit', 'Submit'],
+        author: '',
+        recipeID: '',
         file: null,
         filename: '',
         name: '',
@@ -51,6 +55,7 @@ class Multiform extends Component {
         contributors: '',
         source: '',
         displaySuccess: 'none',
+        displaySuccessEdit: 'none',
         displayContribute: 'block'
     }
 
@@ -88,13 +93,16 @@ class Multiform extends Component {
             })
             .then((res) => {
                 const recipe = res.data.recipe[0];
+                this.setState({author: recipe.author});
+                this.setState({recipeID: recipe.recipeID});
                 this.setState({name: recipe.name});
                 this.setState({description: recipe.description});
                 this.setState({image: recipe.image});
-                this.setState({calories: recipe.calories});
-                this.setState({carbs: recipe.carbs});
-                this.setState({fat: recipe.fat});
-                this.setState({protein: recipe.protein});
+                this.setState({filename: recipe.image});
+                this.setState({calories: recipe.nutrition.calories});
+                this.setState({carbs: recipe.nutrition.carbs});
+                this.setState({fat: recipe.nutrition.fat});
+                this.setState({protein: recipe.nutrition.protein});
                 this.setState({ingredients: recipe.ingredients});
                 this.setState({amounts: recipe.amounts});
                 this.setState({difficulty: recipe.difficulty});
@@ -217,12 +225,22 @@ class Multiform extends Component {
             data.append('amounts', this.state.amounts[i]);
         }
 
-        for(i = 0; i < this.state.directions.length; i++) {
-            data.append('directions', this.state.directions[i]);
+        if(this.state.directions !== null) {
+            for(i = 0; i < this.state.directions.length; i++) {
+                data.append('directions', this.state.directions[i]);
+            }
+        }
+        else{
+            data.append('directions', []);
         }
 
-        for(i = 0; i < this.state.tips.length; i++) {
-            data.append('tips', this.state.tips[i]);
+        if(this.state.tips !== null) {
+            for(i = 0; i < this.state.tips.length; i++) {
+                data.append('tips', this.state.tips[i]);
+            }
+        }
+        else {
+            data.append('tips', []);
         }
     
         axios.post('/recipeUpload', data, {
@@ -241,7 +259,66 @@ class Multiform extends Component {
     // same thing as handleSubmit but we call updateOne rather than create
     // in mongoose
     handleEdit = () => {
-        // need to implement displaySuccessEdit
+        const data = new FormData();
+
+        data.append('file', this.state.file);
+        data.append('image', this.state.image);
+        data.append('author', this.state.author);
+        data.append('recipeID', this.state.recipeID);
+        data.append('name', this.state.name);
+        data.append('description', this.state.description);
+        data.append('calories', this.state.calories);
+        data.append('carbs', this.state.carbs);
+        data.append('fat', this.state.fat);
+        data.append('protein', this.state.protein);
+        data.append('difficulty', this.state.difficulty);
+        data.append('time', this.state.time);
+        data.append('contributors', this.state.contributors);
+        data.append('source', this.state.source);
+        data.append('update', 'true');
+
+        for(var i = 0; i < this.state.ingredients.length; i++) {
+            data.append('ingredients', this.state.ingredients[i]);
+        }
+        
+        for(i = 0; i < this.state.allergens.length; i++) {
+            data.append('allergens', this.state.allergens[i]);
+        }
+
+        for(i = 0; i < this.state.amounts.length; i++) {
+            data.append('amounts', this.state.amounts[i]);
+        }
+
+        if(this.state.directions !== null) {
+            for(i = 0; i < this.state.directions.length; i++) {
+                data.append('directions', this.state.directions[i]);
+            }
+        }
+        else {
+            data.append('directions', []);
+        }
+        
+
+        if(this.state.tips !== null) {
+            for(i = 0; i < this.state.tips.length; i++) {
+                data.append('tips', this.state.tips[i]);
+            }
+        }
+        else {
+            data.append('tips', []);
+        }
+        
+    
+        axios.post('/recipeUpload', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+          }
+        })
+        .then((res) => {
+            this.setState({displaySuccessEdit: 'block'});
+            this.setState({displayContribute: 'none'});
+        });
         // need to implement delete
         // need to implement updateOne on server
         // need to test!
@@ -510,17 +587,25 @@ class Multiform extends Component {
                     <p>Difficulty: {this.state.difficulty}</p>
                     <p>Time: {this.state.time} minutes</p>
                     <p>Directions: </p>
-                    <ul style={{listStyleType: 'none'}}>{this.state.directions.map((direction, i) => {
-                        return (
-                            <li>{i+ 1}.{direction}</li>
-                        );
+                    {this.state.directions !== null ? (
+                        <ul style={{listStyleType: 'none'}}>{this.state.directions.map((direction, i) => {
+                            return (
+                                <li>{i+ 1}.{direction}</li>
+                            );
                     })}</ul>
+                    ) : (
+                        <div></div>
+                    )}
                     <p>Tips: </p>
-                    <ul style={{listStyleType: 'none'}}>{this.state.tips.map((tip, i) => {
-                        return (
-                            <li>{i+ 1}.{tip}</li>
-                        );
+                    {this.state.tips !== null ? (
+                        <ul style={{listStyleType: 'none'}}>{this.state.tips.map((tip, i) => {
+                            return (
+                                <li>{i+ 1}.{tip}</li>
+                            );
                     })}</ul>
+                    ) : (
+                        <div></div>
+                    )}
                     <p>Contributors: {this.state.contributors}</p>
                     <p>Source: {this.state.source}</p>
                 </div>
@@ -572,9 +657,8 @@ class Multiform extends Component {
         this.handleNext();
     };
     
-    handleReset = () => {
-        this.setState({activeStep: 0});
-        this.setState({completed: {}});
+    handleDelete = () => {
+        
     };
 
     render() { 
@@ -619,8 +703,10 @@ class Multiform extends Component {
                             <Grid item xs={10}>
                                 <h2 style={{paddingTop: '.5em', marginLeft: '1.5em'}}>Edit your recipe</h2>
                             </Grid>
-                            <Grid item xs={2} align="center">
-                                <Button style={{color: 'red', textTransform: 'none', marginTop: '2.5em', marginRight: '5em'}}>Delete</Button>
+                            <Grid item xs={2} align="center" style={{marginTop: '.5em'}}>
+                                <IconButton>
+                                    <DeleteForeverIcon onClick={this.handleDelete} style={{fill: 'red', width: '40px', height: '40px'}}></DeleteForeverIcon>
+                                </IconButton>
                             </Grid>
                         </Grid>
                     ) : (
@@ -682,6 +768,9 @@ class Multiform extends Component {
                 </div>
                 <div style={{display: this.state.displaySuccess}}>
                     <h2>Your recipe has been successfully uploaded!</h2>
+                </div>
+                <div style={{display: this.state.displaySuccessEdit}}>
+                    <h2>Your recipe has been successfully updated!</h2>
                 </div>
             </Paper>
         );

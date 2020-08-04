@@ -47,31 +47,78 @@ function createRecipe(req, res, fileName, author) {
     })
 }
 
+
+function updateRecipe(req, res, fileName) {
+    Recipe.updateOne({recipeID: req.body.recipeID}, {
+        name: req.body.name,
+        description: req.body.description,
+        contributors: req.body.contributors,
+        source: req.body.source,
+        directions: req.body.directions,
+        ingredients: req.body.ingredients,
+        allergens: req.body.allergens,
+        amounts: req.body.amounts,
+        tips: req.body.tips,
+        nutrition: {
+            calories: req.body.calories,
+            carbs: req.body.carbs,
+            fat: req.body.fat,
+            protein: req.body.protein
+        },
+        time: req.body.time,
+        difficulty: req.body.difficulty,
+        image: fileName,
+    },
+    (error, recipe) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            res.send();
+        }
+    })
+}
+
 module.exports = (req, res) => {
     jwt.verify(req.token, jwtKey, (error, decoded) => {
         if(error) {
             res.status(403).json({expired: true});
         }
         else {
-            if(req.files !== null) {
-                var date = new Date();
-                req.files.file.name = date.getTime() + req.files.file.name; // add time stamp
-
-                const file = req.files.file;
-                const directory = path.join(__dirname, '../client/public/images/', file.name);
-        
-                file.mv(directory, error => {
-                    if(error) {
-                        console.error(error);
-                        return res.status(500).send(error);
-                    }
-            
-                    // var filePath = path.join('../../public/images', file.name);
-                    createRecipe(req, res, file.name, decoded.user.username);
-                });
+            if((req.body.author !== decoded.user.username) && (req.body.update)) {
+                console.log("Token does not match recipe author");
+                res.status(403);
             }
             else {
-                createRecipe(req, res, '', decoded.user.username);
+                if(req.files !== null) {
+                    var date = new Date();
+                    req.files.file.name = date.getTime() + req.files.file.name; // add time stamp
+
+                    const file = req.files.file;
+                    const directory = path.join(__dirname, '../client/public/images/', file.name);
+            
+                    file.mv(directory, error => {
+                        if(error) {
+                            console.error(error);
+                            return res.status(500).send(error);
+                        }
+                
+                        if(req.body.update) {
+                            updateRecipe(req, res, '/images/'+ file.name);
+                        }
+                        else {
+                            createRecipe(req, res, file.name, decoded.user.username);
+                        }
+                    });
+                }
+                else {
+                    if(req.body.update) {
+                        updateRecipe(req, res, req.body.image);
+                    }
+                    else {
+                        createRecipe(req, res, '', decoded.user.username);
+                    }
+                }
             }
         }
     });
