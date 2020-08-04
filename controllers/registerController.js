@@ -9,7 +9,7 @@ module.exports = (req, res) => {
         email: req.body.registerEmail,
         bookmarks: [],
         image: '',
-        following: [],
+        following: ['jmreynolds03'],
         followers: []
     },
     (error, user) => {

@@ -77,6 +77,38 @@ class Multiform extends Component {
         }
     }
 
+
+    componentDidMount() {
+        if(this.props.recipeID) {
+
+            axios.get('/recipes', {
+                params: {
+                    recipeID: this.props.recipeID
+                }
+            })
+            .then((res) => {
+                const recipe = res.data.recipe[0];
+                this.setState({name: recipe.name});
+                this.setState({description: recipe.description});
+                this.setState({image: recipe.image});
+                this.setState({calories: recipe.calories});
+                this.setState({carbs: recipe.carbs});
+                this.setState({fat: recipe.fat});
+                this.setState({protein: recipe.protein});
+                this.setState({ingredients: recipe.ingredients});
+                this.setState({amounts: recipe.amounts});
+                this.setState({difficulty: recipe.difficulty});
+                this.setState({time: recipe.time});
+                this.setState({directions: recipe.directions});
+                this.setState({tips: recipe.tips});
+                this.setState({contributors: recipe.contributors});
+                this.setState({source: recipe.source});
+                this.setState({name: recipe.name});
+            });
+        }
+    }
+
+
     //-----------CHANGE FUNCTIONS-----------//
     onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
@@ -203,6 +235,16 @@ class Multiform extends Component {
             this.setState({displaySuccess: 'block'});
             this.setState({displayContribute: 'none'});
         });
+    }
+
+
+    // same thing as handleSubmit but we call updateOne rather than create
+    // in mongoose
+    handleEdit = () => {
+        // need to implement displaySuccessEdit
+        // need to implement delete
+        // need to implement updateOne on server
+        // need to test!
     }
 
 
@@ -572,7 +614,18 @@ class Multiform extends Component {
         return (  
             <Paper style={styles.root}>
                 <div style={{display: this.state.displayContribute}}>
-                    <h1 style={{color: 'black', paddingTop: '.5em'}}>Share your Delicious Recipe!</h1>
+                    {this.props.edit ? (
+                        <Grid container style={{marginTop: '2em'}}>  
+                            <Grid item xs={10}>
+                                <h2 style={{paddingTop: '.5em', marginLeft: '1.5em'}}>Edit your recipe</h2>
+                            </Grid>
+                            <Grid item xs={2} align="center">
+                                <Button style={{color: 'red', textTransform: 'none', marginTop: '2.5em', marginRight: '5em'}}>Delete</Button>
+                            </Grid>
+                        </Grid>
+                    ) : (
+                        <h1 style={{color: 'black', paddingTop: '.5em'}}>Share your Delicious Recipe!</h1>
+                    )}
                     <Stepper nonLinear activeStep={this.state.activeStep}>
                         {this.state.steps.map((label, index) => (
                         <Step key={label}>
@@ -587,10 +640,10 @@ class Multiform extends Component {
                     <div>
                         {this.allStepsCompleted() ? (
                         <div>
-                            <Typography style={styles.instructions}>
+                            {/* <Typography style={styles.instructions}>
                             All steps completed - you&apos;re finished
                             </Typography>
-                            <Button onClick={this.handleReset}>Reset</Button>
+                            <Button onClick={this.handleReset}>Reset</Button> */}
                         </div>
                         ) : (
                         <div>
@@ -608,9 +661,16 @@ class Multiform extends Component {
                                 Next
                             </Button>
                                 {this.state.activeStep === 7 ? (
-                                    <Button variant="contained" style={styles.button} onClick={this.handleSubmit}>
-                                        Submit
-                                    </Button>
+                                    this.props.edit ? 
+                                    // if editing hit this submit button
+                                        <Button variant="contained" style={styles.button} onClick={this.handleEdit}>
+                                            Submit
+                                        </Button>
+                                    :
+                                    // if first contribute, hit this submit button
+                                        <Button variant="contained" style={styles.button} onClick={this.handleSubmit}>
+                                            Submit
+                                        </Button>
                                 ) : (
                                     <Button variant="contained" disabled style={styles.button} >
                                         Submit

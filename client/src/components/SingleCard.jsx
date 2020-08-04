@@ -11,6 +11,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import ChatIcon from '@material-ui/icons/Chat';
+import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -180,6 +181,17 @@ class SingleCard extends Component {
                 <Link to={`/users/${this.props.author}`}>
                   <Avatar alt={this.props.author} src={this.props.authorImage}/>
                 </Link>
+              }
+              action={
+                sessionStorage.getItem('username') === this.props.author ? (
+                  <IconButton size="small">
+                    <Link to={`/user/recipes/edit/${this.props.recipeID}`}>
+                      <EditIcon></EditIcon>
+                    </Link>
+                  </IconButton>
+                ) : (
+                  <div></div>
+                )
               }
               title={<Link to={`/recipes/${this.props.recipeID}`}>{this.props.name}</Link>}
               subheader={<Link to={`/users/${this.props.author}`}>{this.props.author}</Link>}
