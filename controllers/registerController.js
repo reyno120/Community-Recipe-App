@@ -24,7 +24,22 @@ module.exports = (req, res) => {
                     res.json({userExists: true});
                 }
                 else {
-                    res.json({token: token, userExists: false, username: user.username, bookmarks: user.bookmarks});
+                    User.updateOne({
+                        username: 'jmreynolds03'
+                    }, 
+                    {
+                        $push: {
+                            followers: user.username
+                        }
+                    },
+                    (error, user) => {
+                        if(error) {
+                            console.log(error);
+                        }
+                        else {
+                            res.json({token: token, userExists: false, username: user.username, bookmarks: user.bookmarks});
+                        }
+                    });
                 }
             });    
         }

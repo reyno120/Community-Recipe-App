@@ -116,7 +116,7 @@ class Allergens extends Component {
         var nuts = ["almond butter", "cashew butter", "almonds", "cashews", "walnuts", "pecans",
                     "almond milk", "almond milk (unsweetended)", "almond milk (chocolate)", 
                     "almond milk (vanilla)", "coconut milk", "coconut milk (unsweetened)",
-                    "cashew milk", "cashew milk (unsweetened)"];
+                    "cashew milk", "cashew milk (unsweetened)", "almond flour"];
 
         for(var i = 0; i < ingredients.length; i++) {
             if(nuts.includes(ingredients[i])) {
@@ -140,7 +140,7 @@ class Allergens extends Component {
 
     checkSoy = () => {
         var { ingredients } = this.props;
-        var soy = ["tempeh", "tofu", "tofu (silken", "tofu (firm)", "tofu (regular)", "tofu (extra-firm)",
+        var soy = ["tempeh", "tofu", "tofu (silken)", "tofu (firm)", "tofu (regular)", "tofu (extra-firm)",
                    "tofu (super-firm)", "edamame", "soy milk", "soy milk (unsweetened)", "soy milk (chocolate)",
                    "soy milk (vanilla)"];
 

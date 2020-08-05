@@ -111,8 +111,6 @@ class Recipe extends Component {
             sessionStorage.setItem('bookmarks', bookmarks);
             this.setState({bookmarked: false});
     
-            console.log(bookmarks);
-            console.log("posting");
             axios.post('/recipe/bookmark', {
               bookmarks: bookmarks,
               action: 'remove'
@@ -147,7 +145,7 @@ class Recipe extends Component {
                         margin: 'auto'
                     }}>
                     {this.state.recipe.map((details, index) => (
-                        <div>
+                        <div key={index}>
                             <h1 style={{
                                 color: 'rgb(25, 26, 23)',
                                 textDecoration: 'underline',
@@ -160,12 +158,12 @@ class Recipe extends Component {
                             </div>
                             <img src={details.image} alt="temporary" style={{width: '40%', marginLeft: '25em', display: 'block'}} />
                             <div style={{textAlign: 'center', marginTop: '1em'}}>
-                                <IconButton>
-                                    <FavoriteIcon style={{color: this.state.likeColor}} onClick={this.handleLike} />
+                                <IconButton onClick={this.handleLike}>
+                                    <FavoriteIcon style={{color: this.state.likeColor}} />
                                 </IconButton>
                                 <p style={{marginLeft: '-.5em', marginRight: '1em', fontSize: '18px', display: 'inline'}}>&nbsp;({this.state.likeCount})</p>
-                                <IconButton>
-                                    <BookmarkIcon style={{color: this.state.bookmarkColor}} onClick={this.handleBookmark} />
+                                <IconButton onClick={this.handleBookmark}>
+                                    <BookmarkIcon style={{color: this.state.bookmarkColor}} />
                                 </IconButton>
                             </div>
                             <p style={{
@@ -184,7 +182,7 @@ class Recipe extends Component {
                                     <h2>Ingredients</h2>
                                     <ul style={{listStylePosition: 'inside'}}>
                                         {details.ingredients.map((value, index) => {
-                                            return <li key={index}>{details.amounts[index]} {value}</li>
+                                            return <li key={index}>{details.amounts[index]} <span style={{fontWeight: 'bold'}}>{value}</span></li>
                                         })}
                                     </ul>
                                 </Grid>
@@ -239,8 +237,8 @@ class Recipe extends Component {
                         width: '1366px',
                         margin: 'auto' 
                     }}>
-                    <IconButton>
-                        <ExpandMoreIcon onClick={() => this.setState({expanded: !this.state.expanded})} style={this.state.expanded ? styles.expandOpen : styles.expand} />
+                    <IconButton onClick={() => this.setState({expanded: !this.state.expanded})}>
+                        <ExpandMoreIcon style={this.state.expanded ? styles.expandOpen : styles.expand} />
                     </IconButton>
                     <p style={{display: 'inline'}}>{this.state.expanded ? 'Hide Comments' : 'Show Comments'}</p>
                     <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>

@@ -40,11 +40,14 @@ const ingredients = [
     { value: 'rice', label: 'rice'},
     { value: 'white rice', label: 'white rice'},
     { value: 'brown rice', label: 'brown rice'},
+    { value: 'brown rice flour', label: 'brown rice flour'},
     { value: 'red rice', label: 'red rice'},
     { value: 'black rice', label: 'black rice'},
     { value: 'wild rice', label: 'wild rice'},
     { value: 'oats', label: 'oats'},
     { value: 'old-fashioned rolled oats', label: 'old-fashioned rolled oats'},
+    { value: 'oat flour', label: 'oat flour'},
+    { value: 'oat bran', label: 'oat bran'},
     { value: 'quinoa', label: 'quinoa'},
     { value: 'red quinoa', label: 'red quinoa'},
     { value: 'white quinoa', label: 'white quinoa'},
@@ -67,6 +70,7 @@ const ingredients = [
     { value: 'hemp seeds', label: 'hemp seeds'},
     { value: 'pumpkin seeds', label: 'pumpkin seeds'},
     { value: 'sunflower seeds', label: 'sunflower seeds'},
+    { value: 'almond flour', label: 'almond flour'},
     { value: 'nutritional yeast', label: 'nutrional yeast'},
     { value: 'pasta', label: 'pasta'},
     { value: 'pasta (whole-grain)', label: 'pasta (whole-grain)'},
@@ -172,6 +176,7 @@ const ingredients = [
     { value: 'nutmeg', label: 'nutmeg'},
     { value: 'oregano', label: 'oregano'},
     { value: 'paprika', label: 'paprika'},
+    { value: 'smoked paprika', label: 'smoked paprika'},
     { value: 'peppercorns', label: 'peppercorns'},
     { value: 'rosemary', label: 'rosemary'},
     { value: 'turmeric', label: 'turmeric'},
@@ -222,7 +227,11 @@ const ingredients = [
     { value: 'tortilla chips', label: 'tortilla chips'},
     { value: 'salsa', label: 'salsa'},
     { value: 'baking powder', label: 'baking powder'},
-    { value: 'oat flour', label: 'oat flour'}
+    { value: 'oat flour', label: 'oat flour'},
+    { value: 'white wine vinegar', label: 'white wine vinegar'},
+    { value: 'hot sauce', label: 'hot sauce'},
+    { value: 'barbecue sauce', label: 'barbecue sauce'},
+    { value: 'ketchup', label: 'ketchup'}
 ];
 
 export default ingredients;
