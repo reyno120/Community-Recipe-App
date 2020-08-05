@@ -18,7 +18,7 @@ const recipeSchema = new mongoose.Schema({
         fat: { type: String },
         protein: { type: String }
     },
-    time: { type: String },
+    time: { type: Number },
     difficulty: { type: String },
     image: { type: String },
     likes: { type: Number },

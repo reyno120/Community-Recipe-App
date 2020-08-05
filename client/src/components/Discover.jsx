@@ -8,7 +8,16 @@ import IngredientList from '../data/ingredients';
 import Radio from '@material-ui/core/Radio';
 import axios from 'axios';
 import SingleCard from './SingleCard';
+import TextField from '@material-ui/core/TextField';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: 'rgb(254, 98, 57)'
+        }
+    }
+});
 
 class Discover extends Component {
     state = {  
@@ -88,8 +97,9 @@ class Discover extends Component {
                         </Grid>
                         <Grid item xs={4} align='center'>
                             <h2>Time</h2>
-                            <input type="number"></input>
-
+                            <ThemeProvider theme={theme}>
+                                <p>Less than <TextField name="time" inputProps={{min: 0}} style={{width: '4em'}} onChange={this.onChange} type="number"></TextField>minutes</p>
+                            </ThemeProvider>
                         </Grid>
                         <Grid item xs={4} align='center'>
                             <h2>Difficulty</h2>

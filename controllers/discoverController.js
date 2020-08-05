@@ -63,7 +63,21 @@ module.exports = (req, res) => {
                 }
             }
 
-            res.json({recipes: filteredRecipes});
+            var timeFilteredRecipes = []
+            if(time === 0 || time === '' || time === null) {
+                timeFilteredRecipes = filteredRecipes;
+            }
+            else {
+                for(i = 0; i < filteredRecipes.length; i++) {
+                    if(filteredRecipes[i].time !== '' && filteredRecipes[i].time !== 0 && filteredRecipes[i].time !== null) {
+                        if(filteredRecipes[i].time <= time) {
+                            timeFilteredRecipes.push(filteredRecipes[i]);
+                        }
+                    }
+                }
+            }
+
+            res.json({recipes: timeFilteredRecipes});
         }
     });
 }
