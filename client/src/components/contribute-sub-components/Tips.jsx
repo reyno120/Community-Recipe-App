@@ -40,7 +40,7 @@ class Tips extends Component {
                 <h2 style={{marginLeft: '2em'}}>Tips:</h2>
                 
                 <Grid container>
-                    <Grid xs={2} align="center">
+                    <Grid item xs={2} align="center">
                         <Button 
                             variant="contained"
                             style={{display: 'block'}}
@@ -56,7 +56,7 @@ class Tips extends Component {
                     </Grid>
 
 
-                    <Grid xs={10} align="left">
+                    <Grid item xs={10} align="left">
                         {this.state.tips.map((tip, index) => {
                             return (
                                 <div>
@@ -70,15 +70,24 @@ class Tips extends Component {
                             );
                         })}
 
-                        <p style={{fontWeight: "bold"}}>#1: 
-                                    <TextField value={this.props.tips[0]} onChange={this.props.handleTips(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
-                        </p>
+                        <p style={{fontWeight: "bold", display: 'inline'}}>#1:</p>
+                        {this.props.tips[0] ? (
+                            <TextField value={this.props.tips[0]} onChange={this.props.handleTips(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                        ) : (
+                            <TextField value={''} onChange={this.props.handleTips(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                        )}
+                        
 
                         {this.state.inputs.map((input, index) => {
                             return (
-                                <p style={{fontWeight: "bold"}}>#{index + 2}: 
-                                    <TextField value={this.props.tips[index + 1]} onChange={this.props.handleTips(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
-                                </p>
+                                <div key={index} style={{marginTop: '1em'}}>
+                                    <p style={{fontWeight: "bold", display: 'inline'}}>#{index + 2}:</p>
+                                    {this.props.tips[index + 1] ? (
+                                        <TextField value={this.props.tips[index + 1]} onChange={this.props.handleTips(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    ) : (
+                                        <TextField value={''} onChange={this.props.handleTips(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    )}
+                                </div>
                             );
                         })}
                     </Grid>

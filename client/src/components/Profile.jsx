@@ -176,7 +176,7 @@ class Profile extends Component {
                     <h2 style={{marginLeft: '1em'}}>{this.state.username}'s recipes</h2>
                     <Grid container spacing={2} style={{marginLeft: '.5em'}}>
                         {this.state.recipes.map((details, index) => (
-                            <Grid item xs={3}>
+                            <Grid key={index} item xs={3}>
                                 <SingleCard 
                                     key={index} 
                                     name={details.name}

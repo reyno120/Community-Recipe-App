@@ -168,7 +168,6 @@ class Multiform extends Component {
         }
 
         this.setState({allergens: allergens});
-        console.log(allergens);
     }
 
     handleDirections = (index) => (e) => {
@@ -328,10 +327,12 @@ class Multiform extends Component {
     nameStep = () => {
         return (
             <div style={{marginLeft: '3em', marginBottom: '2em'}}>
-                <h2 style={{marginBottom: '0'}}>What is the name of your Recipe?</h2>
-                <TextField name="name" value={this.state.name} onChange={this.onChange} label="Recipe Name" color="none" style={{width: '23em'}} />
-                <h2 style={{marginBottom: '0'}}>Describe your Recipe:</h2>
-                <TextField name="description" value={this.state.description} onChange={this.onChange} label="Description" multiline rowsMax={3} style={{width: '23em'}} />
+                <ThemeProvider theme={theme}>
+                    <h2 style={{marginBottom: '0'}}>What is the name of your Recipe?</h2>
+                    <TextField name="name" value={this.state.name} onChange={this.onChange} label="Recipe Name" color="primary" style={{width: '23em'}} />
+                    <h2 style={{marginBottom: '0'}}>Describe your Recipe:</h2>
+                    <TextField name="description" value={this.state.description} onChange={this.onChange} color="primary" label="Description" multiline rowsMax={3} style={{width: '23em'}} />
+                </ThemeProvider>
             </div>
         );
     }
@@ -360,13 +361,12 @@ class Multiform extends Component {
         for(var i = 0; i < this.state.ingredients.length; i++) {
             ingr.push({value: this.state.ingredients[i], label: this.state.ingredients[i]});
         }
-        console.log(ingr);
 
         return (
             <div style={{marginBottom: '6em'}}>
                 <ThemeProvider theme={theme}>
                     <Grid container>
-                        <Grid xs={6} align="center" style={{marginTop: '2em'}}>
+                        <Grid item xs={6} align="center" style={{marginTop: '2em'}}>
                             <h2>Ingredients:</h2>
                             <Select
                                 isMulti
@@ -376,11 +376,11 @@ class Multiform extends Component {
                                 defaultValue={ingr}
                             />
                         </Grid>
-                        <Grid xs={6} align="center" style={{marginTop: '2em'}}>
+                        <Grid item xs={6} align="center" style={{marginTop: '2em'}}>
                             <h2>Amount:</h2>
                             {this.state.ingredients.map((ingredient, index) => {
                                 return (
-                                    <div>
+                                    <div key={index}>
                                         <p style={{
                                             fontSize: '18px',
                                             display: 'inline' 
@@ -408,10 +408,8 @@ class Multiform extends Component {
                     <ThemeProvider theme={theme}>
                         <Grid container>
                             <Grid item xs={3}>
-                                <p>
-                                    <span style={{fontWeight: 'bold'}}>
-                                        Calories:
-                                    </span> 
+                                <div>
+                                    <p style={{fontWeight: 'bold', display: 'inline'}}>Calories:</p>
                                     <TextField 
                                         name="calories" 
                                         onChange={this.onChange} 
@@ -421,29 +419,25 @@ class Multiform extends Component {
                                         style={{width: '3em'}}
                                         value={this.state.calories}
                                     />grams
-                                </p>
+                                </div>
                             </Grid>
                             <Grid item xs={3}>
-                                <p>
-                                    <span style={{fontWeight: 'bold'}}>
-                                        Carbs:
-                                        </span> 
-                                        <TextField 
-                                            name="carbs" 
-                                            onChange={this.onChange} 
-                                            color="primary" 
-                                            type="number" 
-                                            inputProps={{min: 0}} 
-                                            style={{width: '3em'}}
-                                            value={this.state.carbs}
-                                        />grams
-                                    </p>
+                                <div>
+                                    <p style={{fontWeight: 'bold', display: 'inline'}}>Carbs:</p>
+                                    <TextField 
+                                        name="carbs" 
+                                        onChange={this.onChange} 
+                                        color="primary" 
+                                        type="number" 
+                                        inputProps={{min: 0}} 
+                                        style={{width: '3em'}}
+                                        value={this.state.carbs}
+                                    />grams
+                                </div>
                             </Grid>
                             <Grid item xs={3}>
-                                <p>
-                                    <span style={{fontWeight: 'bold'}}>
-                                        Protein:
-                                    </span> 
+                                <div>
+                                    <p style={{fontWeight: 'bold', display: 'inline'}}>Protein:</p>
                                     <TextField 
                                         name="protein" 
                                         onChange={this.onChange} 
@@ -453,13 +447,11 @@ class Multiform extends Component {
                                         style={{width: '3em'}}
                                         value={this.state.protein}
                                     />grams
-                                </p>
+                                </div>
                             </Grid>
                             <Grid item xs={3}>
-                                <p>
-                                    <span style={{fontWeight: 'bold'}}>
-                                        Fat:
-                                    </span> 
+                                <div>
+                                    <p style={{fontWeight: 'bold', display: 'inline'}}>Fat:</p>
                                     <TextField 
                                         name="fat" 
                                         onChange={this.onChange} 
@@ -469,7 +461,7 @@ class Multiform extends Component {
                                         style={{width: '3em'}}
                                         value={this.state.fat}
                                     />grams
-                                </p>
+                                </div>
                             </Grid>
                         </Grid>
                     </ThemeProvider>
@@ -483,10 +475,10 @@ class Multiform extends Component {
         return (
             <ThemeProvider theme={theme}>
                 <Grid container>
-                    <Grid xs={12} align="center">
+                    <Grid item xs={12} align="center">
                         <h2 style={{marginTop: '3em'}}>Who is this recipe for?</h2>
                     </Grid>
-                    <Grid xs={4} align="right">
+                    <Grid item xs={4} align="right">
                         <p>Beginner Sous Chef</p>
                         <Radio
                             checked={this.state.difficulty === 'Easy'}
@@ -497,7 +489,7 @@ class Multiform extends Component {
                             style={{marginRight: '2em'}}
                         />
                         </Grid>
-                        <Grid xs={4} align="center">
+                        <Grid item xs={4} align="center">
                             <p>Experienced Cook</p>
                             <Radio
                                 checked={this.state.difficulty === 'Medium'}
@@ -507,7 +499,7 @@ class Multiform extends Component {
                                 name="difficulty"
                             />
                         </Grid>
-                        <Grid xs={4} align="left">
+                        <Grid item xs={4} align="left">
                             <p>Master Chef</p>
                             <Radio
                                 checked={this.state.difficulty === 'Hard'}
@@ -518,9 +510,10 @@ class Multiform extends Component {
                                 style={{marginLeft: '1em'}}
                             />
                         </Grid>
-                        <Grid xs={12} align="center">
+                        <Grid item xs={12} align="center">
                             <h2>How much time does this recipe take to make?</h2>
-                            <p><TextField name="time" value={this.state.time} type="number" inputProps={{min: 0}} onChange={this.onChange} style={{width: '3em'}} />minutes</p>
+                            <TextField name="time" value={this.state.time} type="number" inputProps={{min: 0}} onChange={this.onChange} style={{width: '3em'}} />
+                            <p style={{display: 'inline'}}>minutes</p>
                         </Grid>
                 </Grid>
             </ThemeProvider>
@@ -530,10 +523,10 @@ class Multiform extends Component {
     directionsAndTipsStep = () => {
         return (
             <Grid container>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                     <Directions directions={this.state.directions} handleDirections={this.handleDirections} deleteDirection={this.deleteDirection}></Directions>
                 </Grid>
-                <Grid xs={12} style={{marginTop: '3em'}}>
+                <Grid item xs={12} style={{marginTop: '3em'}}>
                     <Tips tips={this.state.tips} handleTips={this.handleTips} deleteTip={this.deleteTip}></Tips>
                 </Grid>
             </Grid>
@@ -543,10 +536,10 @@ class Multiform extends Component {
     sourceStep = () => {
         return (
             <Grid container>
-                <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
+                <Grid item xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
                     <h2>Contributors: <TextField name="contributors" value={this.state.contributors} onChange={this.onChange} style={{width: '20em'}}></TextField></h2>
                 </Grid>
-                <Grid xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
+                <Grid item xs={12} style={{marginTop: '2em', marginLeft: '3em'}}>
                     <h2>Source: <TextField name='source' value={this.state.source} onChange={this.onChange} style={{width: '23em'}}></TextField></h2>
                 </Grid>
             </Grid>
@@ -573,13 +566,13 @@ class Multiform extends Component {
                     <p>Ingredients:</p>
                     <ul style={{listStyleType: 'none'}}>{this.state.ingredients.map((ingredient, i) => {
                         return (
-                            <li>{ingredient}, {this.state.amounts[i]}</li>
+                            <li key={i}>{ingredient}, {this.state.amounts[i]}</li>
                         );
                     })}</ul>
                     <p>Allergens: </p>
                     <ul style={{listStyleType: 'none'}}>{this.state.allergens.map((allergen, i) => {
                         return (
-                            <li>{allergen}</li>
+                            <li key={i}>{allergen}</li>
                         );
                     })}</ul>
                     <p>Difficulty: {this.state.difficulty}</p>
@@ -588,7 +581,7 @@ class Multiform extends Component {
                     {this.state.directions !== null ? (
                         <ul style={{listStyleType: 'none'}}>{this.state.directions.map((direction, i) => {
                             return (
-                                <li>{i+ 1}.{direction}</li>
+                                <li key={i}>{i+ 1}.{direction}</li>
                             );
                     })}</ul>
                     ) : (
@@ -598,7 +591,7 @@ class Multiform extends Component {
                     {this.state.tips !== null ? (
                         <ul style={{listStyleType: 'none'}}>{this.state.tips.map((tip, i) => {
                             return (
-                                <li>{i+ 1}.{tip}</li>
+                                <li key={i}>{i+ 1}.{tip}</li>
                             );
                     })}</ul>
                     ) : (
@@ -725,7 +718,7 @@ class Multiform extends Component {
                         {this.state.steps.map((label, index) => (
                         <Step key={label}>
                             <StepButton onClick={this.handleStep(index)} completed={this.state.completed[index]}>
-                                <StepLabel className={{root: styles.stepIcon, active: styles.stepIcon}}>
+                                <StepLabel inputprops={{root: styles.stepIcon, active: styles.stepIcon}}>
                                     {label}
                                 </StepLabel>
                             </StepButton>
@@ -742,7 +735,7 @@ class Multiform extends Component {
                         </div>
                         ) : (
                         <div>
-                            <Typography className={styles.instructions}>{this.getStepContent(this.state.activeStep)}</Typography>
+                            <Typography component="div" >{this.getStepContent(this.state.activeStep)}</Typography>
                             <div>
                             <Button disabled={this.state.activeStep === 0} onClick={this.handleBack} style={styles.backButton}>
                                 Back

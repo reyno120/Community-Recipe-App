@@ -98,35 +98,44 @@ class Discover extends Component {
                         <Grid item xs={4} align='center'>
                             <h2>Time</h2>
                             <ThemeProvider theme={theme}>
-                                <p>Less than <TextField name="time" inputProps={{min: 0}} style={{width: '4em'}} onChange={this.onChange} type="number"></TextField>minutes</p>
+                                <p style={{display: 'inline'}}>Less than</p>
+                                <TextField name="time" inputProps={{min: 0}} style={{width: '4em'}} onChange={this.onChange} type="number"></TextField>
+                                <p style={{display: 'inline'}}>minutes</p>
                             </ThemeProvider>
                         </Grid>
                         <Grid item xs={4} align='center'>
                             <h2>Difficulty</h2>
-                            <p>Easy
+
+                            <div style={{display: 'block'}}>
+                                <p style={{display: 'inline'}}>Easy</p>
                                 <Radio
                                     checked={this.state.difficulty === 'Easy'}
                                     value={"Easy"}
                                     onChange={this.onChange}
                                     name="difficulty"
                                 />
-                            </p>
-                            <p>Medium
+                            </div>
+
+                            <div style={{display: 'block'}}>
+                                <p style={{display: 'inline'}}>Medium</p>
                                 <Radio
                                     checked={this.state.difficulty === 'Medium'}
                                     value={"Medium"}
                                     onChange={this.onChange}
                                     name="difficulty"
                                 />
-                            </p>
-                            <p>Hard
+                            </div>
+
+                            <div style={{display: 'block'}}>
+                                <p style={{display: 'inline'}}>Hard</p>
                                 <Radio
                                     checked={this.state.difficulty === 'Hard'}
                                     value={"Hard"}
                                     onChange={this.onChange}
                                     name="difficulty"
                                 />
-                            </p>
+                            </div>
+
                         </Grid>
                         <Grid item xs={12}>
                             <h2>Ingredients:</h2>

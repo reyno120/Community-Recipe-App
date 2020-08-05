@@ -29,9 +29,8 @@ class MyRecipes extends Component {
                     <Grid container spacing={2} style={{justifyContent: 'center', margin: '2em auto auto auto', width: '1366px'}}>
                         {this.state.recipes.map((details, index) => {
                             return (
-                                <Grid item xs={3}>
+                                <Grid key={index} item xs={3}>
                                     <SingleCard
-                                        key={index}
                                         name={details.name}
                                         description={details.description}
                                         author={details.author}

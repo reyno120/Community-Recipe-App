@@ -5,7 +5,7 @@ const User = require('../models/User');
 module.exports = (req, res) => {
     jwt.verify(req.token, jwtKey, (error, decoded) => {
         User.findOne({username: decoded.user.username}, (error, user) => {
-            res.json({image: user.image});
+            res.json({image: user.image, followers: user.followers, following: user.following});
         });
     })
 }

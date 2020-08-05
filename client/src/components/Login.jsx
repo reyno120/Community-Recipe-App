@@ -70,7 +70,6 @@ class Login extends Component {
             <div>
                 <Button 
                     onClick={() => this.setState({open: true})}
-                    style={{marginLeft: '90em'}}
                 >Login</Button>
                 <Dialog 
                     aria-labelledby="simple-dialog-title" 

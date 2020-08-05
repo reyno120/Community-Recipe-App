@@ -49,9 +49,8 @@ class Cards extends Component {
                 </div>
                 <Grid container spacing={2} style={{marginLeft: '.5em'}}>
                     {this.state.recipes.map((details, index) => (
-                        <Grid item xs={3}>
+                        <Grid key={index} item xs={3}>
                             <SingleCard 
-                                key={index} 
                                 name={details.name}
                                 description={details.description}
                                 author={details.author}

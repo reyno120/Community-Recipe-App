@@ -40,7 +40,7 @@ class Directions extends Component {
                 <h2 style={{marginLeft: '2em'}}>Directions:</h2>
                 
                 <Grid container>
-                    <Grid xs={2} align="center">
+                    <Grid item xs={2} align="center">
                         <Button 
                             variant="contained"
                             style={{display: 'block'}}
@@ -56,7 +56,7 @@ class Directions extends Component {
                     </Grid>
 
 
-                    <Grid xs={10} align="left">
+                    <Grid item xs={10} align="left">
                         {this.state.directions.map((step, index) => {
                             return (
                                 <div>
@@ -71,15 +71,24 @@ class Directions extends Component {
                         })}
 
 
-                        <p style={{fontWeight: "bold"}}>Step 1: 
+                        <p style={{fontWeight: "bold", display: 'inline'}}>Step 1:</p>
+                        {this.props.directions[0] ? (
                             <TextField name="step" value={this.props.directions[0]} onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
-                        </p>
+                        ) : (
+                            <TextField name="step" value={''} onChange={this.props.handleDirections(0)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                        )}
+                        
 
                         {this.state.inputs.map((input, index) => {
                             return (
-                                <p style={{fontWeight: "bold"}}>Step {index + 2}: 
-                                    <TextField name="step" value={this.props.directions[index + 1]} onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
-                                </p>
+                                <div key={index} style={{marginTop: '1em'}}>
+                                    <p style={{fontWeight: "bold", display: 'inline'}}>Step {index + 2}:</p>
+                                    {this.props.directions[index + 1] ? (
+                                        <TextField name="step" value={this.props.directions[index + 1]} onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    ) : (
+                                        <TextField name="step" value={''} onChange={this.props.handleDirections(index + 1)} style={{marginLeft: '1em', width: '55em'}}></TextField>
+                                    )}
+                                </div>
                             );
                         })}
                     </Grid>

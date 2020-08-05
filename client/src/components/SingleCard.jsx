@@ -88,9 +88,9 @@ class SingleCard extends Component {
         // set like state and update # of likes
         this.setState({likeColor: 'gray'});
         this.setState({liked: false});
-        var likes = this.state.likeCount;
-        likes--;
-        this.setState({likeCount: likes});
+        var likes2 = this.state.likeCount;
+        likes2--;
+        this.setState({likeCount: likes2});
   
         // update likedBy
         var likedBy = this.props.likedBy;
@@ -150,8 +150,6 @@ class SingleCard extends Component {
         sessionStorage.setItem('bookmarks', bookmarks);
         this.setState({bookmarked: false});
 
-        console.log(bookmarks);
-        console.log("posting");
         axios.post('/recipe/bookmark', {
           bookmarks: bookmarks,
           action: 'remove'
@@ -208,8 +206,8 @@ class SingleCard extends Component {
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon onClick={this.handleLike} style={{color: this.state.likeColor}} />
+              <IconButton aria-label="add to favorites" onClick={this.handleLike}>
+                <FavoriteIcon style={{color: this.state.likeColor}} />
                 <div style={{fontSize: '16px', color: 'gray'}}>&nbsp;({this.state.likeCount})</div>
               </IconButton>
               {/* <IconButton>
@@ -218,8 +216,8 @@ class SingleCard extends Component {
               {/* <IconButton aria-label="share">
                 <ShareIcon onClick={this.handleShare} style={{color: this.state.shareColor}} />
               </IconButton> */}
-              <IconButton style={{marginLeft: 'auto'}}>
-                  <BookmarkIcon onClick={this.handleBookmark} style={{color: this.state.bookmarkColor}}></BookmarkIcon>
+              <IconButton style={{marginLeft: 'auto'}} onClick={this.handleBookmark}>
+                  <BookmarkIcon style={{color: this.state.bookmarkColor}}></BookmarkIcon>
               </IconButton>
             </CardActions>
         </Card>

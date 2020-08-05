@@ -20,21 +20,21 @@ class User extends Component {
     render() { 
         return (  
             <div>
-                <IconButton>
-                    <AccountCircleIcon fontSize={'large'} onClick={() => {this.setState({open: true})}}></AccountCircleIcon>
-                    <Drawer anchor={'right'} open={this.state.open} onClose={() => {this.setState({open: false})}}>
-                        <Link to="/user/account">
-                            <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Account</Button>
-                        </Link>
-                        <Link to="/user/recipes">
-                            <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Recipes</Button>
-                        </Link>
-                        <Link to="/bookmarks">
-                            <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>Bookmarks</Button>
-                        </Link>
-                        <Button style={{fontSize: '18px'}} onClick={this.handleLogout}>Logout</Button>
-                    </Drawer>
+                <IconButton onClick={() => {this.setState({open: true})}}>
+                    <AccountCircleIcon fontSize={'large'}></AccountCircleIcon>
                 </IconButton>
+                <Drawer anchor={'right'} open={this.state.open} onClose={() => {this.setState({open: false})}}>
+                    <Link to="/user/account">
+                        <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Account</Button>
+                    </Link>
+                    <Link to="/user/recipes">
+                        <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>My Recipes</Button>
+                    </Link>
+                    <Link to="/bookmarks">
+                        <Button style={{fontSize: '18px'}} onClick={() => {this.setState({open: false})}}>Bookmarks</Button>
+                    </Link>
+                    <Button style={{fontSize: '18px'}} onClick={this.handleLogout}>Logout</Button>
+                </Drawer>
             </div>
 
         );
