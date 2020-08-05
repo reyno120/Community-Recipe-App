@@ -137,7 +137,7 @@ class Discover extends Component {
                                 isSearchable={true}
                             />
                         </Grid>
-                        <Button variant="outlined" onClick={this.handleSubmit}>Submit</Button> 
+                        <Button variant="outlined" style={{margin: '2em auto 2em auto'}} onClick={this.handleSubmit}>Submit</Button> 
                     </Grid>
                 </Paper>
                 <div style={{height: '2em'}}></div>
