@@ -68,20 +68,27 @@ class Allergens extends Component {
     }
 
     checkSugar = () => {
-        if(this.props.ingredients.includes('brown sugar')) {
-            if(!this.state.sugarFreeSelected) {
-                this.setState({sugarFreeSelected: true});
-                this.setState({sugarFree: false});
-                this.props.handleAllergens("sugarFree", false);
-                return this.state.sugarFree;
+        var { ingredients } = this.props;
+        var sugar = ["brown sugar, cane sugar"];
+
+        for(var i = 0; i < ingredients.length; i++) {
+            if(sugar.includes(ingredients[i])) {
+                if(!this.state.sugarFreeSelected) {
+                    this.setState({sugarFreeSelected: true});
+                    this.setState({sugarFree: false});
+                    this.props.handleAllergens("sugarFree", false);
+                    return this.state.sugarFree;
+                }
+                else {
+                    return this.state.sugarFree;
+                }
             }
             else {
                 return this.state.sugarFree;
             }
         }
-        else {
-            return this.state.sugarFree;
-        }
+
+        return this.state.sugarFree;
     }
 
     checkGluten = () => {
@@ -89,7 +96,9 @@ class Allergens extends Component {
         var gluten = ["pasta", "pasta (whole-grain)", "spaghetti", "spaghetti (whole-grain)",
                       "linguine", "linguine (whole-grain)", "fusilli", "fusilli (whole-grain)",
                       "lasagna", "lasagna (whole-grain)", "elbow macaroni", "elbow macaroni (whole-grain)",
-                      "tortillas", "tortillas (whole-grain)"];
+                      "tortillas", "tortillas (whole-grain)", "whole wheat pastry flour",
+                      "bread crumbs", "whole-grain bread crumbs", "pita bread", "whole-wheat pita bread",
+                      "unbleached all-purpose flour"];
 
         for(var i = 0; i < ingredients.length; i++) {
             if(gluten.includes(ingredients[i])) {
