@@ -27,6 +27,7 @@ const followController = require('./controllers/followController');
 const myRecipesController = require('./controllers/myRecipesController');
 const deleteRecipeController = require('./controllers/deleteRecipeController');
 const feedbackController = require('./controllers/feedbackController');
+const searchController = require('./controllers/searchController');
 
 
 
@@ -53,6 +54,7 @@ app.get('/user/auth', verifyToken, authController);
 app.get('/user/info', verifyToken, userInfoController);
 app.get('/users', usersController);
 app.get('/myrecipes', verifyToken, myRecipesController);
+app.get('/search', searchController);
 
 app.post('/recipeUpload', verifyToken, uploadRecipeController);
 app.post('/register', registerController);

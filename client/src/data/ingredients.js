@@ -258,7 +258,14 @@ const ingredients = [
     { value: 'pasta sauce', label: 'pasta sauce'},
     { value: 'aquafaba', label: 'aquafaba'},
     { value: 'unbleached all-purpose flour', label: 'unbleached all-purpose flour'},
-    { value: 'cane sugar', label: 'cane sugar'}
+    { value: 'cane sugar', label: 'cane sugar'},
+    { value: 'apple cider vinegar', label: 'apple cider vinegar'},
+    { value: 'tamari', label: 'tamari'},
+    { value: 'sriracha', label: 'sriracha'},
+    { value: 'brown rice vinegar', label: 'brown rice vinegar'},
+    { value: 'nori sheets', label: 'nori sheets'},
+    { value: 'short grain brown rice', label: 'short grain brown rice'},
+    { value: 'scallions', label: 'scallions'}
 ];
 
 export default ingredients;

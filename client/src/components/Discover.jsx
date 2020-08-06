@@ -157,6 +157,7 @@ class Discover extends Component {
                         width: '1366px',
                         margin: 'auto'
                     }}>
+                    <h2 style={{marginLeft: '1em'}}>Displaying {this.state.recipes.length} results</h2>
                     <Grid spacing={3} style={{margin: 'auto'}} container>
                         {this.state.recipes.map((details, index) => (
                             <Grid item xs={3}>

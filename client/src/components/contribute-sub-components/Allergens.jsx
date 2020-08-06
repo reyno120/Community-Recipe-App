@@ -69,7 +69,7 @@ class Allergens extends Component {
 
     checkSugar = () => {
         var { ingredients } = this.props;
-        var sugar = ["brown sugar, cane sugar"];
+        var sugar = ["brown sugar", "cane sugar"];
 
         for(var i = 0; i < ingredients.length; i++) {
             if(sugar.includes(ingredients[i])) {
