@@ -1,20 +1,27 @@
 const Recipe = require('../models/Recipe');
 
 module.exports = (req, res) => {
-    Recipe.find({
-        $search: {
-            text: {
-                query: req.query.search,
-                path: 'name'
+    const agg = [
+        {
+          '$search': {
+            'text': {
+              'query': req.query.search, 
+              'path': 'name',
+              'fuzzy': {
+                  'maxEdits': 2,
+                  'maxExpansions': 100
+              }
             }
+          }
         }
-    },
-    (error, recipe) => {
+      ];
+
+    Recipe.aggregate(agg, (error, recipes) => {
         if(error) {
             console.log(error);
         }
         else {
-            res.json({recipe: recipe});
+            res.json({recipes: recipes});
         }
     })
 }

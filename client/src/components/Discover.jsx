@@ -10,6 +10,10 @@ import axios from 'axios';
 import SingleCard from './SingleCard';
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from '@material-ui/core/IconButton';
+
 
 const theme = createMuiTheme({
     palette: {
@@ -32,7 +36,8 @@ class Discover extends Component {
         ingredients: [],
         difficulty: '',
         time: 0,
-        recipes: []
+        recipes: [],
+        search: ''
     };
 
 
@@ -71,6 +76,23 @@ class Discover extends Component {
         });
     }
 
+    checkKey = (e) => {
+        if(e.keyCode === 13) {
+            this.handleSearch();
+        }
+    }
+
+    handleSearch = () => {
+        axios.get('/search', {
+            params: {
+                search: this.state.search
+            }
+        })
+        .then((res) => {
+            this.setState({recipes: res.data.recipes});
+        });
+    }
+
     render() { 
         return (  
             <div>
@@ -83,7 +105,37 @@ class Discover extends Component {
                     }}>
                     <h2 style={{textAlign: 'center'}}>Discover New Recipes!</h2>
                     <Grid container>
-                        <Grid item xs={4} align='center'>
+
+                        <Grid align="center" item xs={12}>
+                            <ThemeProvider theme={theme}>
+                                <TextField 
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <IconButton size="small" onClick={this.handleSearch}>
+                                                    <SearchIcon />
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                    onKeyDown={this.checkKey}
+                                    onChange={this.onChange}
+                                    name="search"
+                                    style={{width: '30em'}}
+                                    color="primary"
+                                ></TextField>
+                            </ThemeProvider>
+                        </Grid>
+
+
+                        {/*********** Allergens ***********/}
+                        <Grid item xs={3} align='left' style={{
+                                                                marginLeft: '1em',
+                                                                marginTop: '1em',
+                                                                paddingLeft: '1em',
+                                                                border: 'solid 2px rgb(254, 98, 57)',
+                                                                borderRadius: '10px'
+                                                                }}>
                             <h2>Allergens:</h2>
                             <div style={{textAlign: 'left', marginLeft: '3em'}}>
                                 <p><Checkbox name="saltFree" onChange={this.handleChange} checked={this.state.saltFree}/>no added salt</p>
@@ -94,16 +146,18 @@ class Discover extends Component {
                                 <p><Checkbox name="peanutFree" onChange={this.handleChange} />peanut free</p>
                                 <p><Checkbox name="soyFree" onChange={this.handleChange} />soy free</p>
                             </div>
-                        </Grid>
-                        <Grid item xs={4} align='center'>
+
+
+                        {/*********** Time ***********/}
                             <h2>Time</h2>
                             <ThemeProvider theme={theme}>
                                 <p style={{display: 'inline'}}>Less than</p>
                                 <TextField name="time" inputProps={{min: 0}} style={{width: '4em'}} onChange={this.onChange} type="number"></TextField>
                                 <p style={{display: 'inline'}}>minutes</p>
                             </ThemeProvider>
-                        </Grid>
-                        <Grid item xs={4} align='center'>
+
+
+                        {/*********** Difficulty ***********/}
                             <h2>Difficulty</h2>
 
                             <div style={{display: 'block'}}>
@@ -136,8 +190,7 @@ class Discover extends Component {
                                 />
                             </div>
 
-                        </Grid>
-                        <Grid item xs={12}>
+                            {/*********** Ingredients ***********/}
                             <h2>Ingredients:</h2>
                             <Select 
                                 isMulti
@@ -146,23 +199,12 @@ class Discover extends Component {
                                 isSearchable={true}
                             />
                         </Grid>
-                        <Button variant="outlined" style={{margin: '2em auto 2em auto'}} onClick={this.handleSubmit}>Submit</Button> 
-                    </Grid>
-                </Paper>
-                <div style={{height: '2em'}}></div>
-                <Paper
-                    elevation={3}
-                    style={{
-                        backgroundColor: 'rgb(228, 221, 211)',
-                        width: '1366px',
-                        margin: 'auto'
-                    }}>
-                    <h2 style={{marginLeft: '1em'}}>Displaying {this.state.recipes.length} results</h2>
-                    <Grid spacing={3} style={{margin: 'auto'}} container>
+                        <Grid item xs={8}>
+                        <h2 style={{marginLeft: '1em'}}>Displaying {this.state.recipes.length} results</h2>
+                        <Grid spacing={3} style={{margin: 'auto'}} container>
                         {this.state.recipes.map((details, index) => (
-                            <Grid item xs={3}>
+                            <Grid key={index} item xs={4}>
                                 <SingleCard
-                                    key={index} 
                                     name={details.name}
                                     description={details.description}
                                     author={details.author}
@@ -179,7 +221,11 @@ class Discover extends Component {
                             </Grid>
                         ))}
                     </Grid>
+                        </Grid>
+                    </Grid>
+                    <Button variant="outlined" style={{margin: '2em auto 2em auto'}} onClick={this.handleSubmit}>Submit</Button> 
                 </Paper>
+                <div style={{height: '2em'}}></div>
             </div>
         );
     }
