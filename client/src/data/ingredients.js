@@ -19,6 +19,7 @@ const ingredients = [
     { value: 'concord graps', label: 'concord grapes'},
     { value: 'red grapes', label: 'red grapes'},
     { value: 'black grapes', label: 'black grapes'},
+    { value: 'pineapple', label: 'pineapple'},
     { value: 'dulse seaweed flakes', label: 'dulse seaweed flakes'},
     { value: 'goji berries', label: 'goji Berries'},
     { value: 'black beans', label: 'black beans'},
@@ -265,7 +266,10 @@ const ingredients = [
     { value: 'brown rice vinegar', label: 'brown rice vinegar'},
     { value: 'nori sheets', label: 'nori sheets'},
     { value: 'short grain brown rice', label: 'short grain brown rice'},
-    { value: 'scallions', label: 'scallions'}
+    { value: 'scallions', label: 'scallions'},
+    { value: 'vegan cheese', label: 'vegan cheese'},
+    { value: 'vegan parmesan', label: 'vegan parmesan'},
+    { value: 'radishes', label: 'radishes'}
 ];
 
 export default ingredients;

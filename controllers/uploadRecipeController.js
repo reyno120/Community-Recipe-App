@@ -95,7 +95,8 @@ module.exports = (req, res) => {
                     req.files.file.name = date.getTime() + req.files.file.name; // add time stamp
 
                     const file = req.files.file;
-                    const directory = path.join(__dirname, '../client/public/images/', file.name);
+                    var filename = file.name.replace(/ /g, "-");
+                    const directory = path.join(__dirname, '../client/public/images/', filename);
             
                     file.mv(directory, error => {
                         if(error) {
@@ -104,10 +105,10 @@ module.exports = (req, res) => {
                         }
                 
                         if(req.body.update) {
-                            updateRecipe(req, res, '/images/'+ file.name);
+                            updateRecipe(req, res, '/images/'+ filename);
                         }
                         else {
-                            createRecipe(req, res, file.name, decoded.user.username);
+                            createRecipe(req, res, filename, decoded.user.username);
                         }
                     });
                 }

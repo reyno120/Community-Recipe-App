@@ -32,11 +32,13 @@ module.exports = (req, res) => {
                             followers: user.username
                         }
                     },
-                    (error, user) => {
+                    (error, user2) => {
                         if(error) {
                             console.log(error);
                         }
                         else {
+                            console.log(user);
+                            console.log(user.username);
                             res.json({token: token, userExists: false, username: user.username, bookmarks: user.bookmarks});
                         }
                     });
