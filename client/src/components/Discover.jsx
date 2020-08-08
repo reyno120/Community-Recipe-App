@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import Select from 'react-select';
 import IngredientList from '../data/ingredients';
@@ -50,8 +49,7 @@ class Discover extends Component {
     }
 
     handleChange = (e) => {
-        this.setState({[e.target.name]: e.target.checked});
-        var allergens = this.state.allergens
+        var allergens = this.state.allergens;
         if(e.target.checked) {
             allergens.push(e.target.name);
         }
@@ -59,12 +57,24 @@ class Discover extends Component {
             var index = allergens.indexOf(e.target.name);
             allergens.splice(index, 1);
         }
+        this.setState({[e.target.name]: e.target.checked});
 
-        this.handleSubmit()
+        this.handleSubmit();
     }
 
     onChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
+    }
+
+    onTimeChange = (event, value) => {
+        this.setState({time: value});
+        this.handleSubmit();
+    }
+
+    onDiffChange = (e) => {
+        this.setState({[e.target.name]: e.target.value}, () => {
+            this.handleSubmit();
+        });
     }
 
     handleIngredients = (e) => {
@@ -74,16 +84,17 @@ class Discover extends Component {
                 ingredients.push(e[i].value);
             }
         }
-        // this.setState({ingredients: ingredients});
-
-        this.handleSubmit(ingredients);
+        
+        this.setState({ingredients: ingredients}, () => {
+            this.handleSubmit();
+        });
     }
 
-    handleSubmit = (ingredients) => {
-        if(ingredients === undefined) {
-            ingredients = [];
-        }
-        const { time, difficulty, allergens } = this.state;
+    handleSubmit = () => {
+        // if(ingredients === undefined) {
+        //     ingredients = [];
+        // }
+        const { time, ingredients, difficulty, allergens } = this.state;
 
         axios.post('/discover', {ingredients, difficulty, time, allergens})
         .then((res) => {
@@ -202,7 +213,8 @@ class Discover extends Component {
                                         getAriaValueText={this.valuetext}
                                         valueLabelDisplay="auto"
                                         color="primary"
-                                        onChange={this.onChange}
+                                        onChange={this.onTimeChange}
+                                        name="time"
                                     />
                                 </div>
                             </ThemeProvider>
@@ -215,7 +227,7 @@ class Discover extends Component {
                                 <Radio
                                     checked={this.state.difficulty === 'Easy'}
                                     value={"Easy"}
-                                    onChange={this.onChange}
+                                    onChange={this.onDiffChange}
                                     name="difficulty"
                                 />
                             </div>
@@ -225,7 +237,7 @@ class Discover extends Component {
                                 <Radio
                                     checked={this.state.difficulty === 'Medium'}
                                     value={"Medium"}
-                                    onChange={this.onChange}
+                                    onChange={this.onDiffChange}
                                     name="difficulty"
                                 />
                             </div>
@@ -235,7 +247,7 @@ class Discover extends Component {
                                 <Radio
                                     checked={this.state.difficulty === 'Hard'}
                                     value={"Hard"}
-                                    onChange={this.onChange}
+                                    onChange={this.onDiffChange}
                                     name="difficulty"
                                 />
                             </div>
