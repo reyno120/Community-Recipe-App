@@ -14,6 +14,7 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import '../App.css';
 
 
 class SingleCard extends Component {
@@ -201,8 +202,8 @@ class SingleCard extends Component {
               onClick={this.handleImageClick}
             />
             <CardContent>
-              <Typography variant="body2" color="textPrimary" component="p">
-                {this.props.description}
+              <Typography variant="body2" color="textPrimary" component="div" className={'description'}>
+                <p style={{marginTop: '0'}}>{this.props.description}</p>
               </Typography>
             </CardContent>
             <CardActions disableSpacing>

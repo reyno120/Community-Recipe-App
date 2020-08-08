@@ -25,6 +25,21 @@ p {
 .MuiStepIcon-root.MuiStepIcon-completed {
   color: rgb(254, 98, 57) !important;
 }
+.description {
+  height: 120px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.description::-webkit-scrollbar {
+  width: 3px;
+}
+.description::-webkit-scrollbar-track {
+  background: white;
+}
+.description::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 25px;
+}
 .navbar {
   root: {
     flexGrow: 1;
