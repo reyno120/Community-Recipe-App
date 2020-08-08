@@ -45,6 +45,10 @@ class Discover extends Component {
     };
 
 
+    componentDidMount() {
+        this.handleSubmit();
+    }
+
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.checked});
         var allergens = this.state.allergens
@@ -70,13 +74,16 @@ class Discover extends Component {
                 ingredients.push(e[i].value);
             }
         }
-        this.setState({ingredients: ingredients});
+        // this.setState({ingredients: ingredients});
 
-        this.handleSubmit();
+        this.handleSubmit(ingredients);
     }
 
-    handleSubmit = () => {
-        const { ingredients, time, difficulty, allergens } = this.state;
+    handleSubmit = (ingredients) => {
+        if(ingredients === undefined) {
+            ingredients = [];
+        }
+        const { time, difficulty, allergens } = this.state;
 
         axios.post('/discover', {ingredients, difficulty, time, allergens})
         .then((res) => {
@@ -115,7 +122,7 @@ class Discover extends Component {
                 transform: 'rotate(180deg)'
             },
             checkbox: {
-                marginTop: '-2em'
+                marginTop: '-1.5em'
             }
         }
 
@@ -159,7 +166,7 @@ class Discover extends Component {
                                                                 marginTop: '1em',
                                                                 paddingLeft: '1em',
                                                                 }}>     
-                            <div style={{ border: 'solid 2px rgb(254, 98, 57)', borderRadius: '10px'}}> 
+                            <div style={{ border: 'solid 2px rgb(254, 98, 57)', borderRadius: '10px', marginTop: '4em'}}> 
                             <div style={{height: '.5em'}}></div>                                
                             <h2 style={{display: 'inline', marginLeft: '.5em'}}>Allergens:</h2>
                             <IconButton style={{marginLeft: '1em'}} size="small" onClick={() => this.setState({expanded: !this.state.expanded})}>

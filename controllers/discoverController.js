@@ -3,6 +3,7 @@ const Recipe = require('../models/Recipe');
 
 module.exports = (req, res) => {
     const { ingredients, allergens, difficulty, time } = req.body;
+    console.log(req.body);
 
     // ingredients and allergens filter applied
     if(ingredients.length > 0 && allergens.length > 0) {
