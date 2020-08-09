@@ -2,5 +2,8 @@ module.exports = {
     mongoURI: 'mongodb+srv://jmreynolds:jmreynolds@mycluster-pjizw.mongodb.net/CommunityRecipes?retryWrites=true&w=majority',
     jwtKey: 'plants',
     emailPassword: 'plantLover6751',
-    myEmail: 'jmreynolds03@gmail.com'
+    myEmail: 'jmreynolds03@gmail.com',
+    cloudinary_name: 'drsnwqblv',
+    cloudinary_key: '383181452952943',
+    cloudinary_secret: 'KZMQ7wuhvWBE6SonPWYQKFG-Qrw'
 }
