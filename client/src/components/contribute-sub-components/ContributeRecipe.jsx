@@ -564,11 +564,15 @@ class Multiform extends Component {
                         <p style={pStyle}>Protein: {this.state.protein}g</p>
                         <p style={pStyle}>Fat: {this.state.fat}g</p>
                     <p>Ingredients:</p>
-                    <ul style={{listStyleType: 'none'}}>{this.state.ingredients.map((ingredient, i) => {
-                        return (
-                            <li key={i}>{ingredient}, {this.state.amounts[i]}</li>
-                        );
-                    })}</ul>
+                    {this.state.ingredients ? (
+                        <ul style={{listStyleType: 'none'}}>{this.state.ingredients.map((ingredient, i) => {
+                            return (
+                                <li key={i}>{ingredient}, {this.state.amounts[i]}</li>
+                            );
+                        })}</ul>
+                    ) : (
+                        <div></div>
+                    )}
                     <p>Allergens: </p>
                     <ul style={{listStyleType: 'none'}}>{this.state.allergens.map((allergen, i) => {
                         return (

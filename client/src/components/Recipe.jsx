@@ -180,11 +180,15 @@ class Recipe extends Component {
                                 </Grid>
                                 <Grid item xs={6} align="center">
                                     <h2>Ingredients</h2>
-                                    <ul style={{listStylePosition: 'inside'}}>
-                                        {details.ingredients.map((value, index) => {
-                                            return <li key={index}>{details.amounts[index]} <span style={{fontWeight: 'bold'}}>{value}</span></li>
-                                        })}
-                                    </ul>
+                                    {details.ingredients ? (
+                                        <ul style={{listStylePosition: 'inside'}}>
+                                            {details.ingredients.map((value, index) => {
+                                                return <li key={index}>{details.amounts[index]} <span style={{fontWeight: 'bold'}}>{value}</span></li>
+                                            })}
+                                        </ul>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </Grid>
                                 <Grid item xs={3} align="center">
                                     <h2>Useful tips</h2>
