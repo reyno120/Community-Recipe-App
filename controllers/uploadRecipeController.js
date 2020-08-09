@@ -96,7 +96,7 @@ module.exports = (req, res) => {
 
                     const file = req.files.file;
                     var filename = file.name.replace(/ /g, "-");
-                    const directory = path.join(__dirname, '../client/public/images/', filename);
+                    // const directory = path.join(__dirname, '../client/public/images/', filename);
                     const directory = path.join('/client/public/images/', filename);
                     console.log(directory);
             
