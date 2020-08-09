@@ -37,8 +37,6 @@ module.exports = (req, res) => {
                             console.log(error);
                         }
                         else {
-                            console.log(user);
-                            console.log(user.username);
                             res.json({token: token, userExists: false, username: user.username, bookmarks: user.bookmarks});
                         }
                     });
