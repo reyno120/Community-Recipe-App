@@ -42,7 +42,9 @@ function createRecipe(req, res, imageURL, author) {
                 if(error) {
                     console.log(error);
                 }
-                res.send();
+                else {
+                    res.send();
+                }
             });
         }
     })
@@ -99,7 +101,8 @@ module.exports = (req, res) => {
             else {
                 if(req.files !== null) {
                     const file = req.files.file;
-                    const directory = path.join(__dirname, '../client/public/images/', file.name);
+                    // const directory = path.join(__dirname, '../client/public/images/', file.name);
+                    const directory = path.join(__dirname, '../images/', file.name);
 
                     file.mv(directory, error => {
                         if(error) {
@@ -107,13 +110,26 @@ module.exports = (req, res) => {
                             return res.status(500).send(error);
                         }
 
-                        cloudinary.uploader.upload(directory, {folder: 'recipes', use_filename: true}, (error, result) => {
+                        cloudinary.uploader.upload(directory, {
+                            folder: 'recipes', 
+                            use_filename: true
+                        }, 
+                        (error, result) => {
                             if(error) {
                                 console.log(error);
                             }
                             else {
                                 if(req.body.update) {
-                                    updateRecipe(req, res, result.url);
+                                    // delete old image
+                                    var filename = 'recipes/' + req.body.oldImage.split("/").pop().split(".")[0];
+                                    cloudinary.uploader.destroy(filename, {invalidate: true}, (error, result2) => {
+                                        if(error) {
+                                            console.log(error);
+                                        }
+                                        else {
+                                            updateRecipe(req, res, result.url);
+                                        }
+                                    });
                                 }
                                 else {
                                     createRecipe(req, res, result.url, decoded.user.username);
@@ -123,7 +139,7 @@ module.exports = (req, res) => {
                 
                     });
                 }
-                else {
+                else { // if no new image was uploaded
                     if(req.body.update) {
                         updateRecipe(req, res, req.body.image);
                     }

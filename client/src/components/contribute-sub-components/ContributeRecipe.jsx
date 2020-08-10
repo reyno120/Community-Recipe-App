@@ -41,6 +41,7 @@ class Multiform extends Component {
         name: '',
         description: '',
         image: '',
+        oldImage: '',
         calories: 0,
         carbs: 0,
         fat: 0,
@@ -127,6 +128,7 @@ class Multiform extends Component {
         if(e.target.files[0]) {
             this.setState({file: e.target.files[0]});
             this.setState({filename: e.target.files[0].name});
+            this.setState({oldImage: this.state.image});
             this.setState({image: URL.createObjectURL(e.target.files[0])});
         }
     }
@@ -276,17 +278,22 @@ class Multiform extends Component {
         data.append('contributors', this.state.contributors);
         data.append('source', this.state.source);
         data.append('update', 'true');
+        data.append('oldImage', this.state.oldImage);
 
-        for(var i = 0; i < this.state.ingredients.length; i++) {
-            data.append('ingredients', this.state.ingredients[i]);
+        if(this.state.ingredients !== null) {
+            for(var i = 0; i < this.state.ingredients.length; i++) {
+                data.append('ingredients', this.state.ingredients[i]);
+            }
         }
         
         for(i = 0; i < this.state.allergens.length; i++) {
             data.append('allergens', this.state.allergens[i]);
         }
 
-        for(i = 0; i < this.state.amounts.length; i++) {
-            data.append('amounts', this.state.amounts[i]);
+        if(this.state.amounts !== null) {
+            for(i = 0; i < this.state.amounts.length; i++) {
+                data.append('amounts', this.state.amounts[i]);
+            }
         }
 
         if(this.state.directions !== null) {
@@ -329,7 +336,7 @@ class Multiform extends Component {
             <div style={{marginLeft: '3em', marginBottom: '2em'}}>
                 <ThemeProvider theme={theme}>
                     <h2 style={{marginBottom: '0'}}>What is the name of your Recipe?</h2>
-                    <TextField name="name" value={this.state.name} onChange={this.onChange} label="Recipe Name" color="primary" style={{width: '23em'}} />
+                    <TextField required name="name" value={this.state.name} onChange={this.onChange} label="Recipe Name" color="primary" style={{width: '23em'}} />
                     <h2 style={{marginBottom: '0'}}>Describe your Recipe:</h2>
                     <TextField name="description" value={this.state.description} onChange={this.onChange} color="primary" label="Description" multiline rowsMax={3} style={{width: '23em'}} />
                 </ThemeProvider>
@@ -662,7 +669,6 @@ class Multiform extends Component {
             }
         })
         .then((res) => {
-            console.log("test");
             window.location.replace("/contribute");
         });
     };
@@ -710,8 +716,8 @@ class Multiform extends Component {
                                 <h2 style={{paddingTop: '.5em', marginLeft: '1.5em'}}>Edit your recipe</h2>
                             </Grid>
                             <Grid item xs={2} align="center" style={{marginTop: '.5em'}}>
-                                <IconButton>
-                                    <DeleteForeverIcon onClick={() => this.setState({open: true})} style={{fill: 'red', width: '40px', height: '40px'}}></DeleteForeverIcon>
+                                <IconButton onClick={() => this.setState({open: true})}>
+                                    <DeleteForeverIcon style={{fill: 'red', width: '40px', height: '40px'}}></DeleteForeverIcon>
                                 </IconButton>
                             </Grid>
                         </Grid>
