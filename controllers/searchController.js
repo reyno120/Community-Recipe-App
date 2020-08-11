@@ -1,7 +1,18 @@
 const Recipe = require('../models/Recipe');
 
 module.exports = (req, res) => {
-    const agg = [
+    if(req.query.search === '') {
+      Recipe.find({}, (error, recipes) => {
+        if(error) {
+          console.log(error);
+        }
+        else {
+          res.json({recipes: recipes});
+        }
+      });
+    }
+    else {
+      const agg = [
         {
           '$search': {
             'text': {
@@ -23,5 +34,6 @@ module.exports = (req, res) => {
         else {
             res.json({recipes: recipes});
         }
-    })
+    });
+  }
 }

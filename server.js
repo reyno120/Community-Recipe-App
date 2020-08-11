@@ -32,7 +32,11 @@ const searchController = require('./controllers/searchController');
 
 
 // Connection to database
-mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .catch(error => {
+        console.log("Error connecting to MongoDB");
+        console.log(error);
+    });
 
 
 

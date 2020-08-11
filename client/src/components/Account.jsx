@@ -10,6 +10,7 @@ class Account extends Component {
         file: null,
         filename: '',
         image: '',
+        oldImage: '',
         followers: [],
         following: []
     };
@@ -22,6 +23,7 @@ class Account extends Component {
         })
         .then((res) => {
             this.setState({image: res.data.image});
+            this.setState({oldImage: res.data.image});
             this.setState({followers: res.data.followers});
             this.setState({following: res.data.following});
         });
@@ -40,6 +42,7 @@ class Account extends Component {
         const data = new FormData();
 
         data.append('file', this.state.file);
+        data.append('oldImage', this.state.oldImage);
 
         axios.post('/user/update', data, {
             headers: {

@@ -91,9 +91,6 @@ class Discover extends Component {
     }
 
     handleSubmit = () => {
-        // if(ingredients === undefined) {
-        //     ingredients = [];
-        // }
         const { time, ingredients, difficulty, allergens } = this.state;
 
         axios.post('/discover', {ingredients, difficulty, time, allergens})
