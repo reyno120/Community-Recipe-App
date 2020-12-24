@@ -8,6 +8,9 @@ A Community based collaborative recipe web application for vegan healthy plant-b
 2. In the 'config' folder create a file named 'keys.js'
 
 
+# Deployment
+This project has been deployed through heroku and can be viewed here: https://community-recipe-app.herokuapp.com/
+
 # Tech Stack
 * React
 * NodeJS/Express
