@@ -29,6 +29,8 @@ module.exports = {
 | cloudinary_key | Taken from cloudinary for uploading and deleting recipe images |
 | cloudinary_secret | Taken from cloudinary for uploading and deleting recipe images |
 
+### Running
+
 
 # Deployment
 This project has been deployed through heroku and can be viewed here: https://community-recipe-app.herokuapp.com/
