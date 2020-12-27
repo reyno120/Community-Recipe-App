@@ -20,6 +20,7 @@ module.exports = {
     cloudinary_secret: 'xxxxxxxxxxx'
 }
 ```
+4. Run 'npm run dev' to deploy locally.
 
 | Field | Description |
 | ----- | ----------- |
@@ -28,9 +29,6 @@ module.exports = {
 | cloudinary_name | Taken from cloudinary for uploading and deleting recipe images |
 | cloudinary_key | Taken from cloudinary for uploading and deleting recipe images |
 | cloudinary_secret | Taken from cloudinary for uploading and deleting recipe images |
-
-### Running
-
 
 # Deployment
 This project has been deployed through heroku and can be viewed here: https://community-recipe-app.herokuapp.com/
